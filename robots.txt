@@ -1,0 +1,22 @@
+# Vision IT Computer Institute — Robots.txt
+# https://visionitinstitute.vercel.app
+
+User-agent: *
+Allow: /
+
+# Block admin areas from indexing
+Disallow: /admin
+Disallow: /admin-panel
+
+# Allow all major crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Sitemap location
+Sitemap: https://visionitinstitute.vercel.app/sitemap.xml

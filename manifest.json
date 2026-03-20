@@ -1,0 +1,56 @@
+{
+  "name": "Vision IT Computer Institute",
+  "short_name": "Vision IT",
+  "description": "Surajpur ka #1 computer training center — Basic Computer, Tally, Programming, Web Design. Admission Open 2026!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "lang": "hi-IN",
+  "categories": ["education", "training"],
+  "icons": [
+    {
+      "src": "/bg-Logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/bg-Logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/bg-Logo.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Courses Dekhen",
+      "short_name": "Courses",
+      "description": "All computer courses",
+      "url": "/?page=courses",
+      "icons": [{ "src": "/bg-Logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Admission Apply",
+      "short_name": "Admission",
+      "description": "Apply for admission",
+      "url": "/?page=admission",
+      "icons": [{ "src": "/bg-Logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Contact Us",
+      "short_name": "Contact",
+      "description": "Call or WhatsApp",
+      "url": "/?page=contact",
+      "icons": [{ "src": "/bg-Logo.png", "sizes": "96x96" }]
+    }
+  ]
+}
