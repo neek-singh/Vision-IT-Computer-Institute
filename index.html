@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html lang="hi-IN">
+<html lang="hi-IN" data-theme="light">
 <head>
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<!-- ═══════════════════════════════════════════
+     FAVICON & WEB ICONS
+════════════════════════════════════════════ -->
+<link rel="icon" type="image/png" href="bg-Logo.png"/>
+<link rel="shortcut icon" href="bg-Logo.png"/>
+<link rel="apple-touch-icon" href="bg-Logo.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="bg-Logo.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="bg-Logo.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="bg-Logo.png"/>
+<meta name="msapplication-TileImage" content="bg-Logo.png"/>
+<meta name="msapplication-TileColor" content="#6366f1"/>
+
 <meta name="google-site-verification" content="np2V9AabQxLW7E12ffJ61lwn1fIxzYoHK8SI6rvI6O4"/>
 
 <!-- Performance: Preconnect -->
@@ -192,27 +205,42 @@
 <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com"/>
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com"/>
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+// Navbar safe fallback — runs before module loads
+window.showPage=window.showPage||function(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  var pg=document.getElementById('page-'+id);
+  if(pg)pg.classList.add('active');
+  window.scrollTo(0,0);
+  document.querySelectorAll('.nav-link').forEach(function(n){n.classList.remove('active');});
+  var nl=document.getElementById('nav-'+id);
+  if(nl)nl.classList.add('active');
+  var mob=document.getElementById('mob-menu');
+  if(mob)mob.classList.remove('open');
+};
+window.closeMob=window.closeMob||function(){
+  var m=document.getElementById('mob-menu');
+  if(m)m.classList.remove('open');
+};
+window.toggleNavDropdown=window.toggleNavDropdown||function(id){
+  ['more-dropdown','portal-dropdown'].forEach(function(d){
+    if(d!==id){var e=document.getElementById(d);if(e)e.classList.add('hidden');}
+  });
+  var e=document.getElementById(id);if(e)e.classList.toggle('hidden');
+};
+window.closeNavDropdowns=window.closeNavDropdowns||function(){
+  ['more-dropdown','portal-dropdown'].forEach(function(d){var e=document.getElementById(d);if(e)e.classList.add('hidden');});
+};
+window.applyAdmission=window.applyAdmission||function(){};
+window.openModal=window.openModal||function(id){var e=document.getElementById(id);if(e)e.classList.add('open');};
+window.closeModal=window.closeModal||function(id){var e=document.getElementById(id);if(e)e.classList.remove('open');};
+</script>
+<script</script>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 /* ═══ THEME VARIABLES ═══ */
 :root{
-  --sky:#6366f1;--sky2:#818cf8;--sky-rgb:99,102,241;
-  --gold:#f59e0b;--gold2:#fbbf24;
-  --accent:#8b5cf6;
-  --bg:#09090f;--bg2:#0f0f1a;--bg3:#13131f;
-  --surf:#16162a;--surf2:#1c1c30;--surf3:#222238;
-  --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);
-  --text:#e8e8ff;--text2:#9090b8;--text3:#5a5a90;
-  --card-bg:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
-  --nav-bg:rgba(9,9,15,.92);
-  --modal-bg:rgba(12,12,22,.98);
-  --inp-bg:rgba(255,255,255,.05);
-  --inp-border:rgba(255,255,255,.1);
-  --shadow-card:0 8px 32px rgba(0,0,0,.4);
-  --transition:all .3s cubic-bezier(.4,0,.2,1);
-}
-[data-theme="light"]{
   --sky:#4f46e5;--sky2:#6366f1;--sky-rgb:79,70,229;
   --gold:#d97706;--gold2:#f59e0b;
   --accent:#7c3aed;
@@ -226,7 +254,133 @@
   --inp-bg:rgba(99,102,241,.05);
   --inp-border:rgba(99,102,241,.2);
   --shadow-card:0 8px 32px rgba(99,102,241,.12);
+  --transition:all .3s cubic-bezier(.4,0,.2,1);
 }
+
+/* ═══ LIGHT MODE TEXT VISIBILITY FIXES ═══ */
+/* Stats/numbers that need to be visible */
+.stat-num { color: var(--text) !important; }
+/* Section labels */
+.slabel::before, .slabel::after { background: var(--sky) !important; }
+/* Offer strip */
+#offers-strip { color: #fff; }
+/* Top banner */
+#top-banner { color: #fff; }
+/* Certificate canvas area */
+
+/* Fix hardcoded text-white in content areas */
+.page .text-white:not(.btn):not(.badge):not([style*="background:linear-gradient"]):not([style*="background:rgba"]) {
+  color: var(--text) !important;
+}
+/* Slate text on light bg */
+.text-slate-300, .text-slate-400 { color: var(--text2) !important; }
+.text-slate-500, .text-slate-600 { color: var(--text3) !important; }
+
+/* Cards - ensure text is visible */
+.card .text-white, .card-flat .text-white { color: var(--text) !important; }
+.glass .text-white { color: var(--text) !important; }
+.card .text-slate-300, .card .text-slate-400 { color: var(--text2) !important; }
+.glass .text-slate-300, .glass .text-slate-400 { color: var(--text2) !important; }
+.card .text-slate-500, .glass .text-slate-500 { color: var(--text3) !important; }
+
+/* Modal text */
+.modal-box .text-white { color: var(--text) !important; }
+.modal-box .text-slate-300, .modal-box .text-slate-400 { color: var(--text2) !important; }
+.modal-box .text-slate-500 { color: var(--text3) !important; }
+
+/* Admin panel */
+.admin-link { color: var(--text2) !important; }
+
+/* Nav links on light bg */
+.nav-link { color: var(--text2); }
+.nav-link:hover, .nav-link.active { color: var(--sky); }
+#mob-menu .nav-link { color: var(--text2); }
+#mob-menu .text-white { color: var(--text) !important; }
+
+/* Footer */
+footer .text-white { color: var(--text) !important; }
+footer .text-slate-300, footer .text-slate-400, footer .text-slate-500 { color: var(--text2) !important; }
+
+/* Section headings */
+h1.text-white, h2.text-white, h3.text-white, h4.text-white { color: var(--text) !important; }
+
+/* Exceptions - keep white text WHERE background is dark */
+#hero-slider .text-white { color: #fff !important; }
+#hero-slider .text-slate-300 { color: rgba(255,255,255,.8) !important; }
+#summer-batch .text-white { color: #fff !important; }
+#summer-batch .text-slate-300 { color: rgba(255,255,255,.8) !important; }
+#summer-batch .text-slate-400 { color: rgba(255,255,255,.6) !important; }
+#vit-apps-section .text-white { color: #fff !important; }
+#vit-apps-section .text-slate-300 { color: rgba(255,255,255,.8) !important; }
+#vit-apps-section .text-slate-400 { color: rgba(255,255,255,.6) !important; }
+#vit-apps-section .text-slate-500 { color: rgba(255,255,255,.5) !important; }
+#vit-apps-section .text-slate-600 { color: rgba(255,255,255,.4) !important; }
+
+/* Buttons always keep white text */
+.btn .text-white, .btn-sky, .btn-gold, .btn-green, .btn-red { color: #fff; }
+
+/* bg-hero sections (dark gradient bg) */
+.bg-hero .text-white { color: #fff !important; }
+.bg-hero .text-slate-300, .bg-hero .text-slate-400 { color: rgba(255,255,255,.75) !important; }
+
+/* Slabel */
+.slabel { color: var(--sky2); }
+
+/* Stars */
+.stars { color: var(--gold); }
+
+/* Input labels */
+label.lbl { color: var(--text2); }
+
+/* Note items */
+.note-item .th2 { color: var(--text2); }
+
+/* Admin panel sidebar */
+#admin-panel { background: var(--bg2); }
+.admin-link { color: var(--text2); }
+.admin-link:hover, .admin-link.active { color: var(--sky); background: rgba(var(--sky-rgb),.08); }
+
+/* bg-s and bg-a sections */
+.bg-s { background: var(--bg); }
+.bg-a { background: var(--bg2); }
+
+/* Glass morphism on light */
+.glass { 
+  background: rgba(255,255,255,.7) !important;
+  border-color: var(--border2) !important;
+  backdrop-filter: blur(12px);
+}
+.glass-strong {
+  background: rgba(255,255,255,.9) !important;
+  border-color: var(--border2) !important;
+}
+
+/* Cards on light */
+.card {
+  background: var(--card-bg) !important;
+  border-color: var(--border2) !important;
+}
+
+/* Inp on light */
+.inp {
+  background: var(--inp-bg) !important;
+  border-color: var(--inp-border) !important;
+  color: var(--text) !important;
+}
+.inp::placeholder { color: var(--text3) !important; }
+
+/* FAQ items */
+.faq-q { color: var(--text); }
+.faq-item { background: var(--card-bg); border-color: var(--border2); }
+
+/* Divider */
+.divider { background: var(--border); }
+
+/* Table */
+.admin-table th { background: var(--bg3); color: var(--text); }
+.admin-table td { color: var(--text2); border-color: var(--border); }
+
+
 
 /* ═══ RESET & BASE ═══ */
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -235,26 +389,48 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .page{display:none;min-height:100vh;}.page.active{display:block;}
 
 /* ═══ NAVBAR ═══ */
-#navbar{position:fixed;top:0;left:0;right:0;z-index:999;background:transparent;backdrop-filter:blur(0);border-bottom:1px solid transparent;transition:top .35s cubic-bezier(.4,0,.2,1),background .4s,backdrop-filter .4s,border-color .4s,transform .35s cubic-bezier(.4,0,.2,1),box-shadow .4s;}
-#navbar.scrolled{background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-bottom:1px solid var(--border);box-shadow:0 4px 32px rgba(0,0,0,.2);}
+#navbar{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(245,243,255,.6);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:top .35s cubic-bezier(.4,0,.2,1),background .4s,backdrop-filter .4s,border-color .4s,transform .35s cubic-bezier(.4,0,.2,1),box-shadow .4s;}
+#navbar.scrolled{background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-bottom:1px solid var(--border);box-shadow:0 4px 20px rgba(99,102,241,.12);}
 #navbar.hidden-nav{transform:translateY(-100%);}
 .nav-link{color:var(--text2);font-weight:600;font-size:.9rem;padding:.3rem 0;position:relative;transition:color .25s;cursor:pointer;}
 .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--sky),var(--gold));border-radius:2px;transition:width .3s;}
 .nav-link:hover,.nav-link.active{color:var(--text);}
-[data-theme="light"] #navbar:not(.scrolled) .nav-link{color:rgba(255,255,255,.9);}
-[data-theme="light"] #navbar:not(.scrolled) #theme-toggle{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.15);}
+
+
 .nav-link:hover::after,.nav-link.active::after{width:100%;}
 
 /* ═══ BG SECTIONS ═══ */
-.bg-hero{background:radial-gradient(ellipse 90% 60% at 50% -5%,rgba(var(--sky-rgb),.18),transparent 70%),radial-gradient(ellipse 50% 40% at 95% 85%,rgba(245,158,11,.08),transparent 60%),var(--bg);}
-.bg-s{background:var(--bg2);}
+.bg-hero{background:linear-gradient(135deg,rgba(var(--sky-rgb),.12) 0%,rgba(139,92,246,.08) 50%,var(--bg2) 100%);}
+.bg-s{background:var(--bg);}
 .bg-a{background:var(--bg3);}
 
 /* ═══ GLASS ═══ */
-.glass{background:var(--card-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border2);border-top-color:var(--border2);position:relative;}
-.glass::after{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent);border-radius:inherit;pointer-events:none;z-index:0;}
-[data-theme="light"] .glass::after{background:linear-gradient(180deg,rgba(255,255,255,.5),transparent);}
-.glass-strong{background:var(--nav-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid var(--border);}
+/* ── GLASSMORPHISM SYSTEM ── */
+.glass{
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(18px) saturate(160%);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid var(--border2);
+  border-top:1px solid var(--border2);
+  position:relative;
+  transition:var(--transition);
+}
+.glass::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.01) 100%);
+}
+.glass::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  border-radius:inherit;pointer-events:none;z-index:1;
+}
+.glass:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.18);
+  border-top-color:rgba(255,255,255,.28);
+  box-shadow:0 8px 32px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.15);
+}
+.glass-strong{background:rgba(255,255,255,.92);border:1px solid var(--border2);backdrop-filter:blur(24px);}
 
 /* ═══ BUTTONS ═══ */
 .btn{font-family:'Outfit',sans-serif;font-weight:700;border-radius:12px;transition:var(--transition);cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;border:none;outline:none;}
@@ -264,19 +440,65 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(245,158,11,.45);}
 .btn-ghost{border:1.5px solid rgba(var(--sky-rgb),.4);color:var(--sky2);background:transparent;}
 .btn-ghost:hover{background:rgba(var(--sky-rgb),.1);transform:translateY(-1px);}
-[data-theme="light"] .btn-ghost{border-color:rgba(var(--sky-rgb),.4);color:var(--sky);}
+
 .btn-red{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;}
 .btn-green{background:linear-gradient(135deg,#10b981,#059669);color:#fff;}
 
 /* ═══ CARDS ═══ */
-.card{background:var(--card-bg);border:1px solid var(--border);border-top-color:var(--border2);border-radius:20px;transition:var(--transition);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);position:relative;overflow:hidden;box-shadow:var(--shadow-card);}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);pointer-events:none;z-index:1;}
-[data-theme="light"] .card::before{background:linear-gradient(90deg,transparent,rgba(99,102,241,.2),transparent);}
-.card:hover{transform:translateY(-6px);border-color:rgba(var(--sky-rgb),.35);border-top-color:rgba(var(--sky-rgb),.5);box-shadow:0 24px 64px rgba(var(--sky-rgb),.15),0 0 0 1px rgba(var(--sky-rgb),.08);}
-.card-flat{background:var(--card-bg);border:1px solid var(--border);border-top-color:var(--border2);border-radius:16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:relative;box-shadow:var(--shadow-card);}
-.card-flat::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);pointer-events:none;}
-[data-theme="light"] .card-flat::before{background:linear-gradient(90deg,transparent,rgba(99,102,241,.15),transparent);}
-.card-flat:hover{border-color:rgba(var(--sky-rgb),.25);}
+.card{
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border:1px solid rgba(255,255,255,.1);
+  border-top:1px solid rgba(255,255,255,.2);
+  border-radius:20px;
+  transition:var(--transition);
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);
+}
+.card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 60%);
+}
+.card::after{
+  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+  pointer-events:none;z-index:1;
+}
+.card:hover{
+  transform:translateY(-6px);
+  background:rgba(255,255,255,.09);
+  border-color:rgba(var(--sky-rgb),.3);
+  border-top-color:rgba(var(--sky-rgb),.5);
+  box-shadow:0 24px 64px rgba(0,0,0,.35),0 0 0 1px rgba(var(--sky-rgb),.12),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.card-flat{
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(16px) saturate(150%);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);
+  border:1px solid rgba(255,255,255,.09);
+  border-top:1px solid rgba(255,255,255,.17);
+  border-radius:16px;
+  position:relative;
+  transition:var(--transition);
+  box-shadow:0 4px 20px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1);
+}
+.card-flat::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.05) 0%,transparent 70%);
+}
+.card-flat::after{
+  content:'';position:absolute;top:0;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+  pointer-events:none;
+}
+.card-flat:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(var(--sky-rgb),.2);
+  border-top-color:rgba(var(--sky-rgb),.35);
+  box-shadow:0 8px 32px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.15);
+}
 
 /* ═══ GRADIENTS TEXT ═══ */
 .gt-sky{background:linear-gradient(135deg,var(--sky),var(--sky2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
@@ -286,7 +508,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 /* ═══ TYPOGRAPHY & UI ═══ */
 .slabel{display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);}
 .slabel::before,.slabel::after{content:'';display:inline-block;width:20px;height:1.5px;background:var(--sky);border-radius:2px;}
-.statnum{font-weight:900;font-size:2.8rem;background:linear-gradient(135deg,var(--sky),var(--sky2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.statnum{font-size:2.2rem;font-weight:900;color:var(--sky);line-height:1;font-family:'Outfit',sans-serif;}
 .inp{background:var(--inp-bg);border:1px solid var(--inp-border);color:var(--text);border-radius:10px;padding:.65rem 1rem;width:100%;outline:none;transition:border-color .3s,background .3s;font-family:'Outfit',sans-serif;font-size:.9rem;}
 .inp:focus{border-color:var(--sky);background:rgba(var(--sky-rgb),.06);}
 .inp::placeholder{color:var(--text3);}
@@ -304,24 +526,20 @@ label.lbl{display:block;color:var(--text2);font-size:.83rem;font-weight:600;marg
 @keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(var(--sky-rgb),.3)}50%{box-shadow:0 0 50px rgba(var(--sky-rgb),.6)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-@keyframes themeSwitch{0%{transform:scale(.8) rotate(-30deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+}
 .afu{animation:fadeUp .7s ease forwards;}
 .afl{animation:float 4s ease-in-out infinite;}
 .apg{animation:pulseGlow 2.5s ease-in-out infinite;}
 .spin-el{width:36px;height:36px;border:3px solid rgba(var(--sky-rgb),.2);border-top-color:var(--sky);border-radius:50%;animation:spin .8s linear infinite;}
 .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
 
-/* ═══ THEME TOGGLE BUTTON ═══ */
-#theme-toggle{position:relative;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border2);background:var(--card-bg);backdrop-filter:blur(12px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);overflow:hidden;flex-shrink:0;}
-#theme-toggle:hover{border-color:rgba(var(--sky-rgb),.5);box-shadow:0 0 16px rgba(var(--sky-rgb),.2);transform:scale(1.08);}
-#theme-toggle .t-icon{font-size:1.1rem;animation:themeSwitch .35s ease;pointer-events:none;}
-[data-theme="light"] #theme-toggle{border-color:rgba(var(--sky-rgb),.3);}
+
 
 /* ═══ MODAL ═══ */
 .modal-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);z-index:2000;align-items:center;justify-content:center;padding:1rem;}
 .modal-wrap.open{display:flex;}
 .modal-box{background:var(--modal-bg);border:1px solid var(--border2);border-top-color:var(--border2);border-radius:24px;padding:2rem;width:100%;position:relative;max-height:92vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);}
-[data-theme="light"] .modal-box{box-shadow:0 32px 80px rgba(99,102,241,.15);}
+
 
 /* ═══ TOAST ═══ */
 #toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;padding:.9rem 1.4rem;border-radius:14px;font-weight:600;font-size:.88rem;transform:translateY(80px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1);pointer-events:none;max-width:340px;}
@@ -344,14 +562,14 @@ label.lbl{display:block;color:var(--text2);font-size:.83rem;font-weight:600;marg
 .course-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
 .card:hover .course-img img{transform:scale(1.06);}
 .course-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(var(--sky-rgb),.12) 100%);}
-[data-theme="light"] .course-overlay{background:linear-gradient(to bottom,transparent 40%,rgba(var(--sky-rgb),.06) 100%);}
+
 #mob-menu{display:none;background:var(--nav-bg);backdrop-filter:blur(24px);border-top:1px solid var(--border);}
 #mob-menu.open{display:block;}
 ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:rgba(var(--sky-rgb),.3);border-radius:3px;}
 .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(var(--sky-rgb),.25),transparent);}
 .lc2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .lc3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-.testi-card{background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:1.5rem;box-shadow:var(--shadow-card);transition:var(--transition);}
+.testi-card{background:#fff;border:1px solid var(--border2);border-radius:20px;padding:1.5rem;box-shadow:var(--shadow-card);transition:var(--transition);}.testi-card:hover{transform:translateY(-4px);border-color:rgba(var(--sky-rgb),.35);box-shadow:0 12px 36px rgba(var(--sky-rgb),.12);}
 .testi-card:hover{border-color:rgba(var(--sky-rgb),.3);box-shadow:0 16px 48px rgba(var(--sky-rgb),.1);}
 .curr-item{display:flex;align-items:center;gap:.75rem;padding:.55rem .9rem;border-radius:10px;background:rgba(var(--sky-rgb),.06);border:1px solid rgba(var(--sky-rgb),.12);margin-bottom:.45rem;}
 .comment-card{background:rgba(var(--sky-rgb),.04);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;margin-bottom:.75rem;}
@@ -399,7 +617,14 @@ label.lbl{display:block;color:var(--text2);font-size:.83rem;font-weight:600;marg
 .slide.active-slide .afu:nth-child(2){animation-delay:.15s;}
 .slide.active-slide .afu:nth-child(3){animation-delay:.3s;}
 /* Stats card glass */
-.hero-stats-card{background:rgba(9,9,15,.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);border-top:1px solid rgba(255,255,255,.2);}
+.hero-stats-card{
+  background:rgba(9,9,15,.5);
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  border:1px solid rgba(255,255,255,.1);
+  border-top:1px solid rgba(255,255,255,.22);
+  box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12);
+}
 /* Offers */
 .offer-strip{background:linear-gradient(135deg,#7c2d12,#9a1c1c,#7c2d12);border-bottom:1px solid rgba(239,68,68,.3);padding:.75rem 1rem;text-align:center;position:relative;}
 .offer-strip.green-offer{background:linear-gradient(135deg,#064e3b,#065f46,#064e3b);border-bottom-color:rgba(16,185,129,.3);}
@@ -437,136 +662,136 @@ label.lbl{display:block;color:var(--text2);font-size:.83rem;font-weight:600;marg
 /* ══════════════════════════════════════
    LIGHT MODE — COMPREHENSIVE OVERRIDES
    ══════════════════════════════════════ */
-[data-theme="light"]{color-scheme:light;}
-[data-theme="light"] body{color:var(--text);background:var(--bg);}
+
+
 
 /* ── Text ── */
-[data-theme="light"] .text-white{color:var(--text)!important;}
-[data-theme="light"] h1,.light-text,[data-theme="light"] h2,[data-theme="light"] h3,[data-theme="light"] h4{color:var(--text);}
-[data-theme="light"] .text-slate-100,[data-theme="light"] .text-slate-200{color:var(--text)!important;}
-[data-theme="light"] .text-slate-300{color:var(--text2)!important;}
-[data-theme="light"] .text-slate-400,[data-theme="light"] .text-slate-500,[data-theme="light"] .text-slate-600{color:var(--text3)!important;}
-[data-theme="light"] .text-sky-400,[data-theme="light"] .text-sky-300,[data-theme="light"] .text-sky-500{color:var(--sky)!important;}
-[data-theme="light"] .text-amber-400,[data-theme="light"] .text-amber-300{color:var(--gold)!important;}
-[data-theme="light"] .text-violet-400{color:var(--accent)!important;}
-[data-theme="light"] .text-emerald-400,[data-theme="light"] .text-emerald-500{color:#059669!important;}
-[data-theme="light"] .text-red-400{color:#dc2626!important;}
-[data-theme="light"] .text-pink-400{color:#db2777!important;}
-[data-theme="light"] .th{color:var(--text)!important;}
-[data-theme="light"] .th2{color:var(--text2)!important;}
-[data-theme="light"] .th3{color:var(--text3)!important;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ── Backgrounds ── */
-[data-theme="light"] .bg-white\/5{background:rgba(99,102,241,.05)!important;}
-[data-theme="light"] .bg-white\/10{background:rgba(99,102,241,.08)!important;}
-[data-theme="light"] .hover\:bg-white\/5:hover{background:rgba(99,102,241,.06)!important;}
-[data-theme="light"] .border-white\/5,[data-theme="light"] .border-white\/10{border-color:var(--border)!important;}
-[data-theme="light"] .bg-s{background:var(--bg2);}
-[data-theme="light"] .bg-a{background:var(--bg3);}
-[data-theme="light"] .bg-hero{background:radial-gradient(ellipse 90% 60% at 50% -5%,rgba(79,70,229,.1),transparent 70%),radial-gradient(ellipse 50% 40% at 95% 85%,rgba(245,158,11,.06),transparent 60%),var(--bg);}
+
+
+
+
+
+
+
 
 /* ── Keep hero slider always dark (bg images) ── */
-[data-theme="light"] #hero-slider .text-white,
-[data-theme="light"] #hero-slider h1,
-[data-theme="light"] #hero-slider h2{color:#fff!important;}
-[data-theme="light"] #hero-slider p{color:rgba(255,255,255,.85)!important;}
-[data-theme="light"] #hero-slider .text-slate-300{color:rgba(255,255,255,.8)!important;}
-[data-theme="light"] #hero-slider .th2{color:rgba(255,255,255,.8)!important;}
+
+
+
+
 
 /* ── Navbar ── */
-[data-theme="light"] #navbar:not(.scrolled) .nav-link{color:rgba(255,255,255,.92);}
-[data-theme="light"] #navbar:not(.scrolled) .nav-link:hover,[data-theme="light"] #navbar:not(.scrolled) .nav-link.active{color:#fff;}
-[data-theme="light"] #navbar:not(.scrolled) #theme-toggle{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.15);}
-[data-theme="light"] #navbar.scrolled{background:rgba(248,248,255,.96);}
-[data-theme="light"] #navbar.scrolled .nav-link{color:var(--text2);}
-[data-theme="light"] #navbar.scrolled .nav-link:hover,[data-theme="light"] #navbar.scrolled .nav-link.active{color:var(--text);}
-[data-theme="light"] #navbar.scrolled #nav-uname{color:var(--text);}
-[data-theme="light"] #navbar.scrolled #nav-login-btn{border-color:rgba(var(--sky-rgb),.4);color:var(--sky);}
-[data-theme="light"] #navbar.scrolled .font-black.text-white{color:var(--text);}
-[data-theme="light"] #navbar.scrolled .text-sky-400{color:var(--sky)!important;}
+
+
+
+
+
+
+
+
+
+
 
 /* ── Mobile menu ── */
-[data-theme="light"] #mob-menu{background:rgba(248,248,255,.98);border-top:1px solid var(--border);}
-[data-theme="light"] #mob-menu .nav-link{color:var(--text2);}
-[data-theme="light"] #mob-menu .nav-link:hover{color:var(--text);}
-[data-theme="light"] #mob-menu .text-white{color:var(--text)!important;}
-[data-theme="light"] #mob-menu .text-slate-300{color:var(--text2)!important;}
-[data-theme="light"] #mob-menu .text-slate-400,[data-theme="light"] #mob-menu .text-slate-500{color:var(--text3)!important;}
+
+
+
+
+
+
 
 /* ── Cards ── */
-[data-theme="light"] .card{background:#fff;border:1px solid rgba(99,102,241,.1);box-shadow:0 2px 16px rgba(99,102,241,.07),0 1px 4px rgba(99,102,241,.05);}
-[data-theme="light"] .card:hover{background:#fff;border-color:rgba(99,102,241,.3);box-shadow:0 12px 40px rgba(99,102,241,.15);}
-[data-theme="light"] .card .text-white{color:var(--text)!important;}
-[data-theme="light"] .card .text-slate-400{color:var(--text2)!important;}
-[data-theme="light"] .card .text-slate-500{color:var(--text3)!important;}
-[data-theme="light"] .card-flat{background:#fff;border:1px solid rgba(99,102,241,.1);box-shadow:0 2px 12px rgba(99,102,241,.06);}
-[data-theme="light"] .card-flat .text-slate-400{color:var(--text2)!important;}
-[data-theme="light"] .testi-card{background:#fff;border:1px solid rgba(99,102,241,.1);box-shadow:0 2px 16px rgba(99,102,241,.07);}
-[data-theme="light"] .testi-card .text-white{color:var(--text)!important;}
-[data-theme="light"] .testi-card .text-slate-500{color:var(--text3)!important;}
+
+
+
+
+
+
+
+
+
+
+
 
 /* ── Glass ── */
-[data-theme="light"] .glass{background:rgba(255,255,255,.9);border:1px solid rgba(99,102,241,.12);box-shadow:0 2px 20px rgba(99,102,241,.08);}
-[data-theme="light"] .glass .text-white{color:var(--text)!important;}
-[data-theme="light"] .glass .text-slate-400,[data-theme="light"] .glass .th2{color:var(--text2)!important;}
-[data-theme="light"] .glass .text-slate-500{color:var(--text3)!important;}
-[data-theme="light"] .glass-strong{background:rgba(255,255,255,.97);border:1px solid rgba(99,102,241,.12);}
+
+
+
+
+
+
 
 /* ── Inputs & Forms ── */
-[data-theme="light"] .inp{background:#fff;border-color:rgba(99,102,241,.2);color:var(--text);}
-[data-theme="light"] .inp:focus{background:#fff;border-color:var(--sky);box-shadow:0 0 0 3px rgba(79,70,229,.1);}
-[data-theme="light"] .inp::placeholder{color:var(--text3);}
-[data-theme="light"] select.inp option{background:#fff;color:var(--text);}
-[data-theme="light"] label.lbl{color:var(--text2);}
+
+
+
+
+
 
 /* ── Modals ── */
-[data-theme="light"] .modal-wrap{background:rgba(30,30,60,.6);}
-[data-theme="light"] .modal-box{background:#fff!important;border:1px solid rgba(99,102,241,.15)!important;box-shadow:0 32px 80px rgba(79,70,229,.15)!important;}
-[data-theme="light"] .modal-box .text-white{color:var(--text)!important;}
-[data-theme="light"] .modal-box .text-slate-400,[data-theme="light"] .modal-box .th2{color:var(--text2)!important;}
-[data-theme="light"] .modal-box .text-slate-500{color:var(--text3)!important;}
+
+
+
+
+
 
 /* ── FAQ ── */
-[data-theme="light"] .faq-item{border-color:rgba(99,102,241,.12);background:#fff;}
-[data-theme="light"] .faq-q{background:rgba(99,102,241,.03);color:var(--text);}
-[data-theme="light"] .faq-q:hover{background:rgba(99,102,241,.07);}
-[data-theme="light"] .faq-a{color:var(--text2);}
+
+
+
+
 
 /* ── Footer ── */
-[data-theme="light"] footer{background:var(--surf);}
-[data-theme="light"] footer .text-white{color:var(--text)!important;}
-[data-theme="light"] footer .text-slate-400,[data-theme="light"] footer .text-slate-500{color:var(--text3)!important;}
+
+
+
 
 /* ── Misc ── */
-[data-theme="light"] .divider{background:linear-gradient(90deg,transparent,rgba(99,102,241,.2),transparent);}
-[data-theme="light"] ::-webkit-scrollbar-track{background:var(--bg);}
-[data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(99,102,241,.25);}
-[data-theme="light"] .filter-btn{color:var(--text2);border-color:rgba(99,102,241,.15);}
-[data-theme="light"] .filter-btn.active,[data-theme="light"] .filter-btn:hover{background:rgba(99,102,241,.1);color:var(--sky);}
-[data-theme="light"] .community-card{background:linear-gradient(135deg,rgba(79,70,229,.06),rgba(245,158,11,.04));border-color:rgba(99,102,241,.2);}
-[data-theme="light"] .community-card .text-white{color:var(--text)!important;}
-[data-theme="light"] .community-card .text-slate-400{color:var(--text2)!important;}
-[data-theme="light"] .upload-zone{border-color:rgba(99,102,241,.25);background:rgba(99,102,241,.02);}
-[data-theme="light"] .upload-zone:hover{background:rgba(99,102,241,.06);}
-[data-theme="light"] #toast.inf{background:linear-gradient(135deg,var(--sky),var(--accent));}
-[data-theme="light"] .statnum{background:linear-gradient(135deg,var(--sky),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-[data-theme="light"] .profile-ring{border-color:rgba(99,102,241,.5);}
-[data-theme="light"] .admin-link:hover,[data-theme="light"] .admin-link.act{background:rgba(99,102,241,.1);color:var(--sky);}
-[data-theme="light"] .admin-table th{background:rgba(99,102,241,.08);color:var(--sky);}
-[data-theme="light"] .admin-table td{border-bottom-color:var(--border);color:var(--text2);}
-[data-theme="light"] aside.glass-strong{background:rgba(248,248,255,.98);border-right:1px solid rgba(99,102,241,.12);}
-[data-theme="light"] #admin-panel .text-white{color:var(--text)!important;}
-[data-theme="light"] #admin-panel .text-slate-300,[data-theme="light"] #admin-panel .text-slate-400{color:var(--text2)!important;}
-[data-theme="light"] #admin-panel .text-slate-500,[data-theme="light"] #admin-panel .text-slate-600{color:var(--text3)!important;}
-[data-theme="light"] .blog-code-block{background:#f4f4ff;color:#1a1a3e;}
-[data-theme="light"] .code-header{background:rgba(99,102,241,.08);}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ── Apps section stays dark ── */
-[data-theme="light"] section[style*="background:linear-gradient(135deg,#070c18"]{background:linear-gradient(135deg,#1a1a40 0%,#1e1e4a 50%,#1a1a40 100%)!important;}
-[data-theme="light"] section[style*="background:linear-gradient(135deg,#070c18"] .text-white{color:#fff!important;}
-[data-theme="light"] section[style*="background:linear-gradient(135deg,#070c18"] .text-slate-400{color:rgba(255,255,255,.6)!important;}
-[data-theme="light"] section[style*="background:linear-gradient(135deg,#070c18"] .text-slate-500{color:rgba(255,255,255,.4)!important;}
-[data-theme="light"] section[style*="background:linear-gradient(135deg,#070c18"] .text-slate-600{color:rgba(255,255,255,.35)!important;}
+
+
+
+
+
 
 /* Smooth transitions */
 body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-box,.inp,.faq-item,.faq-q,.testi-card,.admin-link,.filter-btn,.divider,.badge,label.lbl,.nav-link,#navbar,#mob-menu,.modal-wrap,h1,h2,h3,h4,p,span,div{transition:background-color .3s ease,border-color .3s ease,color .25s ease,box-shadow .3s ease;}
@@ -584,60 +809,13 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
 .th3{color:var(--text3);}
 
 /* ══ LIGHT MODE EXTRA POLISH ══ */
-[data-theme="light"] body{
-  background-image:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(79,70,229,.05),transparent);
-}
-[data-theme="light"] .card::before{
-  background:linear-gradient(90deg,transparent,rgba(99,102,241,.15),transparent);
-}
-[data-theme="light"] .btn-ghost{
-  border-color:rgba(79,70,229,.35);
-  color:var(--sky);
-}
-[data-theme="light"] .btn-ghost:hover{
-  background:rgba(79,70,229,.08);
-}
-[data-theme="light"] #scroll-prog{
-  background:linear-gradient(90deg,var(--sky),var(--gold));
-}
-[data-theme="light"] .orb{opacity:.4;}
 
-/* ══ THEME TOGGLE ENHANCED ══ */
-#theme-toggle{
-  width:44px;height:44px;
-  background:var(--card-bg);
-  border:1.5px solid var(--border2);
-  border-radius:50%;
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .3s;
-  position:relative;overflow:hidden;
-  flex-shrink:0;
-}
-#theme-toggle::before{
-  content:'';position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.12),transparent 70%);
-  pointer-events:none;
-}
-#theme-toggle:hover{
-  border-color:rgba(var(--sky-rgb),.6);
-  box-shadow:0 0 20px rgba(var(--sky-rgb),.25);
-  transform:scale(1.1) rotate(15deg);
-}
-#theme-toggle .t-icon{font-size:1.15rem;display:block;line-height:1;}
-[data-theme="light"] #theme-toggle{
-  background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(240,240,255,.8));
-  border-color:rgba(79,70,229,.25);
-  box-shadow:0 2px 12px rgba(79,70,229,.1);
-}
-[data-theme="light"] #theme-toggle:hover{
-  box-shadow:0 0 20px rgba(79,70,229,.2),0 4px 12px rgba(79,70,229,.15);
-}
-@keyframes themeSwitch{
-  0%{transform:scale(.6) rotate(-45deg);opacity:0;}
-  60%{transform:scale(1.15) rotate(8deg);}
-  100%{transform:scale(1) rotate(0);opacity:1;}
-}
+
+
+
+
+
+
 
 
 /* ══ MINIMALIST UI POLISH ══ */
@@ -811,7 +989,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
   text-decoration:none;
 }
 .nav-drop-item:hover{background:rgba(var(--sky-rgb),.1);color:var(--text);}
-[data-theme="light"] .nav-drop-item:hover{background:rgba(var(--sky-rgb),.08);}
+
 #nav-more-wrap,#nav-portal-wrap{position:relative;}
 /* Close dropdown when clicking outside */
 
@@ -819,26 +997,319 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
 /* Summer Batch — always dark regardless of theme */
 #summer-batch{color-scheme:dark;}
 #summer-batch *{color:inherit;}
-#summer-batch .text-white,[data-theme="light"] #summer-batch .text-white{color:#fff!important;}
-[data-theme="light"] #summer-batch .text-slate-300{color:rgba(255,255,255,.75)!important;}
-[data-theme="light"] #summer-batch .text-slate-400{color:rgba(255,255,255,.55)!important;}
-[data-theme="light"] #summer-batch{background:none;}
-[data-theme="light"] #summer-batch .absolute.inset-0{background:linear-gradient(150deg,#07031a 0%,#0d0628 45%,#071a0d 100%)!important;}
+#summer-batch .text-white,
+
+
+
+
 
 
 /* VIT Apps section — always dark */
 #vit-apps-section{color-scheme:dark;}
-[data-theme="light"] #vit-apps-section .text-white{color:#fff!important;}
-[data-theme="light"] #vit-apps-section .text-slate-300{color:rgba(255,255,255,.8)!important;}
-[data-theme="light"] #vit-apps-section .text-slate-400{color:rgba(255,255,255,.6)!important;}
-[data-theme="light"] #vit-apps-section .text-slate-500{color:rgba(255,255,255,.4)!important;}
-[data-theme="light"] #vit-apps-section .text-slate-600{color:rgba(255,255,255,.35)!important;}
-[data-theme="light"] #vit-apps-section .th{color:#fff!important;}
-[data-theme="light"] #vit-apps-section .th2{color:rgba(255,255,255,.75)!important;}
-[data-theme="light"] #vit-apps-section .th3{color:rgba(255,255,255,.5)!important;}
-[data-theme="light"] #vit-apps-section .glass{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.15)!important;}
-[data-theme="light"] #vit-apps-section .slabel{color:rgba(255,255,255,.7);}
-[data-theme="light"] #vit-apps-section .slabel::before,[data-theme="light"] #vit-apps-section .slabel::after{background:rgba(255,255,255,.5);}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── GLASSMORPHISM GLOBAL REFINEMENTS ── */
+
+/* Inner content above pseudo-elements */
+.glass > *,.card > *,.card-flat > *{position:relative;z-index:1;}
+
+/* Shimmer on hover — cards */
+@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+.card:hover::before{
+  background:linear-gradient(105deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.08) 50%,rgba(255,255,255,0) 60%);
+  animation:shimmer .6s ease forwards;
+}
+
+/* Note items in modals */
+.note-item{
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.08);
+  border-top:1px solid rgba(255,255,255,.14);
+  border-radius:12px;
+  padding:.6rem .85rem;
+  transition:var(--transition);
+}
+.note-item:hover{background:rgba(255,255,255,.07);}
+
+/* FAQ items */
+.faq-item{
+  background:rgba(255,255,255,.055) !important;
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border:1px solid rgba(255,255,255,.1) !important;
+  border-top:1px solid rgba(255,255,255,.18) !important;
+  box-shadow:0 4px 20px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1);
+  transition:var(--transition);
+}
+.faq-item:hover{
+  background:rgba(255,255,255,.08) !important;
+  border-color:rgba(var(--sky-rgb),.2) !important;
+}
+
+
+/* Modal box glass */
+.modal-box{
+  background:rgba(14,14,26,.85);
+  backdrop-filter:blur(32px) saturate(160%);
+  -webkit-backdrop-filter:blur(32px) saturate(160%);
+  border:1px solid rgba(255,255,255,.1);
+  border-top:1px solid rgba(255,255,255,.2);
+  box-shadow:0 32px 80px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+
+/* Admin links */
+.admin-link{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  border-top:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(12px);
+  transition:var(--transition);
+}
+.admin-link:hover,.admin-link.active{
+  background:rgba(var(--sky-rgb),.15);
+  border-color:rgba(var(--sky-rgb),.25);
+  border-top-color:rgba(var(--sky-rgb),.35);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+/* Badges */
+.badge{
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(var(--sky-rgb),.25);
+  background:rgba(var(--sky-rgb),.12);
+}
+
+/* Nav dropdown glass */
+.nav-dropdown{
+  background:rgba(9,9,15,.88) !important;
+  backdrop-filter:blur(32px) saturate(180%) !important;
+  -webkit-backdrop-filter:blur(32px) saturate(180%) !important;
+  border:1px solid rgba(255,255,255,.1) !important;
+  border-top:1px solid rgba(255,255,255,.18) !important;
+  box-shadow:0 20px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1) !important;
+}
+
+
+
+/* ══════════════════════════════════════════════════
+   ROYAL BLUE THEME — Light Grey + Royal Blue + Gold
+══════════════════════════════════════════════════ */
+
+
+/* Background sections */
+
+
+
+
+
+/* Navbar */
+
+
+
+
+
+
+/* Cards */
+
+
+
+
+
+
+
+/* Text colors */
+
+
+
+
+
+
+
+
+/* Buttons */
+
+
+
+
+
+
+/* Gradient texts */
+
+
+
+
+/* Accent colors */
+
+
+
+
+
+/* Slabel */
+
+
+
+/* Stat numbers */
+
+
+/* Input fields */
+
+
+
+
+/* Badges */
+
+
+/* Filter buttons */
+
+
+
+/* Modal */
+
+
+
+/* Nav dropdown */
+
+
+
+
+/* Divider */
+
+
+/* Admin */
+
+
+
+
+/* Summer batch & VIT apps — keep dark */
+
+
+
+
+/* Hero stats cards in royal theme */
+
+
+
+
+/* FAQ in royal */
+
+
+
+
+/* Testimonial cards */
+
+
+
+/* Royal theme — global text */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ═══ FINAL TEXT OVERRIDES FOR LIGHT MODE ═══ */
+/* Any text-white in page sections → dark */
+#page-home .text-white, #page-courses .text-white, #page-about .text-white,
+#page-blog .text-white, #page-contact .text-white, #page-gallery .text-white,
+#page-results .text-white, #page-certificate .text-white, #page-admission .text-white {
+  color: var(--text) !important;
+}
+/* Exception: buttons, badges, hero slider, dark sections */
+#page-home .btn .text-white, .btn, 
+#hero-slider, #hero-slider *,
+#summer-batch, #summer-batch *,
+#vit-apps-section, #vit-apps-section *,
+.badge, .status-pill,
+[style*="background:linear-gradient(135deg,#f97316"],
+[style*="background:linear-gradient(135deg,var(--sky)"],
+[style*="background:linear-gradient(135deg,#0ea5e9"],
+[style*="background:linear-gradient(135deg,#f59e0b"] {
+  color: revert;
+}
+/* Restore btn text */
+.btn { color: inherit; }
+.btn-sky, .btn-gold, .btn-green, .btn-red, .btn-ghost { color: #fff; }
+.btn-ghost { color: var(--text2); }
+
+
+/* ═══ LINE CLAMP ═══ */
+.lc1{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;}
+.lc2{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;}
+.lc3{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;}
+
+/* ═══ PAGE TRANSITION ═══ */
+.page{animation:pgFade .28s ease both;}
+@keyframes pgFade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══ HERO ANIMATION ═══ */
+.afu{animation:heroUp .65s cubic-bezier(.25,.46,.45,.94) both;}
+@keyframes heroUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══ CUSTOM SCROLLBAR ═══ */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:rgba(var(--sky-rgb),.3);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:rgba(var(--sky-rgb),.5);}
+
+/* ═══ IMPROVED TOAST ═══ */
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .25s;opacity:0;pointer-events:none;}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast-inner{padding:.6rem 1.3rem;border-radius:12px;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;box-shadow:0 8px 32px rgba(0,0,0,.18);white-space:nowrap;}
+.toast-ok{background:rgba(5,150,105,.95);color:#fff;}
+.toast-err{background:rgba(220,38,38,.95);color:#fff;}
+.toast-inf{background:rgba(79,70,229,.95);color:#fff;}
+
+/* ═══ BETTER FOCUS ═══ */
+.btn:focus-visible,.inp:focus-visible{outline:2px solid rgba(var(--sky-rgb),.5);outline-offset:2px;}
+
+/* ═══ CARD HOVER EFFECT ═══ */
+.card{position:relative;overflow:hidden;}
+.card-flat{transition:all .22s;}
+.card-flat:hover{transform:translateY(-3px);}
+
+/* ═══ BLOG IMPROVEMENTS ═══ */
+#blog-grid .card:hover::after{content:"Read More →";position:absolute;bottom:.75rem;right:1rem;font-size:.72rem;font-weight:700;color:var(--sky);}
+
+/* ═══ BETTER INPUT ═══ */
+.inp:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(var(--sky-rgb),.1);background:#fff;}
+textarea.inp{min-height:100px;resize:vertical;}
+
+/* ═══ CONTACT PAGE ═══ */
+.contact-quick-card{transition:all .2s;}
+.contact-quick-card:hover{transform:translateY(-4px);}
+
+/* ═══ ABOUT PAGE ═══ */
+.about-feat-card{transition:all .2s;}
+.about-feat-card:hover{transform:translateY(-4px);}
+
+/* ═══ MOBILE ═══ */
+@media(max-width:640px){
+  .card{border-radius:16px;}
+  .btn{font-size:.84rem;}
+  h1{line-height:1.2;}
+}
 
 </style>
 </head>
@@ -912,7 +1383,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
         </span>
       </div>
       <div class="hidden md:flex items-center gap-3">
-        <button id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light mode" aria-label="Toggle theme"><span class="t-icon">🌙</span></button>
+        
         <button id="nav-login-btn" onclick="openModal('auth-modal')" class="btn btn-ghost px-4 py-2 text-sm">Login</button>
         <div id="nav-user-wrap" class="hidden items-center gap-2">
           <div id="nav-avatar-wrap" onclick="openModal('profile-modal')" class="cursor-pointer relative" title="View Profile">
@@ -923,7 +1394,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
           <button onclick="logoutUser()" class="text-slate-500 hover:text-red-400 text-xs ml-1 transition-colors" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
         </div>
       </div>
-      <button onclick="document.getElementById('mob-menu').classList.toggle('open')" class="md:hidden text-slate-300 p-2"><i class="fas fa-bars text-lg"></i></button>
+      <button onclick="document.getElementById('mob-menu').classList.toggle('open')" class="md:hidden p-2" style="color:var(--text2)"><i class="fas fa-bars text-lg"></i></button>
     </div>
   </div>
   <div id="mob-menu">
@@ -958,7 +1429,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
       </div>
 
       <div class="border-t border-white/10 pt-3 mt-2 space-y-2">
-        <button onclick="toggleTheme()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold" style="background:var(--card-bg);border:1px solid var(--border);color:var(--text2)"><span id="mob-theme-icon">🌙</span> <span id="mob-theme-label">Dark Mode</span></button>
+        
         <button id="mob-login-btn" onclick="openModal('auth-modal');closeMob()" class="btn btn-ghost w-full py-2.5 text-sm justify-center">Login / Register</button>
         <div id="mob-user-row" class="hidden items-center gap-3 px-3 py-2">
           <div id="mob-avatar" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white text-sm" style="background:linear-gradient(135deg,#0ea5e9,#0284c7)" onclick="openModal('profile-modal');closeMob()">U</div>
@@ -983,7 +1454,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
         <div class="relative z-10 h-full flex items-center max-w-7xl mx-auto px-4 sm:px-6">
           <div class="max-w-2xl afu">
             <div class="slabel mb-4">Surajpur District's #1 Computer Institute</div>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-5"><span class="gt-mix">Vision IT</span><br/>Computer<br/><span class="text-sky-400">Institute</span></h1>
+            <h1 class="font-black text-white leading-tight mb-5" style="font-size:clamp(2rem,5vw,3.8rem)"><span class="gt-mix">Vision IT</span> Computer <span style="color:#93c5fd">Institute</span></h1>
             <p class="text-slate-300 text-lg leading-relaxed mb-8 max-w-lg" style="font-weight:300">Pratappur ka sabse trusted <span class="text-sky-400 font-semibold">computer training center</span> — practical skills, job-oriented curriculum aur lifetime career support.</p>
             <div class="flex flex-wrap gap-4">
               <button onclick="showPage('courses')" class="btn btn-sky px-7 py-3.5 text-base"><i class="fas fa-rocket"></i> Explore Courses</button>
@@ -1000,7 +1471,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
         <div class="relative z-10 h-full flex items-center max-w-7xl mx-auto px-4 sm:px-6">
           <div class="max-w-2xl">
             <div class="slabel mb-4" style="background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.3);color:#fbbf24">Job-Oriented Courses</div>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-5">Learn <span class="gt-gold">Programming</span><br/>&amp; Web Design</h1>
+            <h1 class="font-black text-white leading-tight mb-5" style="font-size:clamp(2rem,5vw,3.8rem)">Learn <span class="gt-gold">Programming</span><br/>&amp; Web Design</h1>
             <p class="text-slate-300 text-lg leading-relaxed mb-8 max-w-lg" style="font-weight:300">C, Python, HTML, CSS, JavaScript — real skills jo aapko <span class="text-amber-400 font-semibold">industry-ready</span> banayenge. Live projects ke saath seekhein.</p>
             <div class="flex flex-wrap gap-4">
               <button onclick="setCatFilter(document.querySelector('#cat-filters .filter-btn[data-cat=programming]'),'programming');showPage('courses')" class="btn btn-gold px-7 py-3.5 text-base"><i class="fas fa-code"></i> Programming Courses</button>
@@ -1016,7 +1487,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
         <div class="relative z-10 h-full flex items-center max-w-7xl mx-auto px-4 sm:px-6">
           <div class="max-w-2xl">
             <div class="slabel mb-4" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#34d399">Accounting & Finance</div>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-5">Tally, GST &amp;<br/><span style="background:linear-gradient(135deg,#34d399,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Accounting</span></h1>
+            <h1 class="font-black text-white leading-tight mb-5" style="font-size:clamp(2rem,5vw,3.8rem)">Tally, GST &amp;<br/><span style="background:linear-gradient(135deg,#34d399,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Accounting</span></h1>
             <p class="text-slate-300 text-lg leading-relaxed mb-8 max-w-lg" style="font-weight:300">India ke 1.5 crore+ businesses Tally use karte hain. Sirf <span class="text-emerald-400 font-semibold">2 mahine</span> mein job-ready Tally expert ban jaiye.</p>
             <div class="flex flex-wrap gap-4">
               <button onclick="setCatFilter(document.querySelector('#cat-filters .filter-btn[data-cat=accounting]'),'accounting');showPage('courses')" class="btn px-7 py-3.5 text-base" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none"><i class="fas fa-calculator"></i> Tally Course</button>
@@ -1032,7 +1503,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
         <div class="relative z-10 h-full flex items-center max-w-7xl mx-auto px-4 sm:px-6">
           <div class="max-w-2xl">
             <div class="slabel mb-4" style="background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.3);color:#c084fc">Design & DTP</div>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-5">Graphic Design<br/>&amp; <span style="background:linear-gradient(135deg,#a855f7,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent">DTP Course</span></h1>
+            <h1 class="font-black text-white leading-tight mb-5" style="font-size:clamp(2rem,5vw,3.8rem)">Graphic Design<br/>&amp; <span style="background:linear-gradient(135deg,#a855f7,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent">DTP Course</span></h1>
             <p class="text-slate-300 text-lg leading-relaxed mb-8 max-w-lg" style="font-weight:300">CorelDRAW, Photoshop, PageMaker — <span class="text-purple-400 font-semibold">creative career</span> shuru karein. Banner, logo, brochure design seekhein.</p>
             <div class="flex flex-wrap gap-4">
               <button onclick="setCatFilter(document.querySelector('#cat-filters .filter-btn[data-cat=design]'),'design');showPage('courses')" class="btn px-7 py-3.5 text-base" style="background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;border:none"><i class="fas fa-palette"></i> Design Courses</button>
@@ -1077,13 +1548,29 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
   <!-- ── OFFERS BANNER ── -->
   <div id="offers-strip" class="hidden"></div>
 
-  <section class="bg-s py-14">
+  <section class="bg-s py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-5 text-center">
-        <div class="card-flat p-6"><div class="statnum" id="stat-c">8+</div><div class="text-slate-400 text-sm mt-1">Active Courses</div></div>
-        <div class="card-flat p-6"><div class="statnum">500+</div><div class="text-slate-400 text-sm mt-1">Students Trained</div></div>
-        <div class="card-flat p-6"><div class="statnum">5+</div><div class="text-slate-400 text-sm mt-1">Years Experience</div></div>
-        <div class="card-flat p-6"><div class="statnum">98%</div><div class="text-slate-400 text-sm mt-1">Satisfaction Rate</div></div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="card-flat rounded-2xl p-6 text-center hover:border-sky-400/40 transition-all">
+          <div class="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-book-open text-sky-500 text-xl"></i></div>
+          <div class="statnum" id="stat-c">8+</div>
+          <div class="th2 text-sm mt-1 font-semibold">Active Courses</div>
+        </div>
+        <div class="card-flat rounded-2xl p-6 text-center hover:border-emerald-400/40 transition-all">
+          <div class="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background:rgba(16,185,129,.1)"><i class="fas fa-user-graduate text-emerald-500 text-xl"></i></div>
+          <div class="statnum">500+</div>
+          <div class="th2 text-sm mt-1 font-semibold">Students Trained</div>
+        </div>
+        <div class="card-flat rounded-2xl p-6 text-center hover:border-amber-400/40 transition-all">
+          <div class="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background:rgba(245,158,11,.1)"><i class="fas fa-award text-amber-500 text-xl"></i></div>
+          <div class="statnum">5+</div>
+          <div class="th2 text-sm mt-1 font-semibold">Years Experience</div>
+        </div>
+        <div class="card-flat rounded-2xl p-6 text-center hover:border-violet-400/40 transition-all">
+          <div class="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background:rgba(139,92,246,.1)"><i class="fas fa-trophy text-violet-500 text-xl"></i></div>
+          <div class="statnum">98%</div>
+          <div class="th2 text-sm mt-1 font-semibold">Satisfaction Rate</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1119,9 +1606,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
       <div class="text-center mb-10"><div class="slabel mb-3">Reviews</div><h2 class="text-3xl font-black th">Students <span class="gt-sky">Kehte Hain</span></h2></div>
       <div class="grid md:grid-cols-3 gap-5" id="testimonials-grid">
         <!-- Default fallback testimonials, replaced by Firestore -->
-        <div class="testi-card"><div class="stars mb-3 text-lg">★★★★★</div><p class="th2 text-sm leading-relaxed mb-4" style="font-weight:300">"Vision IT ne meri life change kar di. Basic Computer Course ke baad government office mein job mil gayi. Sir log bahut helpful hain!"</p><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-sky-600 flex items-center justify-center font-bold text-white">R</div><div><div class="text-white font-semibold text-sm">Rahul Verma</div><div class="text-slate-500 text-xs">Basic Computer Graduate</div></div></div></div>
-        <div class="testi-card"><div class="stars mb-3 text-lg">★★★★★</div><p class="th2 text-sm leading-relaxed mb-4" style="font-weight:300">"Tally course ne mujhe accountant banaya. Fees bahut affordable thi aur practical training best thi. Highly recommended!"</p><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-amber-600 flex items-center justify-center font-bold text-white">P</div><div><div class="text-white font-semibold text-sm">Priya Singh</div><div class="text-slate-500 text-xs">Tally Graduate</div></div></div></div>
-        <div class="testi-card"><div class="stars mb-3 text-lg">★★★★☆</div><p class="th2 text-sm leading-relaxed mb-4" style="font-weight:300">"Python seekh ke freelancing milne lagi. Certificate bhi valid hai everywhere. Best decision tha yahan join karna!"</p><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white">A</div><div><div class="text-white font-semibold text-sm">Amit Kumar</div><div class="text-slate-500 text-xs">Programming Graduate</div></div></div></div>
+        <div class="testi-card"><div class="stars mb-3 text-lg">★★★★★</div><p class="th2 text-sm leading-relaxed mb-4" style="font-weight:300">"Vision IT ne meri life change kar di. Basic Computer Course ke baad government office mein job mil gayi. Sir log bahut helpful hain!"</p><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-sky-600 flex items-center justify-center font-bold text-white">R</div><div><div class="th font-semibold text-sm">Rahul Verma</div><div class="th3 text-xs">Basic Computer Graduate</div></div></div></div>
+        <div class="testi-card"><div class="stars mb-3 text-lg">★★★★★</div><p class="th2 text-sm leading-relaxed mb-4" style="font-weight:300">"Tally course ne mujhe accountant banaya. Fees bahut affordable thi aur practical training best thi. Highly recommended!"</p><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-amber-600 flex items-center justify-center font-bold text-white">P</div><div><div class="th font-semibold text-sm">Priya Singh</div><div class="th3 text-xs">Tally Graduate</div></div></div></div>
+        <div class="testi-card"><div class="stars mb-3 text-lg">★★★★☆</div><p class="th2 text-sm leading-relaxed mb-4" style="font-weight:300">"Python seekh ke freelancing milne lagi. Certificate bhi valid hai everywhere. Best decision tha yahan join karna!"</p><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white">A</div><div><div class="th font-semibold text-sm">Amit Kumar</div><div class="th3 text-xs">Programming Graduate</div></div></div></div>
       </div>
     </div>
   </section>
@@ -1142,7 +1629,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
         <div class="insta-card relative overflow-hidden group"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300&q=80" class="w-full h-full object-cover" alt=""/><div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div></div>
         <div class="insta-card relative overflow-hidden group"><img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=300&q=80" class="w-full h-full object-cover" alt=""/><div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div></div>
         <div class="insta-card relative overflow-hidden group"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&q=80" class="w-full h-full object-cover" alt=""/><div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div></div>
-        <div class="insta-card relative overflow-hidden group flex items-center justify-center" style="background:linear-gradient(135deg,rgba(240,148,51,.2),rgba(188,24,136,.2))"><div class="text-center"><i class="fab fa-instagram text-3xl mb-2" style="color:#e6683c"></i><div class="text-white font-bold text-sm">View More</div></div></div>
+        <div class="insta-card relative overflow-hidden group flex items-center justify-center" style="background:linear-gradient(135deg,rgba(240,148,51,.2),rgba(188,24,136,.2))"><div class="text-center"><i class="fab fa-instagram text-3xl mb-2" style="color:#e6683c"></i><div class="th font-bold text-sm">View More</div></div></div>
       </div>
     </div>
   </section>
@@ -1514,7 +2001,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
       <div class="glass rounded-3xl p-10 sm:p-16">
         <div class="text-5xl mb-5">🚀</div>
         <h2 class="text-3xl sm:text-4xl font-black th mb-4">Apna <span class="gt-mix">Digital Career</span> Shuru Karein Aaj</h2>
-        <p class="text-slate-400 text-lg mb-8 max-w-xl mx-auto" style="font-weight:300">Limited seats available — abhi enquiry karein aur apni preferred batch secure karein</p>
+        <p class="th2 text-lg mb-8 max-w-xl mx-auto" style="font-weight:300">Limited seats available — abhi enquiry karein aur apni preferred batch secure karein</p>
         <div class="flex flex-wrap justify-center gap-4">
           <button onclick="applyAdmission('General')" class="btn btn-gold px-8 py-4 text-base">Apply Now — Free Inquiry</button>
           <button onclick="showPage('contact')" class="btn btn-ghost px-8 py-4 text-base">Talk to Us</button>
@@ -1603,9 +2090,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300 group">
+            <a href="/cdn-cgi/l/email-protection#40362933292f2e293430322134213030353200272d21292c6e232f2d" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300 group">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="10667963797f7e796460627164716060656250777d71797c3e737f7d">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg group">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -1626,7 +2113,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
 </div>
 <!-- ====== PAGE COURSES ====== -->
 <div id="page-courses" class="page pt-16">
-  <div class="bg-hero py-14"><div class="max-w-7xl mx-auto px-4 sm:px-6 text-center"><div class="slabel mb-4">What We Offer</div><h1 class="text-4xl sm:text-5xl font-black text-white mb-3">Our <span class="gt-mix">Courses</span></h1><p class="text-slate-400 max-w-xl mx-auto" style="font-weight:300">Industry-aligned, practical training — beginners se advanced tak sabke liye</p></div></div>
+  <div class="bg-hero py-14"><div class="max-w-7xl mx-auto px-4 sm:px-6 text-center"><div class="slabel mb-4">What We Offer</div><h1 class="text-4xl sm:text-5xl font-black text-white mb-3">Our <span class="gt-mix">Courses</span></h1><p class="th2 max-w-xl mx-auto" style="font-weight:300">Industry-aligned, practical training — beginners se advanced tak sabke liye</p></div></div>
   <div class="bg-s py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col sm:flex-row gap-4 mb-5 items-start sm:items-center justify-between flex-wrap">
@@ -1712,9 +2199,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
+            <a href="/cdn-cgi/l/email-protection#a2d4cbd1cbcdcccbd6d2d0c3d6c3d2d2d7d0e2c5cfc3cbce8cc1cdcf" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="1a6c7369737574736e6a687b6e7b6a6a6f685a7d777b737634797577">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -1736,49 +2223,487 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
 
 <!-- ====== PAGE ABOUT ====== -->
 <div id="page-about" class="page pt-16">
-  <div class="bg-hero py-20"><div class="max-w-7xl mx-auto px-4 sm:px-6 text-center"><div class="slabel mb-4">Our Story</div><h1 class="text-4xl sm:text-5xl font-black text-white mb-4">About <span class="gt-mix">Vision IT</span></h1><p class="text-slate-400 text-lg max-w-2xl mx-auto" style="font-weight:300">Pratappur ke students ka digital future banana hamare liye sirf ek kaam nahi — yeh ek mission hai</p></div></div>
-  <div class="bg-s py-20"><div class="max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="grid lg:grid-cols-2 gap-14 items-center">
-      <div>
-        <div class="slabel mb-4">Who We Are</div><h2 class="text-3xl font-black th mb-5">Hamare Baare Mein</h2>
-        <p class="text-slate-400 leading-relaxed mb-4" style="font-weight:300"><strong class="text-white">Vision IT Computer Institute</strong> — F6P6+239, Kadampara Chowk, Pratappur, Dist. Surajpur, CG — ek leading professional computer training center hai jo digital skills aur career development ke liye dedicated hai.</p>
-        <p class="text-slate-400 leading-relaxed mb-4" style="font-weight:300">Hamare experienced instructors real industry background se aate hain. Students actual projects pe kaam karte hain aur job-ready skills develop karte hain.</p>
-        <p class="text-slate-400 leading-relaxed mb-6" style="font-weight:300">Modern computer labs, latest hardware aur software ke saath — curriculum regularly update hota hai taaki students hamesha market-relevant skills seekhein.</p>
-        <div class="flex flex-wrap gap-3"><button onclick="applyAdmission('General')" class="btn btn-sky px-6 py-3 text-sm">Apply Now</button><button onclick="showPage('contact')" class="btn btn-ghost px-6 py-3 text-sm">Contact Us</button></div>
+
+  <!-- ── HERO ── -->
+  <div class="bg-hero py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <div class="slabel mb-4">हमारे बारे में | About Us</div>
+      <h1 class="text-4xl sm:text-5xl font-black text-white mb-4">About <span class="gt-mix">Vision IT</span></h1>
+      <p class="text-slate-400 text-lg max-w-3xl mx-auto" style="font-weight:300">
+        Vision IT Computer Institute — ek aisa learning platform jahan students sirf computer nahi seekhte, balki apna digital future banate hain. Practical skills, career guidance, aur modern technology — sab ek jagah.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── WHO WE ARE ── -->
+  <div class="bg-s py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <div class="slabel mb-4">Who We Are</div>
+          <h2 class="text-3xl font-black th mb-5">Hamare Baare Mein</h2>
+          <p class="th2 leading-relaxed mb-4" style="font-weight:300">
+            <strong class="th">Vision IT Computer Institute</strong> — Kadampara Chowk, Pratappur, Dist. Surajpur, CG — ek modern aur career-oriented computer training center hai jahan Basic se Advanced level tak practical aur skill-based education di jaati hai.
+          </p>
+          <p class="th2 leading-relaxed mb-4" style="font-weight:300">
+            Aaj ke digital era mein sirf degree enough nahi hoti — practical knowledge, software skills, communication ability aur technology awareness bahut zaroori hai. Vision IT isi zaroorat ko samajhte hue students ko ek aisa learning environment deta hai jahan woh seekhte bhi hain, practice bhi karte hain, aur apne career ke liye strong foundation bhi banate hain.
+          </p>
+          <p class="th2 leading-relaxed mb-6" style="font-weight:300">
+            Hamara uddeshya school students, college students, job seekers, professionals aur beginners — sabke liye quality computer education available karana hai.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <button onclick="applyAdmission('General')" class="btn btn-sky px-6 py-3 text-sm">Apply Now</button>
+            <button onclick="showPage('contact')" class="btn btn-ghost px-6 py-3 text-sm">Contact Us</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="glass about-feat-card rounded-2xl p-5"><div class="text-3xl mb-2">🎓</div><div class="th font-bold mb-1">Expert Faculty</div><div class="th2 text-sm" style="font-weight:300">5+ years industry experience</div></div>
+          <div class="glass about-feat-card rounded-2xl p-5"><div class="text-3xl mb-2">🏫</div><div class="th font-bold mb-1">Modern Labs</div><div class="th2 text-sm" style="font-weight:300">Latest hardware & software</div></div>
+          <div class="glass about-feat-card rounded-2xl p-5"><div class="text-3xl mb-2">📜</div><div class="th font-bold mb-1">Certified</div><div class="th2 text-sm" style="font-weight:300">Govt. recognised certificates</div></div>
+          <div class="glass about-feat-card rounded-2xl p-5"><div class="text-3xl mb-2">💼</div><div class="th font-bold mb-1">Placement</div><div class="th2 text-sm" style="font-weight:300">Job support & career guidance</div></div>
+          <div class="glass about-feat-card rounded-2xl p-5"><div class="text-3xl mb-2">👥</div><div class="th font-bold mb-1">Small Batches</div><div class="th2 text-sm" style="font-weight:300">Har student pe personal dhyan</div></div>
+          <div class="glass about-feat-card rounded-2xl p-5"><div class="text-3xl mb-2">⏰</div><div class="th font-bold mb-1">Flex Timing</div><div class="th2 text-sm" style="font-weight:300">Morning, Afternoon & Evening</div></div>
+        </div>
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="glass rounded-2xl p-5"><div class="text-3xl mb-2">🎓</div><div class="text-white font-bold mb-1">Expert Faculty</div><div class="th2 text-sm" style="font-weight:300">5+ years industry experience</div></div>
-        <div class="glass rounded-2xl p-5"><div class="text-3xl mb-2">🏫</div><div class="text-white font-bold mb-1">Modern Labs</div><div class="th2 text-sm" style="font-weight:300">Latest hardware & software</div></div>
-        <div class="glass rounded-2xl p-5"><div class="text-3xl mb-2">📜</div><div class="text-white font-bold mb-1">Certified</div><div class="th2 text-sm" style="font-weight:300">Govt. recognised certificates</div></div>
-        <div class="glass rounded-2xl p-5"><div class="text-3xl mb-2">💼</div><div class="text-white font-bold mb-1">Placement</div><div class="th2 text-sm" style="font-weight:300">Job support & career guidance</div></div>
-        <div class="glass rounded-2xl p-5"><div class="text-3xl mb-2">👥</div><div class="text-white font-bold mb-1">Small Batches</div><div class="th2 text-sm" style="font-weight:300">Personal attention to each student</div></div>
-        <div class="glass rounded-2xl p-5"><div class="text-3xl mb-2">⏰</div><div class="text-white font-bold mb-1">Flex Timing</div><div class="th2 text-sm" style="font-weight:300">Morning & evening batches</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── MISSION & VISION ── -->
+  <div class="bg-a py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <div class="slabel mb-3">Our Purpose</div>
+        <h2 class="text-3xl font-black th">Mission <span class="gt-mix">&</span> Vision</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <div class="glass rounded-3xl p-8">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style="background:rgba(14,165,233,.15)">🎯</div>
+          <h3 class="th font-black text-xl mb-3">हमारा उद्देश्य | Our Mission</h3>
+          <p class="th2 mb-4" style="font-weight:300">"Har student tak quality computer education pahunchaana — affordable, practical, career-focused — taaki Pratappur ka har bachcha Digital India ka hissa ban sake."</p>
+          <div class="space-y-2 mt-4">
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-sky-400 text-xs"></i>Har vidyarthi ko computer literacy dena</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-sky-400 text-xs"></i>Practical learning ko theory se zyada important banana</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-sky-400 text-xs"></i>Students ko self-dependent aur career-oriented banana</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-sky-400 text-xs"></i>Rural students ko technology se jodna</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-sky-400 text-xs"></i>Affordable fees mein quality training dena</div>
+          </div>
+        </div>
+        <div class="glass rounded-3xl p-8">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style="background:rgba(245,158,11,.15)">👁️</div>
+          <h3 class="th font-black text-xl mb-3">हमारी दृष्टि | Our Vision</h3>
+          <p class="th2 mb-4" style="font-weight:300">"Vision IT ko ek trusted, modern aur leading computer education brand banana — jahan students sirf certificates nahi, balki real-world skills, practical exposure aur career guidance paayein."</p>
+          <div class="space-y-2 mt-4">
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-amber-400 text-xs"></i>Students job-ready hon</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-amber-400 text-xs"></i>Freelancing kar sakein</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-amber-400 text-xs"></i>Apna digital business manage kar sakein</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-amber-400 text-xs"></i>AI, programming, designing mein strong banein</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-amber-400 text-xs"></i>Technology ko skill ke roop mein use karein</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── WHAT WE TEACH ── -->
+      <div class="text-center mb-10">
+        <div class="slabel mb-3">Curriculum</div>
+        <h2 class="text-3xl font-black th">हम क्या सिखाते हैं | <span class="gt-sky">What We Teach</span></h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-6">
+        <div class="glass rounded-2xl p-6">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style="background:rgba(14,165,233,.15)">💻</div>
+          <h4 class="th font-bold mb-3">बेसिक कोर्स</h4>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Basic Computer Course</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>MS Word, Excel, PowerPoint</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Internet & Email Training</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Hindi & English Typing</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Computer Fundamentals</div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style="background:rgba(139,92,246,.15)">🎓</div>
+          <h4 class="th font-bold mb-3">डिप्लोमा कोर्स</h4>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-violet-400 text-xs"></i>DCA (Diploma in Computer Application)</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-violet-400 text-xs"></i>ADCA (Advanced DCA)</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-violet-400 text-xs"></i>PGDCA (Post Graduate Diploma)</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-violet-400 text-xs"></i>Office Automation</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-violet-400 text-xs"></i>Data Entry Operator</div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style="background:rgba(16,185,129,.15)">👨‍💻</div>
+          <h4 class="th font-bold mb-3">तकनीकी कोर्स</h4>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-emerald-400 text-xs"></i>C, C++, Python Programming</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-emerald-400 text-xs"></i>Web Designing</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-emerald-400 text-xs"></i>Graphic Designing & DTP</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-emerald-400 text-xs"></i>Tally with GST</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-emerald-400 text-xs"></i>Digital Marketing</div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style="background:rgba(245,158,11,.15)">🤖</div>
+          <h4 class="th font-bold mb-3">AI & Future Tech</h4>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-amber-400 text-xs"></i>AI Basic Concepts</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-amber-400 text-xs"></i>Smart Tools ka Use</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-amber-400 text-xs"></i>Content Creation Tools</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-amber-400 text-xs"></i>Automation Basics</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-amber-400 text-xs"></i>Future Digital Job Awareness</div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style="background:rgba(239,68,68,.15)">🏫</div>
+          <h4 class="th font-bold mb-3">School Students (6th–11th)</h4>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-red-400 text-xs"></i>Computer Basics & Hardware</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-red-400 text-xs"></i>Typing & Presentation Skills</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-red-400 text-xs"></i>Online Study Tools</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-red-400 text-xs"></i>Basic Coding Awareness</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-red-400 text-xs"></i>Digital Thinking & Creativity</div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4" style="background:rgba(99,102,241,.15)">📱</div>
+          <h4 class="th font-bold mb-3">Smart App-Based Learning</h4>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-indigo-400 text-xs"></i>Student App — Attendance & Results</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-indigo-400 text-xs"></i>Teacher App — Class Management</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-indigo-400 text-xs"></i>Fee Status & Notices</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-indigo-400 text-xs"></i>Study Material Access</div>
+            <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-indigo-400 text-xs"></i>Test Results & Progress Reports</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div></div>
+  </div>
+
   <div class="divider"></div>
-  <div class="bg-a py-20"><div class="max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="grid md:grid-cols-2 gap-8 mb-14">
-      <div class="glass rounded-3xl p-8"><div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style="background:rgba(14,165,233,.15)">🎯</div><h3 class="th font-black text-xl mb-3">Hamara Mission</h3><p class="th2" style="font-weight:300">"Har student ko world-class digital education dena — affordable, practical, career-focused — taaki Pratappur ka har bachcha Digital India ka hissa ban sake."</p></div>
-      <div class="glass rounded-3xl p-8"><div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5" style="background:rgba(245,158,11,.15)">👁️</div><h3 class="th font-black text-xl mb-3">Hamari Vision</h3><p class="th2" style="font-weight:300">"Surajpur district ko ek digitally empowered community banana — jahan har individual ke paas technology ki understanding ho aur apni potential achieve karne ke tools hon."</p></div>
+
+  <!-- ── WHY CHOOSE US ── -->
+  <div class="bg-s py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <div class="slabel mb-3">Why Us</div>
+        <h2 class="text-3xl font-black th">हमें क्यों चुनें | <span class="gt-gold">Why Choose Us</span></h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
+        <div class="card-flat about-feat-card rounded-2xl p-5 text-center"><div class="text-3xl mb-3">🖥️</div><h4 class="th font-bold mb-2">Practical Training</h4><p class="th2 text-sm" style="font-weight:300">Real machines par hands-on practice — theory nahi, actual skills</p></div>
+        <div class="card-flat about-feat-card rounded-2xl p-5 text-center"><div class="text-3xl mb-3">🎯</div><h4 class="th font-bold mb-2">Job-Oriented</h4><p class="th2 text-sm" style="font-weight:300">Industry demand ke mutabik curriculum — jo employers chahte hain</p></div>
+        <div class="card-flat about-feat-card rounded-2xl p-5 text-center"><div class="text-3xl mb-3">🏆</div><h4 class="th font-bold mb-2">Certified Programs</h4><p class="th2 text-sm" style="font-weight:300">Govt. recognised certificates — sarkari naukri mein valid</p></div>
+        <div class="card-flat about-feat-card rounded-2xl p-5 text-center"><div class="text-3xl mb-3">💰</div><h4 class="th font-bold mb-2">Affordable Fees</h4><p class="th2 text-sm" style="font-weight:300">₹2,000 se start — EMI facility bhi available</p></div>
+        <div class="card-flat about-feat-card rounded-2xl p-5 text-center"><div class="text-3xl mb-3">👥</div><h4 class="th font-bold mb-2">Small Batches</h4><p class="th2 text-sm" style="font-weight:300">Har student pe personal dhyan — chhoti batch mein seekho</p></div>
+        <div class="card-flat about-feat-card rounded-2xl p-5 text-center"><div class="text-3xl mb-3">📱</div><h4 class="th font-bold mb-2">Smart App System</h4><p class="th2 text-sm" style="font-weight:300">Student & Teacher app — modern app-based management</p></div>
+        <div class="card-flat about-feat-card rounded-2xl p-5 text-center"><div class="text-3xl mb-3">📊</div><h4 class="th font-bold mb-2">Regular Tests</h4><p class="th2 text-sm" style="font-weight:300">Progress tracking, assignments aur regular revision</p></div>
+        <div class="card-flat about-feat-card rounded-2xl p-5 text-center"><div class="text-3xl mb-3">💼</div><h4 class="th font-bold mb-2">Career Guidance</h4><p class="th2 text-sm" style="font-weight:300">Job, freelancing aur skill guidance — course ke baad bhi</p></div>
+      </div>
+
+      <!-- ── TEAM ── -->
+      <div class="text-center mb-10">
+        <div class="slabel mb-3">Our Team</div>
+        <h2 class="text-3xl font-black th">Meet Our <span class="gt-sky">Instructors</span></h2>
+      </div>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 mb-14">
+        <div class="card p-6 text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-3xl mx-auto mb-4">👨‍🏫</div><h4 class="th font-bold mb-1">Rajesh Gupta</h4><span class="badge">Director & Senior Faculty</span><p class="th2 text-sm mt-3" style="font-weight:300">10+ years IT experience. Web development & programming specialist.</p></div>
+        <div class="card p-6 text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-3xl mx-auto mb-4">👩‍🏫</div><h4 class="th font-bold mb-1">Sunita Sharma</h4><span class="badge">Senior Instructor</span><p class="th2 text-sm mt-3" style="font-weight:300">7+ years experience. MS Office, Tally, DTP expert.</p></div>
+        <div class="card p-6 text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-3xl mx-auto mb-4">👨‍💻</div><h4 class="th font-bold mb-1">Vikash Pandey</h4><span class="badge">Programming Faculty</span><p class="th2 text-sm mt-3" style="font-weight:300">5+ years. Python, C++, web technologies specialist.</p></div>
+      </div>
+
+      <!-- ── STUDENT TYPES ── -->
+      <div class="text-center mb-10">
+        <div class="slabel mb-3">For Everyone</div>
+        <h2 class="text-3xl font-black th">हमारे विद्यार्थी | <span class="gt-mix">Who Are Our Students</span></h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
+        <div class="glass rounded-2xl p-6">
+          <div class="text-3xl mb-3">🏫</div><h4 class="th font-bold mb-3">School Students</h4>
+          <div class="space-y-1.5">
+            <div class="th2 text-sm">• Computer basics & digital confidence</div>
+            <div class="th2 text-sm">• Presentation skills</div>
+            <div class="th2 text-sm">• Practical learning</div>
+            <div class="th2 text-sm">• Basic coding awareness</div>
+            <div class="th2 text-sm">• Future career awareness</div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="text-3xl mb-3">🎓</div><h4 class="th font-bold mb-3">College Students</h4>
+          <div class="space-y-1.5">
+            <div class="th2 text-sm">• Professional computer courses</div>
+            <div class="th2 text-sm">• PGDCA / DCA / ADCA</div>
+            <div class="th2 text-sm">• Project work</div>
+            <div class="th2 text-sm">• Job preparation</div>
+            <div class="th2 text-sm">• Resume building support</div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="text-3xl mb-3">💼</div><h4 class="th font-bold mb-3">Job Seekers</h4>
+          <div class="space-y-1.5">
+            <div class="th2 text-sm">• Office software training</div>
+            <div class="th2 text-sm">• Tally & accounting</div>
+            <div class="th2 text-sm">• Typing & data entry</div>
+            <div class="th2 text-sm">• Interview readiness</div>
+            <div class="th2 text-sm">• Practical job skills</div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="text-3xl mb-3">🌱</div><h4 class="th font-bold mb-3">Beginners</h4>
+          <div class="space-y-1.5">
+            <div class="th2 text-sm">• Step-by-step learning</div>
+            <div class="th2 text-sm">• Simple explanation</div>
+            <div class="th2 text-sm">• No technical pressure</div>
+            <div class="th2 text-sm">• Friendly guidance</div>
+            <div class="th2 text-sm">• Zero knowledge se start</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── OUR COMMITMENT ── -->
+      <div class="glass rounded-3xl p-8 sm:p-12 text-center max-w-3xl mx-auto">
+        <div class="text-4xl mb-4">🤝</div>
+        <h3 class="th font-black text-2xl mb-4">हमारा वादा | Our Commitment</h3>
+        <p class="th2 leading-relaxed mb-6" style="font-weight:300">
+          Vision IT Computer Institute har student ke future ke liye committed hai. Hum sirf courses nahi padhate — hum capability build karte hain.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-3 text-left mb-8">
+          <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400"></i>Sahi knowledge milegi</div>
+          <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400"></i>Practical training milegi</div>
+          <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400"></i>Confidence milega</div>
+          <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400"></i>Career direction milega</div>
+          <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400"></i>Technology ka fear nahi, mastery milegi</div>
+          <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400"></i>Govt. recognised certificate milega</div>
+        </div>
+        <p class="font-black text-lg mb-2" style="color:var(--sky)">Learn computers, build skills, and create a strong future.</p>
+        <p class="th font-bold">कम्प्यूटर सीखिए, कौशल बनाइए, और उज्ज्वल भविष्य बनाइए।</p>
+        <div class="flex gap-3 justify-center mt-6">
+          <button onclick="applyAdmission('General')" class="btn btn-sky px-6 py-3 text-sm">Abhi Apply Karein</button>
+          <button onclick="showPage('courses')" class="btn btn-ghost px-6 py-3 text-sm">Courses Dekhen</button>
+        </div>
+      </div>
     </div>
-    <div class="text-center mb-10"><div class="slabel mb-3">Our Team</div><h2 class="text-3xl font-black th">Meet Our <span class="gt-sky">Instructors</span></h2></div>
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
-      <div class="card p-6 text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-3xl mx-auto mb-4">👨‍🏫</div><h4 class="text-white font-bold mb-1">Rajesh Gupta</h4><span class="badge">Director & Senior Faculty</span><p class="text-slate-400 text-sm mt-3" style="font-weight:300">10+ years IT experience. Web development & programming specialist.</p></div>
-      <div class="card p-6 text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-3xl mx-auto mb-4">👩‍🏫</div><h4 class="text-white font-bold mb-1">Sunita Sharma</h4><span class="badge">Senior Instructor</span><p class="text-slate-400 text-sm mt-3" style="font-weight:300">7+ years experience. MS Office, Tally, DTP expert.</p></div>
-      <div class="card p-6 text-center"><div class="w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-3xl mx-auto mb-4">👨‍💻</div><h4 class="text-white font-bold mb-1">Vikash Pandey</h4><span class="badge">Programming Faculty</span><p class="text-slate-400 text-sm mt-3" style="font-weight:300">5+ years. Python, C++, web technologies specialist.</p></div>
+  </div>
+
+  <!-- ── FAQ SECTION ── -->
+  <div class="bg-a py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <div class="slabel mb-3">FAQ</div>
+        <h2 class="text-3xl font-black th">Frequently Asked <span class="gt-mix">Questions</span></h2>
+        <p class="th2 mt-3 max-w-xl mx-auto" style="font-weight:300">Aapke common sawaalon ke jawab — Vision IT ke baare mein sab kuch jaanein</p>
+      </div>
+      <div class="space-y-3" id="about-faq-list">
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">1️⃣ Vision IT Computer Institute क्या है?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm leading-relaxed">Vision IT Computer Institute एक modern computer training center है जहाँ Basic से Advanced level तक practical computer aur digital skills sikhaye jaate hain। यहाँ students career-ready aur technology-confident bante hain।</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">2️⃣ यहाँ कौन-कौन से courses उपलब्ध हैं?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm mb-3">संस्थान में निम्नलिखित courses उपलब्ध हैं:</p>
+            <div class="grid grid-cols-2 gap-1.5">
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>Basic Computer</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>DCA / ADCA / PGDCA</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>Tally with GST</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>Typing Course</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>Programming (C, Python)</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>Web Designing</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>Graphic Designing / DTP</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>Digital Marketing</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>Artificial Intelligence (AI)</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-check-circle text-emerald-400 text-xs"></i>School Students Program</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">3️⃣ क्या beginners भी admission ले सकते हैं?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm leading-relaxed">हाँ, बिल्कुल! Beginners bhi admission le sakte hain। यहाँ step-by-step basic se training di jaati hai। Zero knowledge wale students bhi aasaani se computer seekh sakte hain — koi pressure nahi, friendly environment mein.</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">4️⃣ Class 6th–11th ke students ko kya sikhaya jaata hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <div class="grid grid-cols-2 gap-1.5">
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Computer ki basic knowledge</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Typing practice</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>MS Office ka upyog</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Presentation banana</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Basic coding awareness</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Logical thinking development</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>Safe internet use</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-angle-right text-sky-400 text-xs"></i>AI awareness</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">5️⃣ PGDCA course किसके लिए best है?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm leading-relaxed">PGDCA (Post Graduate Diploma in Computer Application) course graduates aur college students ke liye best hai jo computer field mein career banana chahte hain। Is course mein advanced computer skills, programming concepts, database, project work aur practical knowledge sikhaya jaata hai।</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">6️⃣ AI course mein kya sikhaya jaata hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <div class="space-y-1.5">
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-robot text-amber-400 text-xs"></i>AI ka basic concept</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-robot text-amber-400 text-xs"></i>Smart AI tools ka use</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-robot text-amber-400 text-xs"></i>Automation ki samajh</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-robot text-amber-400 text-xs"></i>Digital productivity skills</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-robot text-amber-400 text-xs"></i>Future technology awareness</div>
+            </div>
+            <p class="th3 text-xs mt-3">Yeh course students ko future-ready digital learners banata hai।</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">7️⃣ क्या practical training milti hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm leading-relaxed">Haan! Yahan 100% practical-based training di jaati hai। Students computer lab mein hands-on practice karte hain। Theory ke saath real machines pe practice — tab hi skills properly develop hoti hain।</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">8️⃣ Course complete karne par certificate milta hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm leading-relaxed">Haan! Course safaltapurvak poora karne par government recognised certificate diya jaata hai jo naukri applications, sarkari exams aur career mein helpful hota hai। Certificate online verify bhi ki ja sakti hai।</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">9️⃣ क्या job guidance milti hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm leading-relaxed">Haan। Sansthan mein students ko career guidance, interview tips, resume building support aur freelancing awareness bhi di jaati hai। Course ke baad bhi career support milta hai।</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">🔟 Fee structure affordable hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm leading-relaxed">Haan! Sansthan ka fee structure student-friendly aur affordable rakha gaya hai। Fees ₹2,000 se start hoti hai। Monthly / installment options bhi available hain taaki zyada se zyada students quality education ka benefit le sakein।</p>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">1️⃣1️⃣ Student App kya hota hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm mb-3">Student App ek digital learning support system hai jisme students:</p>
+            <div class="grid grid-cols-2 gap-1.5">
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-mobile-alt text-sky-400 text-xs"></i>Attendance check kar sakte hain</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-mobile-alt text-sky-400 text-xs"></i>Fee status dekh sakte hain</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-mobile-alt text-sky-400 text-xs"></i>Study material access kar sakte hain</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-mobile-alt text-sky-400 text-xs"></i>Notices aur updates paate hain</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-mobile-alt text-sky-400 text-xs"></i>Test results dekh sakte hain</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-mobile-alt text-sky-400 text-xs"></i>Teachers se connected rehte hain</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">1️⃣2️⃣ Teacher App ka kya upyog hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <div class="grid grid-cols-2 gap-1.5">
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-chalkboard-teacher text-amber-400 text-xs"></i>Attendance manage karna</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-chalkboard-teacher text-amber-400 text-xs"></i>Homework & tests update karna</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-chalkboard-teacher text-amber-400 text-xs"></i>Student progress track karna</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-chalkboard-teacher text-amber-400 text-xs"></i>Notices upload karna</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-chalkboard-teacher text-amber-400 text-xs"></i>Batch-wise management</div>
+              <div class="flex items-center gap-2 th2 text-sm"><i class="fas fa-chalkboard-teacher text-amber-400 text-xs"></i>Fee updates dekhna</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">1️⃣3️⃣ Admission kaise le sakte hain?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 th2 text-sm"><div class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-white text-xs flex-shrink-0" style="background:var(--sky)">1</div>Website pe online form bharein</div>
+              <div class="flex items-center gap-3 th2 text-sm"><div class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-white text-xs flex-shrink-0" style="background:var(--accent)">2</div>Ya seedha sansthan visit karein — Kadampara Chowk, Pratappur</div>
+              <div class="flex items-center gap-3 th2 text-sm"><div class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-white text-xs flex-shrink-0" style="background:var(--gold)">3</div>Call karein: +91 81031 70595</div>
+              <div class="flex items-center gap-3 th2 text-sm"><div class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-white text-xs flex-shrink-0" style="background:#10b981">4</div>24 ghante mein team guide karegi</div>
+            </div>
+            <button onclick="applyAdmission('General')" class="btn btn-sky mt-4 px-5 py-2 text-sm">Apply Now</button>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">1️⃣4️⃣ क्या flexible timing milti hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm leading-relaxed">Haan! Students ki suvidha ke anusaar Morning, Afternoon aur Evening batches available hain। Aap apni convenience ke hisaab se batch choose kar sakte hain।</p>
+            <div class="flex flex-wrap gap-2 mt-3">
+              <span class="badge">Morning 8–10 AM</span>
+              <span class="badge">Morning 10–12 PM</span>
+              <span class="badge">Afternoon 2–4 PM</span>
+              <span class="badge">Evening 4–6 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass rounded-2xl overflow-hidden">
+          <button class="faq-q w-full text-left px-6 py-4 flex items-center justify-between gap-4" onclick="toggleAboutFaq(this)">
+            <span class="th font-bold text-sm sm:text-base">1️⃣5️⃣ क्या beginners se advanced level tak support milti hai?</span>
+            <i class="fas fa-chevron-down text-sky-400 flex-shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-ans hidden px-6 pb-5">
+            <p class="th2 text-sm leading-relaxed">Bilkul! Vision IT Computer Institute mein foundation se professional level tak complete learning path diya jaata hai। Basic Computer se shuru karke PGDCA, Programming, AI — sab ek hi jagah seekh sakte hain।</p>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div></div>
+  </div>
+
   <div class="divider"></div>
-  <div class="bg-s py-20"><div class="max-w-4xl mx-auto px-4 sm:px-6">
-    <div class="text-center mb-10"><div class="slabel mb-3">Journey</div><h2 class="text-3xl font-black th">Hamari <span class="gt-gold">Story</span></h2></div>
-    <div class="space-y-5">
-      <div class="flex gap-5 items-start"><div class="w-16 h-14 rounded-2xl flex-shrink-0 btn btn-sky flex items-center justify-center font-black text-sm">2019</div><div class="glass rounded-2xl p-5 flex-1"><h4 class="text-white font-bold mb-1">Foundation</h4><p class="th2 text-sm" style="font-weight:300">Vision IT ki neev rakhi Pratappur mein — sirf 2 computers aur 1 instructor ke saath, ek bada sapna lekar shuruat ki.</p></div></div>
-      <div class="flex gap-5 items-start"><div class="w-16 h-14 rounded-2xl flex-shrink-0 btn btn-gold flex items-center justify-center font-black text-sm">2020</div><div class="glass rounded-2xl p-5 flex-1"><h4 class="text-white font-bold mb-1">Expansion</h4><p class="th2 text-sm" style="font-weight:300">Lab upgrade hua 10 computers tak, naye courses add hue — Tally, DTP, Internet. 100+ students trained.</p></div></div>
-      <div class="flex gap-5 items-start"><div class="w-16 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center font-black text-sm text-white" style="background:linear-gradient(135deg,#10b981,#059669);border-radius:1rem;min-width:4rem">2022</div><div class="glass rounded-2xl p-5 flex-1"><h4 class="text-white font-bold mb-1">Recognition</h4><p class="th2 text-sm" style="font-weight:300">District recognition, 300+ students, programming courses launch, placement support started.</p></div></div>
-      <div class="flex gap-5 items-start"><div class="w-16 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center font-black text-sm text-white" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);border-radius:1rem;min-width:4rem">2025</div><div class="glass rounded-2xl p-5 flex-1"><h4 class="text-white font-bold mb-1">Today & Beyond</h4><p class="th2 text-sm" style="font-weight:300">500+ students trained, digital website, expanding further. Online courses aane wali hain!</p></div></div>
-    </div>
-  </div></div>
   <footer class="bg-s py-14" style="border-top:1px solid var(--border);" >
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid md:grid-cols-3 xl:grid-cols-5 gap-6 mb-10">
@@ -1843,9 +2768,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
+            <a href="/cdn-cgi/l/email-protection#34425d475d5b5a5d40444655405544444146745359555d581a575b59" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="94e2fde7fdfbfafde0e4e6f5e0f5e4e4e1e6d4f3f9f5fdf8baf7fbf9">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -1864,21 +2789,47 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
     </div>
   </footer>
 </div>
+
 
 <!-- ====== PAGE BLOG ====== -->
 <div id="page-blog" class="page pt-16">
-  <div class="bg-hero py-14"><div class="max-w-7xl mx-auto px-4 sm:px-6 text-center"><div class="slabel mb-4">Knowledge Hub</div><h1 class="text-4xl sm:text-5xl font-black text-white mb-3">Latest <span class="gt-mix">Blog Posts</span></h1><p class="text-slate-400 max-w-xl mx-auto" style="font-weight:300">Technology, career tips, aur digital skills ke baare mein latest updates</p></div></div>
-  <div class="bg-s py-12"><div class="max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="flex flex-wrap gap-2 mb-8" id="blog-cat-filters">
-      <button class="filter-btn active" data-bcat="all" onclick="setBlogFilter(this,'all')">All Posts</button>
-      <button class="filter-btn" data-bcat="Technology" onclick="setBlogFilter(this,'Technology')">Technology</button>
-      <button class="filter-btn" data-bcat="Career Tips" onclick="setBlogFilter(this,'Career Tips')">Career Tips</button>
-      <button class="filter-btn" data-bcat="Programming" onclick="setBlogFilter(this,'Programming')">Programming</button>
-      <button class="filter-btn" data-bcat="Tutorial" onclick="setBlogFilter(this,'Tutorial')">Tutorials</button>
+  <div class="bg-hero py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <div class="slabel mb-4">Knowledge Hub</div>
+      <h1 class="text-4xl sm:text-5xl font-black th mb-3">Vision IT <span class="gt-mix">Blog</span></h1>
+      <p class="th2 text-lg max-w-xl mx-auto" style="font-weight:300">Computer skills, career tips, technology updates aur digital education — sabke liye</p>
     </div>
-    <div id="blog-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"><div class="flex justify-center col-span-3 py-16"><div class="spin-el"></div></div></div>
-  </div></div>
-  <footer class="bg-s py-14" style="border-top:1px solid var(--border);" >
+  </div>
+  <div class="bg-s py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <!-- Filters + Search -->
+      <div class="flex flex-col sm:flex-row gap-3 mb-8 items-start sm:items-center justify-between">
+        <div class="flex flex-wrap gap-2" id="blog-cat-filters">
+          <button class="filter-btn active" data-bcat="all" onclick="setBlogFilter(this,'all')">🗂️ All</button>
+          <button class="filter-btn" data-bcat="Technology" onclick="setBlogFilter(this,'Technology')">💻 Technology</button>
+          <button class="filter-btn" data-bcat="Career Tips" onclick="setBlogFilter(this,'Career Tips')">💼 Career</button>
+          <button class="filter-btn" data-bcat="Programming" onclick="setBlogFilter(this,'Programming')">👨‍💻 Programming</button>
+          <button class="filter-btn" data-bcat="Tutorial" onclick="setBlogFilter(this,'Tutorial')">📖 Tutorials</button>
+          <button class="filter-btn" data-bcat="Digital Skills" onclick="setBlogFilter(this,'Digital Skills')">🌐 Digital</button>
+        </div>
+        <div class="relative flex-shrink-0">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 th3 text-sm"></i>
+          <input id="blog-search" class="inp pl-9 py-2 text-sm" style="width:200px" placeholder="Blog search..." oninput="filterBlogSearch()"/>
+        </div>
+      </div>
+      <!-- Featured post area -->
+      <div id="blog-featured" class="hidden mb-10"></div>
+      <!-- Blog grid -->
+      <div id="blog-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="flex justify-center col-span-3 py-16"><div class="spin-el"></div></div>
+      </div>
+      <!-- Load more -->
+      <div class="text-center mt-10 hidden" id="blog-load-more-wrap">
+        <button onclick="loadMoreBlogs()" class="btn btn-ghost px-8 py-3 text-sm"><i class="fas fa-plus mr-2"></i>Aur Posts Load Karein</button>
+      </div>
+    </div>
+  </div>
+    <footer class="bg-s py-14" style="border-top:1px solid var(--border);" >
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid md:grid-cols-3 xl:grid-cols-5 gap-6 mb-10">
         <div class="md:col-span-1">
@@ -1942,9 +2893,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
+            <a href="/cdn-cgi/l/email-protection#2d5b445e44424344595d5f4c594c5d5d585f6d4a404c4441034e4240" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="e3958a908a8c8d8a97939182978293939691a3848e828a8fcd808c8e">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -1964,43 +2915,193 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
   </footer>
 </div>
 
+
 <!-- ====== PAGE CONTACT ====== -->
 <div id="page-contact" class="page pt-16">
-  <div class="bg-hero py-14"><div class="max-w-7xl mx-auto px-4 sm:px-6 text-center"><div class="slabel mb-4">Get In Touch</div><h1 class="text-4xl sm:text-5xl font-black text-white mb-3">Contact <span class="gt-sky">Us</span></h1><p class="text-slate-400 max-w-xl mx-auto" style="font-weight:300">Questions hain? Hum yahan hain — aaj hi baat karein!</p></div></div>
-  <div class="bg-s py-16"><div class="max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="grid lg:grid-cols-2 gap-12 mb-12">
-      <div class="space-y-4">
-        <div class="glass rounded-2xl p-5 flex gap-4 items-start"><div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background:rgba(14,165,233,.15)"><i class="fas fa-location-dot text-sky-400"></i></div><div><div class="text-white font-bold mb-1">Address</div><div class="th2 text-sm" style="font-weight:300">F6P6+239, Kadampara Chowk,<br/>Pratappur, District – Surajpur,<br/>Chhattisgarh (C.G.) - 497223</div></div></div>
-        <div class="glass rounded-2xl p-5 flex gap-4 items-start"><div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background:rgba(245,158,11,.15)"><i class="fas fa-phone text-amber-400"></i></div><div><div class="text-white font-bold mb-1">Phone</div><div class="th2 text-sm" style="font-weight:300">+91 81031 70595</div></div></div>
-        <div class="glass rounded-2xl p-5 flex gap-4 items-start"><div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background:rgba(99,102,241,.15)"><i class="fas fa-envelope text-violet-400"></i></div><div><div class="text-white font-bold mb-1">Email</div><div class="th2 text-sm" style="font-weight:300">visionitpratappur@gmail.com<br/>visionitpratappur@gmail.com</div></div></div>
-        <div class="glass rounded-2xl p-5 flex gap-4 items-start"><div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background:rgba(16,185,129,.15)"><i class="fas fa-clock text-emerald-400"></i></div><div><div class="text-white font-bold mb-1">Timing</div><div class="th2 text-sm" style="font-weight:300">Mon–Sat: 9AM–6PM<br/>Batches: Morning, Afternoon, Evening<br/>Sunday: Closed</div></div></div>
-        <div class="glass rounded-2xl p-5" style="background:rgba(14,165,233,.05);border:1px solid rgba(14,165,233,.2)"><h4 class="th font-bold mb-2">🎯 Quick Admission</h4><p class="text-slate-400 text-sm mb-3" style="font-weight:300">Seedha apply karein — 24 ghante mein call karenge</p><button onclick="applyAdmission('General')" class="btn btn-sky px-5 py-2.5 text-sm w-full justify-center">Apply for Admission</button></div>
-      </div>
-      <div class="glass rounded-3xl p-8">
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="th font-black text-xl">Send a Message</h3>
-          <button onclick="openModal('tracker-modal')" class="btn btn-ghost px-3 py-1.5 text-xs flex-shrink-0"><i class="fas fa-search mr-1"></i>Track Inquiry</button>
+  <div class="bg-hero py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <div class="slabel mb-4">Get In Touch</div>
+      <h1 class="text-4xl sm:text-5xl font-black th mb-3">Humse <span class="gt-mix">Sampark Karein</span></h1>
+      <p class="th2 text-lg max-w-xl mx-auto" style="font-weight:300">Questions, admission inquiry ya koi bhi baat — hum yahan hain!</p>
+    </div>
+  </div>
+  <div class="bg-s py-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+      <!-- Quick contact cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <a href="tel:+918103170595" class="card-flat contact-quick-card rounded-2xl p-5 text-center no-underline" style="border-color:rgba(var(--sky-rgb),.2)">
+          <div class="w-11 h-11 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background:rgba(var(--sky-rgb),.1)">
+            <i class="fas fa-phone text-sky-500"></i>
+          </div>
+          <div class="th font-bold text-sm mb-0.5">Call Karein</div>
+          <div class="th2 text-xs">+91 81031 70595</div>
+          <div class="th3 text-xs mt-1">Mon–Sat 8AM–6PM</div>
+        </a>
+        <a href="https://wa.me/918103170595?text=Hello%2C%20Vision%20IT%20ke%20baare%20mein%20jaanna%20chahta%20hoon" target="_blank" class="card-flat contact-quick-card rounded-2xl p-5 text-center no-underline" style="border-color:rgba(16,185,129,.2)">
+          <div class="w-11 h-11 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background:rgba(16,185,129,.1)">
+            <i class="fab fa-whatsapp text-emerald-500 text-lg"></i>
+          </div>
+          <div class="th font-bold text-sm mb-0.5">WhatsApp</div>
+          <div class="th2 text-xs">+91 81031 70595</div>
+          <div class="th3 text-xs mt-1">Quick Reply</div>
+        </a>
+        <a href="mailto:visionitpratappur@gmail.com" class="card-flat contact-quick-card rounded-2xl p-5 text-center no-underline" style="border-color:rgba(139,92,246,.2)">
+          <div class="w-11 h-11 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background:rgba(139,92,246,.1)">
+            <i class="fas fa-envelope text-violet-500"></i>
+          </div>
+          <div class="th font-bold text-sm mb-0.5">Email</div>
+          <div class="th2 text-xs" style="font-size:.7rem">visionitpratappur@gmail.com</div>
+          <div class="th3 text-xs mt-1">24hr Response</div>
+        </a>
+        <div class="card-flat contact-quick-card rounded-2xl p-5 text-center" style="border-color:rgba(245,158,11,.2)">
+          <div class="w-11 h-11 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background:rgba(245,158,11,.1)">
+            <i class="fas fa-location-dot text-amber-500"></i>
+          </div>
+          <div class="th font-bold text-sm mb-0.5">Hamare Yahan</div>
+          <div class="th2 text-xs">Kadampara Chowk</div>
+          <div class="th3 text-xs mt-1">Pratappur, Surajpur CG</div>
         </div>
-        <form id="contact-form" onsubmit="submitContact(event)" class="space-y-4">
-          <div class="grid sm:grid-cols-2 gap-3"><div><label class="lbl">Name *</label><input type="text" id="c-name" name="name" autocomplete="name" class="inp" placeholder="Full name" required/></div><div><label class="lbl">Phone/Email *</label><input type="text" id="c-contact" name="tel" autocomplete="tel" class="inp" placeholder="Phone or email" required/></div></div>
-          <div><label class="lbl">Subject</label><input type="text" id="c-subject" class="inp" placeholder="Subject..."/></div>
-          <div><label class="lbl">Course Interest</label><select id="c-interest" class="inp"><option value="">Select...</option><option>Basic Computer Course</option><option>Advanced Computer Course</option><option>Programming Course</option><option>Tally / Accounting</option><option>General Inquiry</option></select></div>
-          <div><label class="lbl">Message *</label><textarea id="c-message" class="inp" rows="4" placeholder="Apna message..." required></textarea></div>
-          <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center"><i class="fas fa-paper-plane"></i> Send Message</button>
-        </form>
       </div>
-    </div>
-    <!-- Map -->
-    <div class="glass rounded-3xl overflow-hidden">
-      <div class="p-5 border-b border-white/5"><h3 class="text-white font-bold"><i class="fas fa-map-location-dot text-sky-400 mr-2"></i>Find Us on Map — Kadampara Chowk, Pratappur</h3><p class="text-slate-500 text-sm mt-1">F6P6+239, Pratappur, District Surajpur, Chhattisgarh 497223</p></div>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.0!2d82.5!3d23.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sPratappur%2C%20Surajpur%2C%20Chhattisgarh!5e0!3m2!1sen!2sin!4v1!5m2!1sen!2sin" width="100%" height="360" style="border:0;display:block" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <div class="p-4 flex flex-wrap gap-3">
-        <a href="https://maps.google.com/?q=F6P6+239,Kadampara+Chowk,Pratappur,Surajpur,Chhattisgarh+497223" target="_blank" class="btn btn-sky px-4 py-2 text-sm"><i class="fas fa-directions"></i> Get Directions</a>
-        <a href="https://wa.me/918103170595?text=Hello%2C%20I%20want%20to%20know%20about%20Vision%20IT%20courses?text=Hello%2C%20I%20want%20to%20know%20about%20Vision%20IT%20courses" target="_blank" class="btn btn-green px-4 py-2 text-sm"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+
+      <!-- Form + Info grid -->
+      <div class="grid lg:grid-cols-2 gap-8 mb-10">
+
+        <!-- Message form -->
+        <div class="card rounded-2xl p-7">
+          <h2 class="th font-black text-2xl mb-1">Message Bhejein</h2>
+          <p class="th2 text-sm mb-6" style="font-weight:300">24 ghante mein reply milega</p>
+          <form id="contact-form" onsubmit="submitContact(event)" class="space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="lbl">Aapka Naam *</label>
+                <input id="c-name" type="text" class="inp" placeholder="Full name" required/>
+              </div>
+              <div>
+                <label class="lbl">Mobile / Email *</label>
+                <input id="c-contact" type="text" class="inp" placeholder="+91 XXXXX XXXXX" required/>
+              </div>
+            </div>
+            <div>
+              <label class="lbl">Subject</label>
+              <input id="c-subject" type="text" class="inp" placeholder="Kya jaanna chahte hain?"/>
+            </div>
+            <div>
+              <label class="lbl">Course Interest</label>
+              <select id="c-interest" class="inp">
+                <option value="">Select course...</option>
+                <option>Basic Computer Course</option>
+                <option>Advanced Computer Course</option>
+                <option>Tally with GST</option>
+                <option>Programming Course</option>
+                <option>Web Design Course</option>
+                <option>DTP & Graphic Design</option>
+                <option>PGDCA / DCA / ADCA</option>
+                <option>Digital Marketing</option>
+                <option>Summer Special Batch 2026</option>
+                <option>General Inquiry</option>
+              </select>
+            </div>
+            <div>
+              <label class="lbl">Message *</label>
+              <textarea id="c-message" class="inp" rows="4" placeholder="Aapka sawaal ya message..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-sky w-full py-3 justify-center font-black text-base">
+              <i class="fas fa-paper-plane mr-2"></i>Message Bhejein
+            </button>
+          </form>
+        </div>
+
+        <!-- Info panel -->
+        <div class="space-y-5">
+          <!-- Batch timings -->
+          <div class="card rounded-2xl p-6">
+            <h3 class="th font-black text-lg mb-4 flex items-center gap-2"><i class="fas fa-clock text-sky-500"></i> Batch Timings</h3>
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between p-3 rounded-xl" style="background:var(--bg2)">
+                <div class="flex items-center gap-2.5">
+                  <i class="fas fa-sun text-yellow-400 text-sm w-4"></i>
+                  <span class="th font-semibold text-sm">Morning Batch 1</span>
+                </div>
+                <span class="badge">8:00 – 10:00 AM</span>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-xl" style="background:var(--bg2)">
+                <div class="flex items-center gap-2.5">
+                  <i class="fas fa-sun text-yellow-400 text-sm w-4"></i>
+                  <span class="th font-semibold text-sm">Morning Batch 2</span>
+                </div>
+                <span class="badge">10:00 AM – 12:00 PM</span>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-xl" style="background:var(--bg2)">
+                <div class="flex items-center gap-2.5">
+                  <i class="fas fa-cloud-sun text-amber-400 text-sm w-4"></i>
+                  <span class="th font-semibold text-sm">Afternoon Batch</span>
+                </div>
+                <span class="badge badge-gold">2:00 – 4:00 PM</span>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-xl" style="background:var(--bg2)">
+                <div class="flex items-center gap-2.5">
+                  <i class="fas fa-moon text-violet-400 text-sm w-4"></i>
+                  <span class="th font-semibold text-sm">Evening Batch</span>
+                </div>
+                <span class="badge" style="background:rgba(139,92,246,.12);color:#7c3aed;border-color:rgba(139,92,246,.3)">4:00 – 6:00 PM</span>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-xl" style="background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.12)">
+                <span class="th2 text-sm">Sunday</span>
+                <span class="badge badge-red">Closed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social links -->
+          <div class="card rounded-2xl p-6">
+            <h3 class="th font-black text-lg mb-4 flex items-center gap-2"><i class="fas fa-share-nodes text-sky-500"></i> Social Media</h3>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <a href="https://www.facebook.com/profile.php?id=61586946313742" target="_blank" class="flex items-center gap-2.5 p-3 rounded-xl transition-all no-underline hover:bg-blue-50" style="border:1px solid rgba(59,130,246,.2)">
+                <i class="fab fa-facebook-f text-blue-600 w-5 text-lg"></i>
+                <div><div class="th font-semibold text-xs">Facebook</div><div class="th3 text-xs">Vision IT</div></div>
+              </a>
+              <a href="https://instagram.com/visionitinstitute" target="_blank" class="flex items-center gap-2.5 p-3 rounded-xl transition-all no-underline hover:bg-pink-50" style="border:1px solid rgba(236,72,153,.2)">
+                <i class="fab fa-instagram text-pink-500 w-5 text-lg"></i>
+                <div><div class="th font-semibold text-xs">Instagram</div><div class="th3 text-xs">@visionitinstitute</div></div>
+              </a>
+              <a href="https://chat.whatsapp.com/DJRFZ5nZGC0GzHf5siOWDi" target="_blank" class="flex items-center gap-2.5 p-3 rounded-xl transition-all no-underline hover:bg-green-50" style="border:1px solid rgba(16,185,129,.2)">
+                <i class="fab fa-whatsapp text-emerald-500 w-5 text-lg"></i>
+                <div><div class="th font-semibold text-xs">WhatsApp Group</div><div class="th3 text-xs">100+ Members</div></div>
+              </a>
+              <a href="https://wa.me/918103170595" target="_blank" class="flex items-center gap-2.5 p-3 rounded-xl transition-all no-underline" style="border:1px solid rgba(var(--sky-rgb),.25);background:rgba(var(--sky-rgb),.04)">
+                <i class="fas fa-comment-dots text-sky-500 w-5 text-lg"></i>
+                <div><div class="th font-semibold text-xs">Direct Chat</div><div class="th3 text-xs">Quick Reply</div></div>
+              </a>
+            </div>
+            <button onclick="applyAdmission('General')" class="btn btn-sky w-full py-2.5 justify-center text-sm font-black">
+              <i class="fas fa-pen-to-square mr-2"></i>Admission Apply Karein
+            </button>
+          </div>
+        </div>
       </div>
+
+      <!-- Google Map -->
+      <div class="card rounded-2xl overflow-hidden">
+        <div class="p-5 flex items-center justify-between flex-wrap gap-3" style="border-bottom:1px solid var(--border)">
+          <div>
+            <h3 class="th font-black text-lg">📍 Hamare Yahan Kaise Aayein</h3>
+            <p class="th2 text-sm mt-0.5">Kadampara Chowk, Pratappur, Dist. Surajpur, CG 497223</p>
+          </div>
+          <a href="https://maps.app.goo.gl/QPqMS4D5qzyf5p4p6" target="_blank" class="btn btn-sky px-5 py-2 text-sm">
+            <i class="fas fa-directions mr-1"></i>Directions
+          </a>
+        </div>
+        <div style="height:300px">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.6!2d82.5543!3d23.2665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sKadampara%20Chowk%2C%20Pratappur%2C%20Surajpur!5e0!3m2!1sen!2sin!4v1"
+            width="100%" height="100%" style="border:0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Vision IT Map">
+          </iframe>
+        </div>
+      </div>
+
     </div>
-  </div></div>
-  <footer class="bg-s py-14" style="border-top:1px solid var(--border);" >
+  </div>
+    <footer class="bg-s py-14" style="border-top:1px solid var(--border);" >
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid md:grid-cols-3 xl:grid-cols-5 gap-6 mb-10">
         <div class="md:col-span-1">
@@ -2064,9 +3165,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
+            <a href="/cdn-cgi/l/email-protection#42342b312b2d2c2b3632302336233232373002252f232b2e6c212d2f" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="71071802181e1f180501031005100101040331161c10181d5f121e1c">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -2085,6 +3186,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
     </div>
   </footer>
 </div>
+
 
 <!-- ====== PAGE PRIVACY ====== -->
 <div id="page-privacy" class="page pt-16">
@@ -2106,7 +3208,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
       <h2>6. Your Rights</h2>
       <ul><li>Request access to your personal data</li><li>Request correction or deletion of your data</li><li>Withdraw consent for marketing communications</li></ul>
       <h2>7. Contact Us</h2>
-      <p>For privacy-related queries, email us at: visionitpratappur@gmail.com or visit us at Kadampara Chowk, Pratappur, Surajpur, CG 497223.</p>
+      <p>For privacy-related queries, email us at: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91e7f8e2f8fefff8e5e1e3f0e5f0e1e1e4e3d1f6fcf0f8fdbff2fefc">[email&#160;protected]</a> or visit us at Kadampara Chowk, Pratappur, Surajpur, CG 497223.</p>
     </div>
   </div></div>
   <footer class="bg-s py-14" style="border-top:1px solid var(--border);" >
@@ -2173,9 +3275,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
+            <a href="/cdn-cgi/l/email-protection#6d1b041e04020304191d1f0c190c1d1d181f2d0a000c0401430e0200" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="a0d6c9d3c9cfcec9d4d0d2c1d4c1d0d0d5d2e0c7cdc1c9cc8ec3cfcd">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -2216,7 +3318,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
       <h2>7. Governing Law</h2>
       <p>These terms are governed by the laws of Chhattisgarh, India. Any disputes shall be subject to the jurisdiction of courts in Surajpur district.</p>
       <h2>8. Contact</h2>
-      <p>Queries: visionitpratappur@gmail.com | Kadampara Chowk, Pratappur, Dist. Surajpur, CG 497223</p>
+      <p>Queries: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a7c6379636564637e7a786b7e6b7a7a7f784a6d676b636624696567">[email&#160;protected]</a> | Kadampara Chowk, Pratappur, Dist. Surajpur, CG 497223</p>
     </div>
   </div></div>
   <footer class="bg-s py-14" style="border-top:1px solid var(--border);" >
@@ -2283,9 +3385,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
+            <a href="/cdn-cgi/l/email-protection#06706f756f69686f7276746772677676737446616b676f6a2865696b" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="abddc2d8c2c4c5c2dfdbd9cadfcadbdbded9ebccc6cac2c785c8c4c6">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -2471,9 +3573,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300 group">
+            <a href="/cdn-cgi/l/email-protection#addbc4dec4c2c3c4d9dddfccd9ccddddd8dfedcac0ccc4c183cec2c0" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300 group">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="9ee8f7edf7f1f0f7eaeeecffeaffeeeeebecdef9f3fff7f2b0fdf1f3">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg group">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -2601,9 +3703,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300 group">
+            <a href="/cdn-cgi/l/email-protection#e0968993898f8e8994909281948190909592a0878d81898cce838f8d" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300 group">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="99eff0eaf0f6f7f0ede9ebf8edf8e9e9ecebd9fef4f8f0f5b7faf6f4">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg group">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -2786,9 +3888,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div>
               <span>+91 81031 70595</span>
             </a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300 group">
+            <a href="/cdn-cgi/l/email-protection#0f79667c666061667b7f7d6e7b6e7f7f7a7d4f68626e6663216c6062" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300 group">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div>
-              <span>visionitpratappur@gmail.com</span>
+              <span><span class="__cf_email__" data-cfemail="e6908f958f89888f92969487928796969394a6818b878f8ac885898b">[email&#160;protected]</span></span>
             </a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg group">
               <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div>
@@ -2860,7 +3962,20 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
               </div>
             </div>
 
-            <form id="admission-page-form" onsubmit="submitAdmissionPage(event)" class="space-y-5" novalidate>
+            <!-- Step indicator -->
+              <div class="flex items-center gap-0 mb-6">
+                <div class="flex items-center flex-1">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-white flex-shrink-0 z-10" style="background:var(--sky)">1</div>
+                  <div class="flex-1 h-1" style="background:linear-gradient(90deg,var(--sky),var(--accent));opacity:.5"></div>
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-white flex-shrink-0 z-10" style="background:var(--accent)">2</div>
+                  <div class="flex-1 h-1" style="background:linear-gradient(90deg,var(--accent),var(--gold));opacity:.5"></div>
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-white flex-shrink-0 z-10" style="background:var(--gold)">3</div>
+                </div>
+              </div>
+              <div class="flex justify-between text-xs th3 -mt-4 mb-5">
+                <span>Personal Info</span><span class="ml-4">Course</span><span>Details</span>
+              </div>
+              <form id="admission-page-form" onsubmit="submitAdmissionPage(event)" class="space-y-5" novalidate>
 
               <!-- Step 1: Personal Info -->
               <div>
@@ -3087,9 +4202,9 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,.15)"><i class="fab fa-whatsapp text-green-400 text-sm"></i></div>
                 <div><div class="th text-sm font-bold">WhatsApp Chat</div><div class="th3 text-xs">Instant reply milega</div></div>
               </a>
-              <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2.5 rounded-xl transition-all hover:bg-white/5">
+              <a href="/cdn-cgi/l/email-protection#67110e140e08090e1317150613061717121527000a060e0b4904080a" class="flex items-center gap-3 p-2.5 rounded-xl transition-all hover:bg-white/5">
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.15)"><i class="fas fa-envelope text-sky-400 text-sm"></i></div>
-                <div><div class="th text-sm font-bold">visionitpratappur@gmail.com</div><div class="th3 text-xs">Email bhejein</div></div>
+                <div><div class="th text-sm font-bold"><span class="__cf_email__" data-cfemail="04726d776d6b6a6d70747665706574747176446369656d682a676b69">[email&#160;protected]</span></div><div class="th3 text-xs">Email bhejein</div></div>
               </a>
             </div>
             <div class="mt-3 pt-3 th3 text-xs text-center" style="border-top:1px solid var(--border)">
@@ -3188,7 +4303,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
           <div class="space-y-2 text-sm th2 font-medium">
             <div class="flex items-start gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 transition-all duration-300"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-location-dot text-sky-400"></i></div><div class="mt-1 leading-relaxed">Kadampara Chowk,<br/>Pratappur, Dist – Surajpur,<br/>Chhattisgarh (C.G.) - 497223</div></div>
             <a href="tel:+918103170595" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone text-sky-400"></i></div><span>+91 81031 70595</span></a>
-            <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div><span>visionitpratappur@gmail.com</span></a>
+            <a href="/cdn-cgi/l/email-protection#55233c263c3a3b3c21252734213425252027153238343c397b363a38" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-white/5 hover:text-sky-400 transition-all duration-300"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope text-sky-400"></i></div><span><span class="__cf_email__" data-cfemail="1f69766c767071766b6f6d7e6b7e6f6f6a6d5f78727e7673317c7072">[email&#160;protected]</span></span></a>
             <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock text-sky-400"></i></div><span>Mon–Sat 8AM–6PM</span></div>
           </div>
         </div>
@@ -4516,7 +5631,7 @@ body,nav,section,footer,aside,main,.card,.card-flat,.glass,.glass-strong,.modal-
   </div>
 </div>
 <!-- ====== FIREBASE + JAVASCRIPT ====== -->
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,updateProfile}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import{getFirestore,collection,addDoc,getDocs,doc,deleteDoc,updateDoc,query,orderBy,serverTimestamp,increment,getDoc,setDoc}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
@@ -4533,9 +5648,12 @@ window._blogsMap={};
 
 // ── Toast ──
 window.toast=(msg,type='inf')=>{
+  const icons={ok:'✅',err:'❌',inf:'ℹ️'};
   const t=document.getElementById('toast');
-  t.textContent=msg;t.className='show '+type;
-  setTimeout(()=>t.classList.remove('show'),3500);
+  t.innerHTML=`<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
+  t.classList.add('show');
+  clearTimeout(t._tid);
+  t._tid=setTimeout(()=>t.classList.remove('show'),3500);
 };
 
 // ── Modal helpers ──
@@ -5302,6 +6420,40 @@ function renderBlogs(){
   let bs=[...allBlogs];
   if(curBlogCat!=='all')bs=bs.filter(b=>b.category===curBlogCat);
   if(!bs.length){g.innerHTML='<div class="col-span-3 text-center text-slate-500 py-16"><div class="text-4xl mb-3">📰</div><p>Is category mein koi post nahi</p></div>';return;}
+  // Featured post
+  const featured=document.getElementById('blog-featured');
+  if(featured && bs.length>0 && curBlogCat==='all'){
+    const fb=bs[0];
+    const fimg=fb.image||'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&q=80';
+    const fdate=fb.createdAt?.toDate?fb.createdAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):fb.dateStr||'Recent';
+    featured.classList.remove('hidden');
+    featured.innerHTML=`<div class="card rounded-2xl overflow-hidden cursor-pointer group" onclick="openBlogPost('${fb.id}')">
+      <div class="grid md:grid-cols-5">
+        <div class="md:col-span-2 relative overflow-hidden" style="min-height:220px">
+          <img src="${fimg}" alt="${fb.title}" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-105" loading="lazy"/>
+          <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(79,70,229,.25),transparent)"></div>
+          <span class="absolute top-4 left-4 badge" style="background:var(--sky);color:#fff;border:none;font-size:.75rem">⭐ Featured</span>
+        </div>
+        <div class="md:col-span-3 p-6 sm:p-8 flex flex-col justify-center">
+          ${fb.category?`<span class="badge mb-3 inline-block">${fb.category}</span>`:''}
+          <h2 class="th font-black text-xl sm:text-2xl leading-tight mb-3 lc2">${fb.title}</h2>
+          <p class="th2 text-sm leading-relaxed mb-5 lc3" style="font-weight:300">${fb.description}</p>
+          <div class="flex items-center justify-between text-xs th3">
+            <div class="flex items-center gap-3">
+              <span><i class="fas fa-calendar-alt mr-1 text-sky-400"></i>${fdate}</span>
+              ${fb.author?`<span><i class="fas fa-user mr-1 text-sky-400"></i>${fb.author}</span>`:''}
+            </div>
+            <div class="flex items-center gap-3">
+              <span><i class="fas fa-heart text-red-400 mr-1"></i>${fb.likes||0}</span>
+              <span><i class="fas fa-comment text-sky-400 mr-1"></i>${fb.comments||0}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    bs=bs.slice(1);
+  } else if(featured) featured.classList.add('hidden');
+
   g.innerHTML=bs.map(b=>{
     const img=b.image||'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&q=80';
     const date=b.createdAt?.toDate?b.createdAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):b.dateStr||'Recent';
@@ -5327,6 +6479,53 @@ function renderBlogs(){
     </div>`;
   }).join('');
 }
+
+// Blog search filter
+window.filterBlogSearch=()=>{
+  const q=(document.getElementById('blog-search')?.value||'').toLowerCase();
+  if(!q){renderBlogs();return;}
+  const g=document.getElementById('blog-grid');if(!g)return;
+  const featured=document.getElementById('blog-featured');
+  if(featured)featured.classList.add('hidden');
+  const filtered=allBlogs.filter(b=>
+    (b.title||'').toLowerCase().includes(q)||
+    (b.description||'').toLowerCase().includes(q)||
+    (b.category||'').toLowerCase().includes(q)
+  );
+  if(!filtered.length){g.innerHTML=`<div class="col-span-3 text-center py-14"><div class="text-4xl mb-3">🔍</div><p class="th2">"${q}" ke liye koi result nahi mila</p></div>`;return;}
+  g.innerHTML=filtered.map(b=>getBlogCardHTML(b)).join('');
+};
+
+// Load more blogs
+window.loadMoreBlogs=()=>{
+  const wrap=document.getElementById('blog-load-more-wrap');
+  if(wrap)wrap.classList.add('hidden');
+};
+
+function getBlogCardHTML(b){
+    const img=b.image||'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&q=80';
+    const date=b.createdAt?.toDate?b.createdAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):b.dateStr||'Recent';
+    return`<div class="card cursor-pointer group" onclick="openBlogPost('${b.id}')">
+      <div class="h-48 overflow-hidden" style="border-radius:16px 16px 0 0">
+        <img src="${img}" alt="${b.title}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&q=80'"/>
+      </div>
+      <div class="p-5">
+        ${b.category?`<span class="badge mb-3 inline-block">${b.category}</span>`:''}
+        <h3 class="text-white font-black text-lg mb-2 lc2 leading-snug">${b.title}</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-4 lc3" style="font-weight:300">${b.description}</p>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3 text-xs text-slate-500">
+            <span><i class="fas fa-calendar-alt text-sky-400 mr-1"></i>${date}</span>
+            ${b.author?`<span><i class="fas fa-user text-sky-400 mr-1"></i>${b.author}</span>`:''}
+          </div>
+          <div class="flex items-center gap-3 text-xs text-slate-400">
+            <span><i class="fas fa-heart text-red-400 mr-1"></i>${b.likes||0}</span>
+            <span><i class="fas fa-comment text-sky-400 mr-1"></i>${b.comments||0}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
 
 window.setBlogFilter=(el,cat)=>{
   document.querySelectorAll('#blog-cat-filters .filter-btn').forEach(b=>b.classList.remove('active'));
@@ -6146,37 +7345,9 @@ async function loadAdmApps(){
   }catch{}
 }
 
-// ── THEME TOGGLE ──
-(()=>{
-  const saved = localStorage.getItem('vit-theme') || 'dark';
-  applyTheme(saved);
-})();
+// ── THEME TOGGLE — 3 themes: dark → light → royal ──
 
-function applyTheme(theme){
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('vit-theme', theme);
-  const icon = theme === 'light' ? '☀️' : '🌙';
-  const label = theme === 'light' ? 'Light Mode' : 'Dark Mode';
-  const btn = document.getElementById('theme-toggle');
-  if(btn) btn.querySelector('.t-icon').textContent = icon;
-  const mobIcon = document.getElementById('mob-theme-icon');
-  const mobLabel = document.getElementById('mob-theme-label');
-  if(mobIcon) mobIcon.textContent = icon;
-  if(mobLabel) mobLabel.textContent = label;
-}
 
-window.toggleTheme = () => {
-  const current = document.documentElement.getAttribute('data-theme') || 'dark';
-  const next = current === 'dark' ? 'light' : 'dark';
-  applyTheme(next);
-  // Re-animate icon
-  const btn = document.getElementById('theme-toggle');
-  if(btn){
-    const ic = btn.querySelector('.t-icon');
-    ic.style.animation='none';
-    requestAnimationFrame(()=>ic.style.animation='themeSwitch .35s ease');
-  }
-};
 
 
 // ── Nav Dropdown toggle ──
@@ -6186,6 +7357,21 @@ window.toggleNavDropdown = id => {
     if(d !== id) document.getElementById(d)?.classList.add('hidden');
   });
   document.getElementById(id)?.classList.toggle('hidden');
+};
+
+// About page FAQ toggle
+window.toggleAboutFaq = btn => {
+  const ans = btn.nextElementSibling;
+  const icon = btn.querySelector('i');
+  const isOpen = !ans.classList.contains('hidden');
+  // Close all
+  document.querySelectorAll('#about-faq-list .faq-ans').forEach(a => a.classList.add('hidden'));
+  document.querySelectorAll('#about-faq-list .faq-q i').forEach(i => i.style.transform = '');
+  // Open clicked if was closed
+  if(!isOpen){
+    ans.classList.remove('hidden');
+    if(icon) icon.style.transform = 'rotate(180deg)';
+  }
 };
 window.closeNavDropdowns = () => {
   ['more-dropdown','portal-dropdown'].forEach(d =>
@@ -6234,17 +7420,20 @@ document.addEventListener('click', e => {
     }
   },{passive:true});
 
-  // Re-check on page switch
-  const origShowPage=window.showPage;
-  window.showPage=id=>{
-    origShowPage(id);
-    setTimeout(()=>{
-      window.scrollTo(0,0);
-      lastY=0;
-      if(id==='home'){nav.classList.remove('scrolled','hidden-nav');}
-      else{nav.classList.add('scrolled');nav.classList.remove('hidden-nav');}
-    },50);
-  };
+  // Re-check on page switch (lazy capture - waits for module to load)
+  window.addEventListener('load',()=>{
+    const origShowPage=window.showPage;
+    if(!origShowPage)return;
+    window.showPage=id=>{
+      origShowPage(id);
+      setTimeout(()=>{
+        window.scrollTo(0,0);
+        lastY=0;
+        if(id==='home'){nav.classList.remove('scrolled','hidden-nav');}
+        else{nav.classList.add('scrolled');nav.classList.remove('hidden-nav');}
+      },50);
+    };
+  });
 
   updateNav();
 })();
@@ -8208,76 +9397,62 @@ window.submitAdmissionPage=async e=>{
       studentName:name,
       mobile:mobile,
       email:g('adm-pg-email'),
-      dob:g('adm-pg-dob'),
-      gender:document.getElementById('adm-pg-gender')?.value||'',
-      qualification:document.getElementById('adm-pg-qualification')?.value||'',
+      dob':g('adm-pg-dob'),
+      gender:g('adm-pg-gender'),
+      qualification:g('adm-pg-qualification'),
       address:g('adm-pg-address'),
       course:course,
       batch:batch,
       joiningDate:g('adm-pg-joindate'),
-      computerKnowledge:document.getElementById('adm-pg-knowledge')?.value||'',
-      paymentPreference:document.getElementById('adm-pg-payment')?.value||'',
-      message:g('adm-pg-message'),
+      computerKnowledge:g('adm-pg-knowledge'),
+      paymentPreference:g('adm-pg-payment'),
       source:g('adm-pg-source'),
-      userId:CU?.uid||'',
-      userEmail:CU?.email||g('adm-pg-email'),
+      message:g('adm-pg-message'),
       trackerStatus:'new',
       formType:'admission_page',
       timestamp:serverTimestamp(),
     });
 
-    // Show success
-    document.getElementById('admission-page-form').classList.add('hidden');
-    document.getElementById('adm-pg-success').classList.remove('hidden');
-    window.scrollTo({top:0,behavior:'smooth'});
-    toast('Application submit ho gayi! 🎉','ok');
+    // Show success state
+    const form=document.getElementById('admission-page-form');
+    const success=document.getElementById('adm-pg-success');
+    const stepBar=document.querySelector('.flex.items-center.gap-0.mb-6');
+    if(form)form.classList.add('hidden');
+    if(stepBar)stepBar.style.display='none';
+    if(success)success.classList.remove('hidden');
+    toast('Application submit ho gayi! ✅ Hum 24 ghante mein contact karenge.','ok');
+
+    // WhatsApp notification
+    const waMsg=encodeURIComponent(`Hello Vision IT! Mera naam ${name} hai. Mobile: ${mobile}. Maine ${course} course ke liye online admission form fill kiya hai. Please contact karein.`);
+    setTimeout(()=>{
+      if(confirm('WhatsApp pe bhi inform karein?')){
+        window.open(`https://wa.me/918103170595?text=${waMsg}`,'_blank');
+      }
+    },1500);
 
   }catch(err){
-    toast('Submit nahi hua: '+err.message,'err');
-    if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane mr-2"></i>Submit Admission Form';}
+    toast('Submission failed: '+err.message,'err');
+    if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane mr-2"></i>Submit Karein';}
   }
 };
 
-// Init admission page when shown
-const _admOrigShow=window.showPage;
-window.showPage=id=>{
-  _admOrigShow(id);
-  if(id==='admission'){
-    initAdmCourseCards();
-    // Pre-fill if logged in
-    if(CU){
-      const nm=document.getElementById('adm-pg-name');
-      const em=document.getElementById('adm-pg-email');
-      if(nm&&!nm.value)nm.value=CU.displayName||'';
-      if(em&&!em.value)em.value=CU.email||'';
-    }
-    // Reset form state
-    document.getElementById('adm-pg-success')?.classList.add('hidden');
-    document.getElementById('admission-page-form')?.classList.remove('hidden');
-    const sb=document.getElementById('adm-pg-submit');
-    if(sb){sb.disabled=false;sb.innerHTML='<i class="fas fa-paper-plane mr-2"></i>Submit Admission Form';}
+// Course cards init on admission page load
+window.addEventListener('load',()=>{
+  document.body.style.opacity='1';
+  // Init admission page courses when it becomes visible
+  const admPage=document.getElementById('page-admission');
+  if(admPage){
+    const observer=new MutationObserver(()=>{
+      if(admPage.classList.contains('active')){
+        initAdmCourseCards();
+        observer.disconnect();
+      }
+    });
+    observer.observe(admPage,{attributes:true,attributeFilter:['class']});
   }
-};
-
-// ── Hero scroll hint ──
-(()=>{
-  const hint=document.querySelector('.scroll-hint');
-  if(hint){
-    window.addEventListener('scroll',()=>{
-      if(window.scrollY>80)hint.style.opacity='0';
-      else hint.style.opacity='1';
-    },{passive:true});
-  }
-})();
-
-// ── Smooth page reveal on load ──
-(()=>{
-  document.body.style.opacity='0';
-  document.body.style.transition='opacity .4s ease';
-  window.addEventListener('load',()=>{document.body.style.opacity='1';});
-})();
-
+});
 
 </script>
+</div><!-- /main-site -->
 </body>
 </html>
