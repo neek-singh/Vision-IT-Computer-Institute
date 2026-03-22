@@ -1,14 +1,13 @@
 {
   "name": "Vision IT Computer Institute",
   "short_name": "Vision IT",
-  "description": "Surajpur ka #1 computer training center — Basic Computer, Tally, Programming, Web Design. Admission Open 2026!",
+  "description": "Surajpur ka #1 Computer Training Center — Basic Computer, Tally, Web Design, Programming",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f0f1a",
-  "theme_color": "#6366f1",
+  "background_color": "#faf9f7",
+  "theme_color": "#2d6a9f",
   "orientation": "portrait-primary",
   "lang": "hi-IN",
-  "categories": ["education", "training"],
   "icons": [
     {
       "src": "/bg-Logo.png",
@@ -23,34 +22,28 @@
       "purpose": "any maskable"
     }
   ],
+  "shortcuts": [
+    {
+      "name": "Admission Apply",
+      "short_name": "Apply",
+      "description": "Vision IT mein admission ke liye apply karein",
+      "url": "/admission",
+      "icons": [{ "src": "/bg-Logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Courses",
+      "short_name": "Courses",
+      "description": "Hamare sabhi computer courses dekhein",
+      "url": "/courses",
+      "icons": [{ "src": "/bg-Logo.png", "sizes": "96x96" }]
+    }
+  ],
+  "categories": ["education", "productivity"],
   "screenshots": [
     {
       "src": "/bg-Logo.png",
-      "sizes": "1280x720",
+      "sizes": "1080x1920",
       "type": "image/png"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Courses Dekhen",
-      "short_name": "Courses",
-      "description": "All computer courses",
-      "url": "/?page=courses",
-      "icons": [{ "src": "/bg-Logo.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "Admission Apply",
-      "short_name": "Admission",
-      "description": "Apply for admission",
-      "url": "/?page=admission",
-      "icons": [{ "src": "/bg-Logo.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "Contact Us",
-      "short_name": "Contact",
-      "description": "Call or WhatsApp",
-      "url": "/?page=contact",
-      "icons": [{ "src": "/bg-Logo.png", "sizes": "96x96" }]
     }
   ]
 }

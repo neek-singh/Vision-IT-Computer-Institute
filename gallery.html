@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<!-- ═══ FAVICON ═══ -->
+<link rel="icon" type="image/png" href="/bg-Logo.png"/>
+<link rel="shortcut icon" href="/bg-Logo.png"/>
+<link rel="apple-touch-icon" href="/bg-Logo.png"/>
+<link rel="manifest" href="/manifest.json"/>
+
+<!-- ═══ PRECONNECT ═══ -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com"/>
+
+<!-- ═══ SEO ═══ -->
+<title>Campus Gallery | Vision IT Computer Institute Surajpur CG</title>
+<meta name="description" content="See Vision IT campus photos — lab sessions, certificate ceremonies, workshops, student life at Pratappur, Surajpur CG. Computer training institute gallery 2026."/>
+<meta name="keywords" content="Vision IT gallery, computer institute photos Surajpur, campus life Pratappur CG, lab sessions, certificate ceremony, computer training photos CG"/>
+<meta name="author" content="Vision IT Computer Institute"/>
+<meta name="robots" content="index, follow, max-image-preview:large"/>
+<meta name="theme-color" content="#2d6a9f"/>
+<link rel="canonical" href="https://visionitinstitute.vercel.app/gallery"/>
+
+<!-- ═══ OG ═══ -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Campus Gallery | Vision IT Computer Institute Surajpur CG"/>
+<meta property="og:description" content="Vision IT campus photos — lab sessions, certificate ceremonies, workshops, student life at Pratappur, Surajpur CG."/>
+<meta property="og:url" content="https://visionitinstitute.vercel.app/gallery"/>
+<meta property="og:image" content="https://visionitinstitute.vercel.app/bg-Logo.png"/>
+<meta property="og:locale" content="hi_IN"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Campus Gallery | Vision IT Computer Institute"/>
+<meta name="twitter:description" content="Lab sessions, certificate ceremonies, workshops — student life at Vision IT Pratappur CG."/>
+<meta name="twitter:image" content="https://visionitinstitute.vercel.app/bg-Logo.png"/>
+
+<!-- ═══ SCHEMA ═══ -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://visionitinstitute.vercel.app/"},
+    {"@type":"ListItem","position":2,"name":"Gallery","item":"https://visionitinstitute.vercel.app/gallery"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"ImageGallery",
+  "name":"Vision IT Computer Institute Campus Gallery",
+  "description":"Lab sessions, certificate ceremonies, workshops aur student life at Vision IT, Pratappur, Surajpur CG",
+  "url":"https://visionitinstitute.vercel.app/gallery",
+  "author":{"@type":"Organization","name":"Vision IT Computer Institute"}
+}
+</script>
+
+<!-- ═══ FONTS ═══ -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/assets/css/style.css"/>
+<script>(function(){var t=localStorage.getItem('vit-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
+<style>
+/* ── Masonry grid ── */
+.gallery-masonry {
+  columns: 2; column-gap: .75rem;
+}
+@media(min-width:640px)  { .gallery-masonry { columns: 3; } }
+@media(min-width:1024px) { .gallery-masonry { columns: 4; } }
+
+.gallery-item {
+  break-inside: avoid; margin-bottom: .75rem;
+  border-radius: var(--radius-lg); overflow: hidden;
+  cursor: pointer; position: relative;
+  background: var(--bg3);
+}
+.gallery-item img {
+  width: 100%; height: auto; display: block;
+  transition: transform .45s ease;
+  border-radius: var(--radius-lg);
+}
+.gallery-item:hover img { transform: scale(1.04); }
+
+.gallery-item .overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(17,17,16,.7) 0%, transparent 55%);
+  opacity: 0; transition: opacity .3s;
+  border-radius: var(--radius-lg);
+  display: flex; align-items: flex-end; padding: .85rem;
+}
+.gallery-item:hover .overlay { opacity: 1; }
+.caption {
+  color: #fff; font-size: .78rem; font-weight: 600;
+  background: rgba(0,0,0,.35); padding: .2rem .6rem;
+  border-radius: 20px; backdrop-filter: blur(4px);
+}
+
+/* ── Lightbox ── */
+#lightbox {
+  display: none; position: fixed; inset: 0; z-index: 2000;
+  background: rgba(13,15,20,.95); backdrop-filter: blur(20px);
+  align-items: center; justify-content: center;
+  padding: 1rem;
+}
+#lightbox.open { display: flex; }
+
+#lb-img {
+  max-width: min(90vw, 900px); max-height: 85vh;
+  border-radius: var(--radius-lg); object-fit: contain;
+  box-shadow: 0 32px 80px rgba(0,0,0,.6);
+  transition: opacity .25s ease;
+}
+#lb-caption {
+  position: absolute; bottom: 1.5rem; left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,.8); font-size: .85rem; font-weight: 500;
+  background: rgba(0,0,0,.5); padding: .35rem 1rem;
+  border-radius: 20px; backdrop-filter: blur(8px);
+  white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;
+}
+#lb-close {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.15);
+  color: #fff; font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+#lb-close:hover { background: rgba(255,255,255,.25); }
+
+.lb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  color: #fff; font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s; z-index: 10;
+}
+.lb-nav:hover { background: rgba(255,255,255,.25); }
+#lb-prev { left: 1rem; }
+#lb-next { right: 1rem; }
+#lb-counter {
+  position: absolute; top: 1.25rem; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,.5); font-size: .8rem; font-weight: 500;
+  background: rgba(0,0,0,.4); padding: .25rem .75rem; border-radius: 20px;
+}
+
+/* ── Filter bar ── */
+.gal-filter {
+  padding: .35rem .85rem; border-radius: 20px;
+  border: 1.5px solid var(--border2);
+  color: var(--ink2); font-size: .82rem; font-weight: 600;
+  cursor: pointer; background: transparent; font-family: inherit;
+  transition: all .15s;
+}
+.gal-filter:hover { border-color: rgba(var(--sky-rgb),.5); color: var(--sky); }
+.gal-filter.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ── Photo count badge ── */
+.photo-count {
+  display: inline-flex; align-items: center; gap: .35rem;
+  background: rgba(var(--sky-rgb),.1); color: var(--sky);
+  border: 1px solid rgba(var(--sky-rgb),.2);
+  padding: .2rem .65rem; border-radius: 20px;
+  font-size: .75rem; font-weight: 600;
+}
+
+/* ── Instagram strip ── */
+.insta-card {
+  aspect-ratio: 1; border-radius: var(--radius);
+  overflow: hidden; background: var(--bg3); cursor: pointer;
+}
+.insta-card img { width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
+.insta-card:hover img { transform: scale(1.06); }
+.insta-card .insta-overlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,.5);
+  opacity: 0; transition: opacity .3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.insta-card:hover .insta-overlay { opacity: 1; }
+</style>
+</head>
+
+<body class="pgIn">
+
+<!-- ═══ TOP BANNER ═══ -->
+<div id="top-banner" style="display:none;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;padding:.5rem 1rem;background:var(--sky);position:fixed;top:0;left:0;right:0;z-index:1001;">
+  <span id="top-banner-text">🎉 Vision IT mein Admission Open hai!</span>
+  <button id="top-banner-cta">Apply Now</button>
+  <button id="top-banner-close" title="Close">×</button>
+</div>
+<div id="toast"></div>
+<div id="mob-overlay"></div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="/" class="flex items-center gap-2.5 no-underline" id="logo-btn">
+        <img src="/bg-Logo.png" alt="Vision IT Logo" class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32" loading="eager"/>
+        <div>
+          <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1">Vision IT</div>
+          <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:600">Computer Institute</div>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="/"          class="nav-link">Home</a>
+        <a href="/courses"   class="nav-link">Courses</a>
+        <a href="/about"     class="nav-link">About</a>
+        <a href="/blog"      class="nav-link">Blog</a>
+        <a href="/contact"   class="nav-link">Contact</a>
+        <div class="relative" id="nav-more-wrap">
+          <button class="nav-link flex items-center gap-1" onclick="toggleNavDropdown('more-dropdown')" style="background:none;border:none;cursor:pointer;font-family:inherit">
+            More <i class="fas fa-chevron-down" style="font-size:.6rem;opacity:.6"></i>
+          </button>
+          <div id="more-dropdown" class="nav-dropdown hidden absolute top-full left-0 mt-2 w-48 p-1.5 z-50">
+            <a href="/gallery"     class="nav-drop-item" style="color:var(--sky);font-weight:600">🖼️ Gallery</a>
+            <a href="/results"     class="nav-drop-item">📊 My Results</a>
+            <a href="/certificate" class="nav-drop-item">🎓 Certificate</a>
+          </div>
+        </div>
+        <button data-theme-toggle aria-label="Toggle dark mode" style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i class="fas fa-moon"></i></button>
+        <a href="/admission" class="nav-link" style="color:var(--sky);font-weight:600">Admission</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <button id="nav-login-btn" onclick="openModal('auth-modal')" class="btn btn-ghost py-1.5 px-4 text-sm">Login</button>
+        <div id="nav-user-wrap" class="hidden items-center gap-2">
+          <div id="nav-avatar-wrap" onclick="openModal('profile-modal')" class="cursor-pointer">
+            <div id="nav-avatar-img" class="w-8 h-8 rounded-full overflow-hidden hidden"><img id="nav-avatar-photo" src="" alt="Profile" class="w-full h-full object-cover"/></div>
+            <div id="nav-avatar-txt" class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style="background:var(--ink);color:#fff">U</div>
+          </div>
+          <span class="text-sm font-medium cursor-pointer" id="nav-uname" style="color:var(--ink)">User</span>
+          <button onclick="logoutUser()" style="color:var(--ink3);background:none;border:none;cursor:pointer;font-size:.8rem;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+      </div>
+      <div class="md:hidden flex items-center gap-2">
+        <button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i class="fas fa-moon"></i></button>
+        <button id="nav-hamburger" aria-label="Open menu" style="color:var(--ink2);background:none;border:none;cursor:pointer;padding:.4rem;"><i class="fas fa-bars text-lg"></i></button>
+      </div>
+    </div>
+  </div>
+  <div id="mob-menu">
+    <div class="px-4 py-4 space-y-0.5">
+      <a href="/"          class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">🏠 Home</a>
+      <a href="/courses"   class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">📚 Courses</a>
+      <a href="/about"     class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">ℹ️ About</a>
+      <a href="/blog"      class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">📰 Blog</a>
+      <a href="/contact"   class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">📬 Contact</a>
+      <a href="/gallery"   class="nav-link active block px-3 py-2.5 rounded-lg" style="background:var(--bg2)">🖼️ Gallery</a>
+      <a href="/admission" class="nav-link block px-3 py-2.5 rounded-lg font-semibold" style="color:var(--sky)">📝 Admission</a>
+      <div style="height:1px;background:var(--border);margin:.75rem 0"></div>
+      <button id="mob-login-btn" onclick="openModal('auth-modal')" class="btn btn-sky w-full py-2.5 text-sm justify-center">Login / Register</button>
+      <div id="mob-user-row" class="hidden items-center gap-3 px-3 py-2">
+        <div id="mob-avatar-txt" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm" style="background:var(--ink);color:#fff">U</div>
+        <div class="flex-1"><div id="mob-uname" class="th font-semibold text-sm">User</div></div>
+        <button onclick="logoutUser()" class="btn btn-ghost text-xs px-3 py-1.5">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="pt-24 pb-12" style="background:var(--bg2)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+    <nav aria-label="Breadcrumb" class="flex items-center justify-center gap-2 mb-5 text-sm th3">
+      <a href="/" class="hover:text-sky-400 transition-colors no-underline th3">Home</a>
+      <i class="fas fa-chevron-right text-[10px]"></i>
+      <span style="color:var(--sky)">Gallery</span>
+    </nav>
+    <div class="slabel mb-3">Campus Life</div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2rem,4.5vw,3rem);font-weight:400;color:var(--ink);line-height:1.1;margin-bottom:1rem">
+      Student <span style="color:var(--sky);font-style:italic">Gallery</span>
+    </h1>
+    <p class="th2 max-w-xl mx-auto mb-5" style="font-weight:300">Lab sessions, certificate ceremonies, workshops aur memorable moments — Vision IT ki zindagi</p>
+    <span class="photo-count" id="photo-count-badge"><i class="fas fa-images"></i> Loading...</span>
+  </div>
+</section>
+
+<!-- ═══ FILTER BAR ═══ -->
+<div style="background:var(--bg);border-bottom:1px solid var(--border);position:sticky;top:56px;z-index:100;padding:.85rem 0;backdrop-filter:blur(12px)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-wrap gap-2 items-center" id="gallery-filters" role="group" aria-label="Filter gallery">
+      <button class="gal-filter active" data-cat="all"       onclick="setGalleryFilter(this,'all')">📷 All Photos</button>
+      <button class="gal-filter"        data-cat="lab"       onclick="setGalleryFilter(this,'lab')">💻 Lab Sessions</button>
+      <button class="gal-filter"        data-cat="ceremony"  onclick="setGalleryFilter(this,'ceremony')">🏆 Ceremonies</button>
+      <button class="gal-filter"        data-cat="classroom" onclick="setGalleryFilter(this,'classroom')">📚 Classroom</button>
+      <button class="gal-filter"        data-cat="workshop"  onclick="setGalleryFilter(this,'workshop')">🎯 Workshops</button>
+      <button class="gal-filter"        data-cat="campus"    onclick="setGalleryFilter(this,'campus')">🏫 Campus</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MASONRY GRID ═══ -->
+<main class="py-10" style="background:var(--bg)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <!-- Loading state -->
+    <div id="gallery-loading" class="text-center py-20">
+      <div class="spin-el mx-auto mb-4"></div>
+      <p class="th2 text-sm">Photos load ho rahe hain...</p>
+    </div>
+
+    <!-- Main masonry grid (default photos) -->
+    <div class="gallery-masonry" id="gallery-main-grid" style="display:none"></div>
+
+    <!-- Firestore extra photos -->
+    <div class="gallery-masonry mt-0" id="gallery-firestore-grid"></div>
+
+    <!-- No results -->
+    <div id="gallery-no-results" class="hidden text-center py-20">
+      <div class="text-6xl mb-4">🖼️</div>
+      <h3 class="th font-bold text-xl mb-2">Is category mein koi photo nahi</h3>
+      <button onclick="setGalleryFilter(document.querySelector('.gal-filter'),'all')" class="btn btn-sky px-6 py-2.5 text-sm mt-4">All Photos Dekhein</button>
+    </div>
+
+    <!-- Instagram follow -->
+    <div class="text-center mt-12 pt-10" style="border-top:1px solid var(--border)">
+      <p class="th2 text-sm mb-4" style="font-weight:300">Campus ki aur photos dekhne ke liye Instagram follow karein 📸</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="https://instagram.com/visionitinstitute" target="_blank" rel="noopener"
+           class="btn btn-ghost px-6 py-2.5 text-sm">
+          <i class="fab fa-instagram text-lg" style="color:#e6683c"></i> @visionitinstitute
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61586946313742" target="_blank" rel="noopener"
+           class="btn btn-ghost px-6 py-2.5 text-sm">
+          <i class="fab fa-facebook-f" style="color:#1877f2"></i> Facebook Page
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══ INSTAGRAM PREVIEW STRIP ═══ -->
+<section class="py-14" style="background:var(--bg2)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-8">
+      <div class="slabel mb-3">Social Media</div>
+      <h2 class="text-2xl font-black th mb-2">
+        Follow Us on <span style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Instagram</span>
+      </h2>
+      <a href="https://instagram.com/visionitinstitute" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 mt-2 text-sm font-bold no-underline" style="color:#e6683c">
+        <i class="fab fa-instagram text-lg"></i>@visionitinstitute
+      </a>
+    </div>
+    <div class="grid grid-cols-3 sm:grid-cols-6 gap-3">
+      <div class="insta-card relative">
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=300&q=80" alt="Lab" loading="lazy"/>
+        <div class="insta-overlay"><i class="fab fa-instagram text-white text-2xl"></i></div>
+      </div>
+      <div class="insta-card relative">
+        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=300&q=80" alt="Coding" loading="lazy"/>
+        <div class="insta-overlay"><i class="fab fa-instagram text-white text-2xl"></i></div>
+      </div>
+      <div class="insta-card relative">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300&q=80" alt="Learn" loading="lazy"/>
+        <div class="insta-overlay"><i class="fab fa-instagram text-white text-2xl"></i></div>
+      </div>
+      <div class="insta-card relative">
+        <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=300&q=80" alt="Tech" loading="lazy"/>
+        <div class="insta-overlay"><i class="fab fa-instagram text-white text-2xl"></i></div>
+      </div>
+      <div class="insta-card relative">
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&q=80" alt="Code" loading="lazy"/>
+        <div class="insta-overlay"><i class="fab fa-instagram text-white text-2xl"></i></div>
+      </div>
+      <a href="https://instagram.com/visionitinstitute" target="_blank" rel="noopener"
+         class="insta-card relative flex items-center justify-center no-underline" style="background:linear-gradient(135deg,rgba(240,148,51,.2),rgba(188,24,136,.2))">
+        <div class="text-center">
+          <i class="fab fa-instagram text-3xl mb-1" style="color:#e6683c"></i>
+          <div class="th font-bold text-xs">View More</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="py-14" style="background:var(--bg)">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+    <div class="glass rounded-2xl p-8">
+      <div class="text-4xl mb-4">🎓</div>
+      <h2 class="text-2xl font-black th mb-3">Aap Bhi Vision IT Ka Hissa Banein</h2>
+      <p class="th2 mb-6" style="font-weight:300">In yaadon ka hissa ban jaiye — abhi admission lein aur apna computer career shuru karein.</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/admission" class="btn btn-sky px-7 py-3">Apply Now</a>
+        <a href="/courses"   class="btn btn-ghost px-7 py-3">Courses Dekhein</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="py-14" style="background:var(--bg2);border-top:1px solid var(--border)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid md:grid-cols-4 gap-6 mb-10">
+      <div>
+        <a href="/" class="flex items-center gap-3 mb-4 no-underline">
+          <img src="/bg-Logo.png" alt="Vision IT" class="w-10 h-10 rounded-xl object-contain bg-white" width="40" height="40" loading="lazy"/>
+          <div><div class="font-black th">Vision IT</div><div style="color:var(--sky);font-size:.7rem;letter-spacing:.15em;font-weight:600">COMPUTER INSTITUTE</div></div>
+        </a>
+        <p class="th2 text-sm" style="font-weight:300">Pratappur, Surajpur CG ka sabse trusted computer education center.</p>
+      </div>
+      <div>
+        <h4 class="th font-bold mb-4 text-sm uppercase tracking-wider">Quick Links</h4>
+        <div class="space-y-2 text-sm">
+          <a href="/"           class="block th2 hover:text-sky-400 transition-colors no-underline">Home</a>
+          <a href="/courses"    class="block th2 hover:text-sky-400 transition-colors no-underline">All Courses</a>
+          <a href="/admission"  class="block th2 hover:text-sky-400 transition-colors no-underline">Admission Apply</a>
+          <a href="/blog"       class="block th2 hover:text-sky-400 transition-colors no-underline">Blog</a>
+          <a href="/contact"    class="block th2 hover:text-sky-400 transition-colors no-underline">Contact</a>
+          <a href="/about"      class="block th2 hover:text-sky-400 transition-colors no-underline">About Us</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="th font-bold mb-4 text-sm uppercase tracking-wider">Gallery Categories</h4>
+        <div class="space-y-2 text-sm">
+          <button onclick="setGalleryFilter(document.querySelector('[data-cat=\\'lab\\']'),'lab')" class="block th2 hover:text-sky-400 transition-colors text-left w-full" style="background:none;border:none;cursor:pointer;font-family:inherit">💻 Lab Sessions</button>
+          <button onclick="setGalleryFilter(document.querySelector('[data-cat=\\'ceremony\\']'),'ceremony')" class="block th2 hover:text-sky-400 transition-colors text-left w-full" style="background:none;border:none;cursor:pointer;font-family:inherit">🏆 Ceremonies</button>
+          <button onclick="setGalleryFilter(document.querySelector('[data-cat=\\'classroom\\']'),'classroom')" class="block th2 hover:text-sky-400 transition-colors text-left w-full" style="background:none;border:none;cursor:pointer;font-family:inherit">📚 Classroom</button>
+          <button onclick="setGalleryFilter(document.querySelector('[data-cat=\\'workshop\\']'),'workshop')" class="block th2 hover:text-sky-400 transition-colors text-left w-full" style="background:none;border:none;cursor:pointer;font-family:inherit">🎯 Workshops</button>
+          <button onclick="setGalleryFilter(document.querySelector('[data-cat=\\'campus\\']'),'campus')" class="block th2 hover:text-sky-400 transition-colors text-left w-full" style="background:none;border:none;cursor:pointer;font-family:inherit">🏫 Campus</button>
+        </div>
+      </div>
+      <div>
+        <h4 class="th font-bold mb-4 text-sm uppercase tracking-wider">Contact</h4>
+        <address class="space-y-2 text-sm not-italic">
+          <div class="th2">Kadampara Chowk, Pratappur<br/>Surajpur, CG – 497223</div>
+          <a href="tel:+918103170595" class="block th2 hover:text-sky-400 no-underline"><i class="fas fa-phone mr-2" style="color:var(--sky)"></i>+91 81031 70595</a>
+        </address>
+        <div class="flex gap-3 mt-4">
+          <a href="https://www.facebook.com/profile.php?id=61586946313742" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 rounded-xl glass flex items-center justify-center hover:-translate-y-1 transition-all" style="color:#1877f2"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://instagram.com/visionitinstitute" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 rounded-xl glass flex items-center justify-center hover:-translate-y-1 transition-all" style="color:#e6683c"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/918103170595" target="_blank" rel="noopener" aria-label="WhatsApp" class="w-9 h-9 rounded-xl glass flex items-center justify-center hover:-translate-y-1 transition-all" style="color:#25d366"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style="border-top:1px solid var(--border)">
+      <div class="th3 text-sm">© 2026 Vision IT Computer Institute, Pratappur. All rights reserved.</div>
+      <div class="flex gap-4 text-sm">
+        <a href="/privacy" class="th3 hover:text-sky-400 transition-colors no-underline">Privacy Policy</a>
+        <a href="/terms"   class="th3 hover:text-sky-400 transition-colors no-underline">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ LIGHTBOX ═══ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button id="lb-close" onclick="closeLightbox()" aria-label="Close"><i class="fas fa-times"></i></button>
+  <button class="lb-nav" id="lb-prev" onclick="lbNav(-1)" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+  <button class="lb-nav" id="lb-next" onclick="lbNav(1)"  aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+  <div id="lb-counter" aria-live="polite"></div>
+  <img id="lb-img" src="" alt="Gallery photo"/>
+  <div id="lb-caption"></div>
+</div>
+
+<!-- ═══ AUTH MODAL ═══ -->
+<div class="modal-wrap" id="auth-modal" role="dialog" aria-modal="true">
+  <div class="modal-box max-w-md">
+    <button onclick="closeModal('auth-modal')" class="absolute top-4 right-4 th3 text-xl" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>
+    <div class="text-center mb-6">
+      <img src="/bg-Logo.png" alt="Vision IT" class="w-12 h-12 mx-auto mb-3 rounded-xl object-contain bg-white" width="48" height="48"/>
+      <h3 class="th font-black text-xl">Login</h3>
+    </div>
+    <form onsubmit="handleLogin(event)" class="space-y-4">
+      <div><label class="lbl">Email *</label><input type="email" id="l-email" class="inp" placeholder="your@email.com" required autocomplete="email"/></div>
+      <div>
+        <label class="lbl">Password *</label>
+        <div class="relative">
+          <input type="password" id="l-pass" class="inp pr-11" placeholder="Password" required autocomplete="current-password"/>
+          <button type="button" onclick="togglePwd('l-pass','eye-l')" class="absolute right-3 top-1/2 -translate-y-1/2 th3" style="background:none;border:none;cursor:pointer;"><i id="eye-l" class="fas fa-eye text-sm"></i></button>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center">Login</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script type="module">
+import { initTheme }        from '/assets/js/theme.js';
+import { initNav, initTopBanner } from '/assets/js/nav.js';
+import { loadBannerSettings, sanitizeForHtml } from '/assets/js/db-helpers.js';
+import { auth, db }         from '/assets/js/firebase-config.js';
+import { loginUser, logoutUser as fbLogout } from '/assets/js/auth.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+initTheme();
+initNav();
+initTopBanner(loadBannerSettings);
+
+// ── Auth ──
+let CU = null;
+onAuthStateChanged(auth, user => {
+  CU = user; window.VIT_USER = user;
+  const lb=document.getElementById('nav-login-btn'), uw=document.getElementById('nav-user-wrap');
+  const ml=document.getElementById('mob-login-btn'), mu=document.getElementById('mob-user-row');
+  if (user) {
+    lb?.classList.add('hidden'); uw?.classList.remove('hidden'); uw?.classList.add('flex');
+    ml?.classList.add('hidden'); mu?.classList.remove('hidden'); mu?.classList.add('flex');
+    const nm=user.displayName||user.email?.split('@')[0]||'User';
+    ['nav-uname','mob-uname'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=nm;});
+    ['nav-avatar-txt','mob-avatar-txt'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=nm[0].toUpperCase();});
+  } else {
+    lb?.classList.remove('hidden'); uw?.classList.add('hidden');
+    ml?.classList.remove('hidden'); mu?.classList.add('hidden');
+  }
+});
+
+window.openModal  = id => document.getElementById(id)?.classList.add('open');
+window.closeModal = id => document.getElementById(id)?.classList.remove('open');
+document.querySelectorAll('.modal-wrap').forEach(m => m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); }));
+window.logoutUser = async () => { await fbLogout(); toast('Logout ho gaye','inf'); };
+window.handleLogin = async e => {
+  e.preventDefault();
+  try { await loginUser(document.getElementById('l-email').value, document.getElementById('l-pass').value); closeModal('auth-modal'); toast('Login ho gaye! ✅','ok'); }
+  catch(err) { toast('Login failed: '+err.message,'err'); }
+};
+
+window.toast = (msg, type='inf') => {
+  const icons={ok:'✅',err:'❌',inf:'ℹ️'};
+  const t=document.getElementById('toast');
+  t.innerHTML=`<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
+  t.classList.add('show'); clearTimeout(t._tid);
+  t._tid=setTimeout(()=>t.classList.remove('show'),3500);
+};
+
+// ── Default gallery photos ──
+const DEFAULT_PHOTOS = [
+  { id:'g1',  url:'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800&q=80', caption:'💻 Practical Lab Session',     category:'lab'       },
+  { id:'g2',  url:'https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=800&q=80', caption:'🏆 Certificate Ceremony',       category:'ceremony'  },
+  { id:'g3',  url:'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80', caption:'📚 Classroom Session',          category:'classroom' },
+  { id:'g4',  url:'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80', caption:'👥 Group Project',              category:'lab'       },
+  { id:'g5',  url:'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80', caption:'👨‍💻 Programming Class',          category:'lab'       },
+  { id:'g6',  url:'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80', caption:'🎯 Workshop Day',               category:'workshop'  },
+  { id:'g7',  url:'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80', caption:'💡 Coding Session',             category:'lab'       },
+  { id:'g8',  url:'https://images.unsplash.com/photo-1588072432836-e10032774350?w=800&q=80', caption:'⭐ Student Achievement',        category:'ceremony'  },
+  { id:'g9',  url:'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80', caption:'👨‍🏫 Faculty Session',         category:'classroom' },
+  { id:'g10', url:'https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=800&q=80', caption:'💬 Team Discussion',            category:'workshop'  },
+  { id:'g11', url:'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=800&q=80', caption:'🖥️ Computer Lab',              category:'campus'    },
+  { id:'g12', url:'https://images.unsplash.com/photo-1562408590-e32931084e23?w=800&q=80', caption:'🛠️ Practical Training',          category:'lab'       },
+  { id:'g13', url:'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80', caption:'⌨️ Typing Practice',           category:'lab'       },
+  { id:'g14', url:'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80', caption:'🖥️ Development Session',       category:'lab'       },
+  { id:'g15', url:'https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80', caption:'🎨 Design Class',                 category:'classroom' },
+  { id:'g16', url:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80', caption:'📊 Excel & Tally Training',    category:'lab'       },
+];
+
+// ── Lightbox state ──
+let lbPhotos  = [];
+let lbIndex   = 0;
+
+window.openLightbox = (src, caption, idx) => {
+  document.getElementById('lb-img').src        = src;
+  document.getElementById('lb-img').alt        = caption || '';
+  document.getElementById('lb-caption').textContent = caption || '';
+  lbIndex = idx ?? 0;
+  updateLbCounter();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeLightbox = () => {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+window.lbNav = dir => {
+  if (!lbPhotos.length) return;
+  lbIndex = (lbIndex + dir + lbPhotos.length) % lbPhotos.length;
+  const p = lbPhotos[lbIndex];
+  const img = document.getElementById('lb-img');
+  img.style.opacity = '0';
+  setTimeout(() => {
+    img.src = p.url;
+    img.alt = p.caption || '';
+    document.getElementById('lb-caption').textContent = p.caption || '';
+    img.style.opacity = '1';
+  }, 150);
+  updateLbCounter();
+};
+
+function updateLbCounter() {
+  const el = document.getElementById('lb-counter');
+  if (el && lbPhotos.length) el.textContent = `${lbIndex + 1} / ${lbPhotos.length}`;
+}
+
+// ── Gallery state ──
+let allPhotos   = [...DEFAULT_PHOTOS];
+let curGalCat   = 'all';
+
+// ── Render gallery ──
+function renderGallery() {
+  const mainGrid = document.getElementById('gallery-main-grid');
+  const noRes    = document.getElementById('gallery-no-results');
+  if (!mainGrid) return;
+
+  let photos = curGalCat === 'all'
+    ? allPhotos
+    : allPhotos.filter(p => p.category === curGalCat);
+
+  // Update lightbox photos for navigation
+  lbPhotos = photos;
+
+  // Update count badge
+  const badge = document.getElementById('photo-count-badge');
+  if (badge) badge.innerHTML = `<i class="fas fa-images"></i> ${photos.length} Photos`;
+
+  if (!photos.length) {
+    mainGrid.innerHTML = ''; noRes?.classList.remove('hidden'); return;
+  }
+  noRes?.classList.add('hidden');
+
+  mainGrid.innerHTML = photos.map((p, i) => `
+    <div class="gallery-item" onclick="openLightbox('${p.url}','${sanitizeForHtml(p.caption||'')}',${i})"
+         role="button" tabindex="0" aria-label="${sanitizeForHtml(p.caption||'Gallery photo')}">
+      <img src="${p.url.replace('w=800','w=500')}" alt="${sanitizeForHtml(p.caption||'Vision IT Campus')}"
+           loading="lazy" onerror="this.parentElement.style.display='none'"/>
+      <div class="overlay">
+        <span class="caption">${sanitizeForHtml(p.caption||'')}</span>
+      </div>
+    </div>`).join('');
+
+  // Keyboard support
+  mainGrid.querySelectorAll('[role="button"]').forEach(el => {
+    el.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') e.currentTarget.click(); });
+  });
+}
+
+window.setGalleryFilter = (el, cat) => {
+  document.querySelectorAll('.gal-filter').forEach(b => b.classList.remove('active'));
+  el?.classList.add('active');
+  curGalCat = cat;
+  renderGallery();
+  // Scroll back to grid
+  document.getElementById('gallery-main-grid')?.scrollIntoView({ behavior:'smooth', block:'start' });
+};
+
+// ── Load from Firestore ──
+async function loadFirestoreGallery() {
+  try {
+    const snap = await getDocs(query(collection(db,'gallery'), orderBy('createdAt','desc')));
+    const fsPhotos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (fsPhotos.length) {
+      // Merge Firestore photos into allPhotos
+      allPhotos = [...DEFAULT_PHOTOS, ...fsPhotos];
+      // Render Firestore-only photos in separate grid too
+      const fsGrid = document.getElementById('gallery-firestore-grid');
+      if (fsGrid && fsPhotos.length) {
+        const startIdx = DEFAULT_PHOTOS.length;
+        fsGrid.innerHTML = fsPhotos.map((p, i) => `
+          <div class="gallery-item" onclick="openLightbox('${p.url||p.image}','${sanitizeForHtml(p.caption||'')}',${startIdx+i})"
+               role="button" tabindex="0">
+            <img src="${(p.url||p.image||'').replace('w=800','w=500')}" alt="${sanitizeForHtml(p.caption||'')}" loading="lazy"/>
+            <div class="overlay"><span class="caption">${sanitizeForHtml(p.caption||'')}</span></div>
+          </div>`).join('');
+      }
+    }
+  } catch { /* Firestore load fail — use defaults */ }
+
+  // Show main grid, hide loading
+  document.getElementById('gallery-loading')?.classList.add('hidden');
+  const mainGrid = document.getElementById('gallery-main-grid');
+  if (mainGrid) mainGrid.style.display = '';
+  renderGallery();
+}
+loadFirestoreGallery();
+</script>
+
+<script>
+// ── Inline: nav, mobile, theme, keyboard ──
+window.toggleNavDropdown = id => {
+  ['more-dropdown'].forEach(d=>{if(d!==id)document.getElementById(d)?.classList.add('hidden');});
+  document.getElementById(id)?.classList.toggle('hidden');
+};
+window.closeNavDropdowns = () => document.getElementById('more-dropdown')?.classList.add('hidden');
+document.addEventListener('click', e=>{if(!e.target.closest('#nav-more-wrap'))closeNavDropdowns();});
+
+document.getElementById('nav-hamburger')?.addEventListener('click',()=>{
+  document.getElementById('mob-menu')?.classList.toggle('open');
+  document.getElementById('mob-overlay')?.classList.toggle('open');
+});
+document.getElementById('mob-overlay')?.addEventListener('click',()=>{
+  document.getElementById('mob-menu')?.classList.remove('open');
+  document.getElementById('mob-overlay')?.classList.remove('open');
+});
+
+window.togglePwd=(iid,eid)=>{const i=document.getElementById(iid),e=document.getElementById(eid);if(!i)return;i.type=i.type==='password'?'text':'password';if(e)e.className=i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm';};
+
+// Lightbox close on backdrop click
+document.getElementById('lightbox')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox');
+  if (lb?.classList.contains('open')) {
+    if (e.key === 'ArrowLeft')  lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'Escape')     closeLightbox();
+    return;
+  }
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-wrap.open').forEach(m=>m.classList.remove('open'));
+  }
+});
+</script>
+
+</body>
+</html>

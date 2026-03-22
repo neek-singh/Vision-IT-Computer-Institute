@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<!-- ═══ FAVICON ═══ -->
+<link rel="icon" type="image/png" href="/bg-Logo.png"/>
+<link rel="shortcut icon" href="/bg-Logo.png"/>
+<link rel="apple-touch-icon" href="/bg-Logo.png"/>
+<link rel="manifest" href="/manifest.json"/>
+
+<!-- ═══ PRECONNECT ═══ -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com"/>
+
+<!-- ═══ PRIMARY SEO ═══ -->
+<title>Computer Courses in Surajpur CG | Basic, Tally, Web Design, Programming | Vision IT</title>
+<meta name="description" content="8+ computer courses at Vision IT Pratappur — Basic Computer ₹2,500, Tally GST ₹2,000, Web Design ₹3,500, Programming ₹5,500. Govt. recognised certificate. Surajpur, Chhattisgarh. Apply Now!"/>
+<meta name="keywords" content="computer courses Surajpur, basic computer course Pratappur, Tally GST course CG, web design course Surajpur, programming course Chhattisgarh, DTP course Surajpur, Vision IT courses, computer training Chhattisgarh"/>
+<meta name="author" content="Vision IT Computer Institute"/>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1"/>
+<meta name="geo.region" content="IN-CT"/>
+<meta name="geo.placename" content="Pratappur, Surajpur, Chhattisgarh"/>
+<meta name="theme-color" content="#2d6a9f"/>
+<link rel="canonical" href="https://visionitinstitute.vercel.app/courses"/>
+
+<!-- ═══ OPEN GRAPH ═══ -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Vision IT Computer Institute"/>
+<meta property="og:title" content="Computer Courses in Surajpur CG | Vision IT Pratappur"/>
+<meta property="og:description" content="8+ computer courses — Basic Computer, Tally GST, Web Design, Programming. Govt. recognised certificate. Admission Open 2026!"/>
+<meta property="og:url" content="https://visionitinstitute.vercel.app/courses"/>
+<meta property="og:image" content="https://visionitinstitute.vercel.app/bg-Logo.png"/>
+<meta property="og:locale" content="hi_IN"/>
+
+<!-- ═══ TWITTER ═══ -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Computer Courses in Surajpur CG | Vision IT"/>
+<meta name="twitter:description" content="8+ computer courses at Vision IT Pratappur. Basic, Tally, Web Design, Programming. Govt. certificate. Apply Now!"/>
+<meta name="twitter:image" content="https://visionitinstitute.vercel.app/bg-Logo.png"/>
+
+<!-- ═══ COURSE LIST SCHEMA ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Vision IT Computer Institute Courses",
+  "description": "Computer courses offered at Vision IT Computer Institute, Pratappur, Surajpur CG",
+  "url": "https://visionitinstitute.vercel.app/courses",
+  "numberOfItems": 8,
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"item":{"@type":"Course","name":"Basic Computer Course","description":"MS Word, Excel, PowerPoint, Internet, Typing — 3 month certificate course","provider":{"@type":"Organization","name":"Vision IT Computer Institute"},"offers":{"@type":"Offer","price":"2500","priceCurrency":"INR"}}},
+    {"@type":"ListItem","position":2,"item":{"@type":"Course","name":"Tally with GST Course","description":"Tally Prime, GST filing, accounting — 2 month job-ready course","provider":{"@type":"Organization","name":"Vision IT Computer Institute"},"offers":{"@type":"Offer","price":"2000","priceCurrency":"INR"}}},
+    {"@type":"ListItem","position":3,"item":{"@type":"Course","name":"Programming Course","description":"C, Python, HTML, CSS, JavaScript, MySQL — 6 month course","provider":{"@type":"Organization","name":"Vision IT Computer Institute"},"offers":{"@type":"Offer","price":"5500","priceCurrency":"INR"}}},
+    {"@type":"ListItem","position":4,"item":{"@type":"Course","name":"Web Design Course","description":"Responsive websites, Bootstrap, WordPress — 4 month course","provider":{"@type":"Organization","name":"Vision IT Computer Institute"},"offers":{"@type":"Offer","price":"3500","priceCurrency":"INR"}}},
+    {"@type":"ListItem","position":5,"item":{"@type":"Course","name":"DTP & Graphic Design","description":"CorelDRAW, Photoshop, PageMaker — 2 month course","provider":{"@type":"Organization","name":"Vision IT Computer Institute"},"offers":{"@type":"Offer","price":"2000","priceCurrency":"INR"}}}
+  ]
+}
+</script>
+
+<!-- ═══ BREADCRUMB SCHEMA ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://visionitinstitute.vercel.app/"},
+    {"@type":"ListItem","position":2,"name":"Courses","item":"https://visionitinstitute.vercel.app/courses"}
+  ]
+}
+</script>
+
+<!-- ═══ FONTS ═══ -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/assets/css/style.css"/>
+
+<!-- ═══ THEME: prevent FOUC ═══ -->
+<script>
+  (function(){ var t=localStorage.getItem('vit-theme')||'light'; document.documentElement.setAttribute('data-theme',t); })();
+</script>
+
+<style>
+/* ── Page-specific styles ── */
+.course-card-full {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+}
+.course-card-full:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+
+.curr-item {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .6rem .75rem; border-radius: var(--radius);
+  background: rgba(var(--sky-rgb), .06);
+  border: 1px solid rgba(var(--sky-rgb), .12);
+}
+
+/* Curriculum modal (always dark) */
+#curr-modal .modal-box {
+  background: #12131a;
+  border-color: rgba(255,255,255,.1);
+  color: #f0ede8;
+}
+#curr-modal h3,
+#curr-modal .curr-item span { color: #f0ede8; }
+#curr-modal .th2 { color: rgba(255,255,255,.65); }
+#curr-modal .th3 { color: rgba(255,255,255,.4); }
+
+/* Compare bar */
+#compare-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--ink); color: #fff;
+  padding: .85rem 1rem;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  z-index: 900;
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  justify-content: space-between;
+}
+#compare-bar.open { transform: translateY(0); }
+
+/* Sticky filter bar */
+.filter-bar-sticky {
+  position: sticky; top: 56px; z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: .85rem 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Feature highlight cards */
+.feat-pill {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .25rem .75rem; border-radius: 999px;
+  font-size: .75rem; font-weight: 600;
+  background: rgba(var(--sky-rgb), .1);
+  color: var(--sky); border: 1px solid rgba(var(--sky-rgb), .2);
+}
+</style>
+</head>
+
+<body class="pgIn">
+
+<!-- ══════════════════════════════════════════════
+     TOP BANNER
+══════════════════════════════════════════════ -->
+<div id="top-banner" style="display:none;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;padding:.5rem 1rem;background:var(--sky);position:fixed;top:0;left:0;right:0;z-index:1001;">
+  <span id="top-banner-text">🎉 Vision IT mein Admission Open hai!</span>
+  <span id="top-banner-cd" style="display:none">
+    <span class="banner-cd-unit" id="bcd-d">--</span><span class="banner-cd-sep">d</span>
+    <span class="banner-cd-unit" id="bcd-h">--</span><span class="banner-cd-sep">:</span>
+    <span class="banner-cd-unit" id="bcd-m">--</span><span class="banner-cd-sep">:</span>
+    <span class="banner-cd-unit" id="bcd-s">--</span>
+  </span>
+  <button id="top-banner-cta">Apply Now</button>
+  <button id="top-banner-close" title="Close">×</button>
+</div>
+<div id="toast"></div>
+<div id="mob-overlay"></div>
+
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="/" class="flex items-center gap-2.5 cursor-pointer select-none no-underline" id="logo-btn" aria-label="Vision IT Home">
+        <img src="/bg-Logo.png" alt="Vision IT Logo" class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32" loading="eager"/>
+        <div>
+          <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1">Vision IT</div>
+          <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:600">Computer Institute</div>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="/"          class="nav-link" id="nav-home">Home</a>
+        <a href="/courses"   class="nav-link active" id="nav-courses">Courses</a>
+        <a href="/about"     class="nav-link" id="nav-about">About</a>
+        <a href="/blog"      class="nav-link" id="nav-blog">Blog</a>
+        <a href="/contact"   class="nav-link" id="nav-contact">Contact</a>
+        <div class="relative" id="nav-more-wrap">
+          <button class="nav-link flex items-center gap-1" onclick="toggleNavDropdown('more-dropdown')" style="background:none;border:none;cursor:pointer;font-family:inherit">
+            More <i class="fas fa-chevron-down" style="font-size:.6rem;opacity:.6"></i>
+          </button>
+          <div id="more-dropdown" class="nav-dropdown hidden absolute top-full left-0 mt-2 w-48 p-1.5 z-50">
+            <a href="/gallery"     class="nav-drop-item">🖼️ Gallery</a>
+            <a href="/results"     class="nav-drop-item">📊 My Results</a>
+            <a href="/certificate" class="nav-drop-item">🎓 Certificate</a>
+            <div style="height:1px;background:var(--border);margin:.3rem 0"></div>
+            <button onclick="openModal('tracker-modal');closeNavDropdowns()" class="nav-drop-item w-full text-left" style="background:none;border:none;font-family:inherit;cursor:pointer">🔍 Track Inquiry</button>
+          </div>
+        </div>
+        <div class="relative" id="nav-portal-wrap">
+          <button class="nav-link flex items-center gap-1" onclick="toggleNavDropdown('portal-dropdown')" style="background:none;border:none;cursor:pointer;font-family:inherit">
+            Portals <i class="fas fa-chevron-down" style="font-size:.6rem;opacity:.6"></i>
+          </button>
+          <div id="portal-dropdown" class="nav-dropdown hidden absolute top-full right-0 mt-2 w-52 p-1.5 z-50">
+            <a href="https://vit-student.vercel.app/" target="_blank" rel="noopener" class="nav-drop-item">
+              <span>🎓</span><div><div style="font-size:.83rem;font-weight:600;color:var(--ink)">Student Portal</div><div style="font-size:.72rem;color:var(--ink3)">Login &amp; manage</div></div>
+            </a>
+            <a href="https://vit-teacher.vercel.app/" target="_blank" rel="noopener" class="nav-drop-item">
+              <span>👨‍🏫</span><div><div style="font-size:.83rem;font-weight:600;color:var(--ink)">Staff Portal</div><div style="font-size:.72rem;color:var(--ink3)">Teacher dashboard</div></div>
+            </a>
+          </div>
+        </div>
+        <button data-theme-toggle aria-label="Toggle dark mode" style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i class="fas fa-moon"></i></button>
+        <a href="/admission" class="nav-link" style="color:var(--sky);font-weight:600">Admission</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <button id="nav-login-btn" onclick="openModal('auth-modal')" class="btn btn-ghost py-1.5 px-4 text-sm">Login</button>
+        <div id="nav-user-wrap" class="hidden items-center gap-2">
+          <div id="nav-avatar-wrap" onclick="openModal('profile-modal')" class="cursor-pointer" title="View Profile">
+            <div id="nav-avatar-img" class="w-8 h-8 rounded-full overflow-hidden hidden"><img id="nav-avatar-photo" src="" alt="Profile" class="w-full h-full object-cover"/></div>
+            <div id="nav-avatar-txt" class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style="background:var(--ink);color:#fff">U</div>
+          </div>
+          <span class="text-sm font-medium cursor-pointer" id="nav-uname" style="color:var(--ink)" onclick="openModal('profile-modal')">User</span>
+          <button onclick="logoutUser()" style="color:var(--ink3);background:none;border:none;cursor:pointer;font-size:.8rem;" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+      </div>
+      <div class="md:hidden flex items-center gap-2">
+        <button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i class="fas fa-moon"></i></button>
+        <button id="nav-hamburger" aria-label="Open menu" style="color:var(--ink2);background:none;border:none;cursor:pointer;padding:.4rem;"><i class="fas fa-bars text-lg"></i></button>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mob-menu">
+    <div class="px-4 py-4 space-y-0.5">
+      <a href="/"          class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">🏠 Home</a>
+      <a href="/courses"   class="nav-link active block px-3 py-2.5 rounded-lg" style="background:var(--bg2)">📚 Courses</a>
+      <a href="/about"     class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">ℹ️ About</a>
+      <a href="/blog"      class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">📰 Blog</a>
+      <a href="/contact"   class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">📬 Contact</a>
+      <a href="/gallery"   class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">🖼️ Gallery</a>
+      <a href="/admission" class="nav-link block px-3 py-2.5 rounded-lg font-semibold" style="color:var(--sky)">📝 Admission Apply</a>
+      <div style="height:1px;background:var(--border);margin:.75rem 0"></div>
+      <button id="mob-login-btn" onclick="openModal('auth-modal')" class="btn btn-sky w-full py-2.5 text-sm justify-center">Login / Register</button>
+      <div id="mob-user-row" class="hidden items-center gap-3 px-3 py-2">
+        <div id="mob-avatar-txt" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm" style="background:var(--ink);color:#fff">U</div>
+        <div class="flex-1"><div id="mob-uname" class="th font-semibold text-sm">User</div></div>
+        <button onclick="logoutUser()" class="btn btn-ghost text-xs px-3 py-1.5">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section class="pt-24 pb-16" style="background:var(--bg2)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="flex items-center justify-center gap-2 mb-6 text-sm th3">
+      <a href="/" class="hover:text-sky-400 transition-colors no-underline th3">Home</a>
+      <i class="fas fa-chevron-right text-[10px]"></i>
+      <span style="color:var(--sky)">Courses</span>
+    </nav>
+    <div class="slabel mb-4">What We Offer</div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:400;color:var(--ink);line-height:1.1;margin-bottom:1rem">
+      Our <span style="color:var(--sky);font-style:italic">Courses</span>
+    </h1>
+    <p class="th2 max-w-xl mx-auto text-lg mb-8" style="font-weight:300">Industry-aligned, practical training — beginners se advanced tak sabke liye. Surajpur ka sabse affordable computer education.</p>
+
+    <!-- Quick stats -->
+    <div class="flex flex-wrap items-center justify-center gap-6 text-sm">
+      <div class="flex items-center gap-2 th2"><i class="fas fa-book-open" style="color:var(--sky)"></i><span id="hero-course-count">8+</span> Courses</div>
+      <div class="flex items-center gap-2 th2"><i class="fas fa-rupee-sign" style="color:var(--gold)"></i>Starting ₹2,000</div>
+      <div class="flex items-center gap-2 th2"><i class="fas fa-certificate" style="color:var(--emerald)"></i>Govt. Recognised</div>
+      <div class="flex items-center gap-2 th2"><i class="fas fa-users" style="color:#8b5cf6"></i>500+ Students</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FILTER BAR (sticky)
+══════════════════════════════════════════════ -->
+<div class="filter-bar-sticky">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between flex-wrap">
+      <!-- Search -->
+      <div class="relative flex-1 max-w-sm w-full">
+        <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 th3 text-sm"></i>
+        <input id="course-search" class="inp pl-10 py-2 text-sm" placeholder="Search courses..." oninput="filterCourses()" aria-label="Search courses"/>
+      </div>
+      <!-- Category filters -->
+      <div class="flex flex-wrap gap-2" id="cat-filters" role="group" aria-label="Filter by category">
+        <button class="filter-btn active" data-cat="all"         onclick="setCatFilter(this,'all')">All</button>
+        <button class="filter-btn"        data-cat="basic"       onclick="setCatFilter(this,'basic')">💻 Basic</button>
+        <button class="filter-btn"        data-cat="advanced"    onclick="setCatFilter(this,'advanced')">⚡ Advanced</button>
+        <button class="filter-btn"        data-cat="programming" onclick="setCatFilter(this,'programming')">👨‍💻 Programming</button>
+        <button class="filter-btn"        data-cat="design"      onclick="setCatFilter(this,'design')">🎨 Design</button>
+        <button class="filter-btn"        data-cat="accounting"  onclick="setCatFilter(this,'accounting')">📊 Accounting</button>
+      </div>
+      <!-- Sort -->
+      <div class="flex items-center gap-2">
+        <span class="th3 text-sm">Sort:</span>
+        <select id="course-sort" class="inp w-auto py-1.5 px-3 text-sm" onchange="filterCourses()" aria-label="Sort courses">
+          <option value="default">Default</option>
+          <option value="rating">⭐ Highest Rated</option>
+          <option value="fee-asc">₹ Fee: Low to High</option>
+          <option value="name">A–Z Name</option>
+        </select>
+        <span id="course-count" class="th3 text-sm whitespace-nowrap"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     COURSES GRID
+══════════════════════════════════════════════ -->
+<main class="py-12" style="background:var(--bg)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <!-- Summer Batch Banner -->
+    <div class="rounded-2xl p-5 mb-10 flex flex-col sm:flex-row items-center gap-4 justify-between" style="background:linear-gradient(135deg,#07031a,#0d0628);border:1px solid rgba(249,115,22,.3)">
+      <div class="flex items-center gap-4">
+        <div class="text-4xl">☀️</div>
+        <div>
+          <div class="text-white font-black text-lg">Summer Special Batch 2026</div>
+          <div class="text-slate-400 text-sm" style="font-weight:300">Class 6–11 students ke liye — 45 din mein computer basics</div>
+        </div>
+      </div>
+      <a href="/admission" class="btn px-5 py-2.5 text-sm flex-shrink-0" style="background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;border:none;text-decoration:none">
+        <i class="fas fa-sun mr-1"></i>Join Summer Batch
+      </a>
+    </div>
+
+    <!-- Grid -->
+    <div id="all-courses-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="flex justify-center col-span-3 py-20"><div class="spin-el"></div></div>
+    </div>
+
+    <!-- No results state -->
+    <div id="no-results" class="hidden text-center py-20">
+      <div class="text-6xl mb-4">🔍</div>
+      <h3 class="th font-bold text-xl mb-2">Koi course nahi mila</h3>
+      <p class="th2 text-sm mb-6" style="font-weight:300">Search ya filter change karein, ya hamare saare courses dekhein</p>
+      <button onclick="resetFilters()" class="btn btn-sky px-6 py-2.5 text-sm">All Courses Dekhein</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════════
+     WHY VISION IT (below grid)
+══════════════════════════════════════════════ -->
+<section class="py-16" style="background:var(--bg2)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10">
+      <div class="slabel mb-3">Why Enroll?</div>
+      <h2 class="text-3xl font-black th">Vision IT <em style="color:var(--sky);font-style:italic">Kyun Choose Karein?</em></h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="glass rounded-2xl p-6 text-center">
+        <div class="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl" style="background:rgba(var(--sky-rgb),.12)">🖥️</div>
+        <h3 class="th font-bold mb-2 text-sm">100% Practical</h3>
+        <p class="th2 text-xs leading-relaxed" style="font-weight:300">Real machines par hands-on training — theory kam, practice zyada</p>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center">
+        <div class="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl" style="background:rgba(245,158,11,.12)">📜</div>
+        <h3 class="th font-bold mb-2 text-sm">Govt. Certificate</h3>
+        <p class="th2 text-xs leading-relaxed" style="font-weight:300">Government recognised certificates — job, exam, higher study ke liye valid</p>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center">
+        <div class="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl" style="background:rgba(16,185,129,.12)">💼</div>
+        <h3 class="th font-bold mb-2 text-sm">Placement Help</h3>
+        <p class="th2 text-xs leading-relaxed" style="font-weight:300">Resume building, interview prep aur job referrals — 70%+ placement record</p>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center">
+        <div class="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl" style="background:rgba(139,92,246,.12)">💰</div>
+        <h3 class="th font-bold mb-2 text-sm">EMI Available</h3>
+        <p class="th2 text-xs leading-relaxed" style="font-weight:300">Affordable fees with easy installment — no financial barrier to learning</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     CTA
+══════════════════════════════════════════════ -->
+<section class="py-16" style="background:var(--bg)">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+    <div class="glass rounded-2xl p-10">
+      <div class="text-5xl mb-4">🎓</div>
+      <h2 class="text-3xl font-black th mb-3">Course Select Ho Gaya?</h2>
+      <p class="th2 mb-6" style="font-weight:300">Abhi admission ke liye apply karein — free counselling ke saath. 24 ghante mein call karenge.</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/admission" class="btn btn-sky px-7 py-3 text-sm">Apply Now</a>
+        <a href="https://wa.me/918103170595?text=Hello,%20main%20course%20ke%20baare%20mein%20jaanna%20chahta%20hoon" target="_blank" rel="noopener" class="btn btn-ghost px-7 py-3 text-sm">
+          <i class="fab fa-whatsapp" style="color:#25d366"></i> WhatsApp
+        </a>
+        <a href="tel:+918103170595" class="btn btn-ghost px-7 py-3 text-sm"><i class="fas fa-phone"></i> Call Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer class="py-14" style="background:var(--bg2);border-top:1px solid var(--border)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid md:grid-cols-4 gap-6 mb-10">
+      <div>
+        <a href="/" class="flex items-center gap-3 mb-4 no-underline">
+          <img src="/bg-Logo.png" alt="Vision IT" class="w-10 h-10 rounded-xl object-contain bg-white" width="40" height="40" loading="lazy"/>
+          <div><div class="font-black th">Vision IT</div><div style="color:var(--sky);font-size:.7rem;letter-spacing:.15em;font-weight:600">COMPUTER INSTITUTE</div></div>
+        </a>
+        <p class="th2 text-sm" style="font-weight:300">Pratappur, Surajpur CG ka sabse trusted computer education center.</p>
+      </div>
+      <div>
+        <h4 class="th font-bold mb-4 text-sm uppercase tracking-wider">Courses</h4>
+        <div class="space-y-2 text-sm">
+          <a href="/courses#basic"       class="block th2 hover:text-sky-400 transition-colors no-underline">Basic Computer</a>
+          <a href="/courses#advanced"    class="block th2 hover:text-sky-400 transition-colors no-underline">Advanced Computer</a>
+          <a href="/courses#programming" class="block th2 hover:text-sky-400 transition-colors no-underline">Programming</a>
+          <a href="/courses#tally"       class="block th2 hover:text-sky-400 transition-colors no-underline">Tally &amp; Accounting</a>
+          <a href="/courses#webdesign"   class="block th2 hover:text-sky-400 transition-colors no-underline">Web Design</a>
+          <a href="/courses#dtp"         class="block th2 hover:text-sky-400 transition-colors no-underline">DTP &amp; Graphic Design</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="th font-bold mb-4 text-sm uppercase tracking-wider">Quick Links</h4>
+        <div class="space-y-2 text-sm">
+          <a href="/"           class="block th2 hover:text-sky-400 transition-colors no-underline">Home</a>
+          <a href="/about"      class="block th2 hover:text-sky-400 transition-colors no-underline">About Us</a>
+          <a href="/admission"  class="block th2 hover:text-sky-400 transition-colors no-underline">Admission Apply</a>
+          <a href="/contact"    class="block th2 hover:text-sky-400 transition-colors no-underline">Contact</a>
+          <a href="/blog"       class="block th2 hover:text-sky-400 transition-colors no-underline">Blog</a>
+          <a href="/gallery"    class="block th2 hover:text-sky-400 transition-colors no-underline">Gallery</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="th font-bold mb-4 text-sm uppercase tracking-wider">Contact</h4>
+        <address class="space-y-2 text-sm not-italic">
+          <div class="th2">Kadampara Chowk, Pratappur<br/>Surajpur, CG – 497223</div>
+          <a href="tel:+918103170595" class="block th2 hover:text-sky-400 no-underline"><i class="fas fa-phone mr-2" style="color:var(--sky)"></i>+91 81031 70595</a>
+          <a href="/cdn-cgi/l/email-protection#66100f150f09080f1216140712071616131426010b070f0a4805090b" class="block th2 hover:text-sky-400 no-underline" style="font-size:.8rem"><i class="fas fa-envelope mr-2" style="color:var(--sky)"></i><span class="__cf_email__" data-cfemail="02746b716b6d6c6b7672706376637272777042656f636b6e2c616d6f">[email&#160;protected]</span></a>
+          <div class="th2"><i class="fas fa-clock mr-2" style="color:var(--sky)"></i>Mon–Sat 8AM–6PM</div>
+        </address>
+      </div>
+    </div>
+    <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style="border-top:1px solid var(--border)">
+      <div class="th3 text-sm">© 2026 Vision IT Computer Institute, Pratappur. All rights reserved.</div>
+      <div class="flex gap-4 text-sm">
+        <a href="/privacy" class="th3 hover:text-sky-400 transition-colors no-underline">Privacy Policy</a>
+        <a href="/terms"   class="th3 hover:text-sky-400 transition-colors no-underline">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════
+     CURRICULUM MODAL
+══════════════════════════════════════════════ -->
+<div class="modal-wrap" id="curr-modal" role="dialog" aria-modal="true" aria-labelledby="curr-name">
+  <div class="modal-box max-w-lg" style="background:#12131a;border-color:rgba(255,255,255,.1)">
+    <button onclick="closeModal('curr-modal')" class="absolute top-4 right-4 text-xl" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5)"><i class="fas fa-times"></i></button>
+
+    <!-- Header -->
+    <div class="flex items-center gap-4 mb-6">
+      <div id="curr-icon" class="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0" style="background:rgba(var(--sky-rgb),.2)">💻</div>
+      <div class="flex-1 min-w-0">
+        <h3 id="curr-name" class="text-white font-black text-xl leading-tight mb-2">Course Name</h3>
+        <div id="curr-badges" class="flex flex-wrap gap-2"></div>
+      </div>
+    </div>
+
+    <!-- Curriculum list -->
+    <div class="mb-6">
+      <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
+        <i class="fas fa-list-check" style="color:var(--sky)"></i> Curriculum
+      </h4>
+      <div id="curr-items" class="space-y-2"></div>
+    </div>
+
+    <!-- Features -->
+    <div id="curr-feats-wrap" class="mb-6">
+      <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
+        <i class="fas fa-star" style="color:#f59e0b"></i> Course Includes
+      </h4>
+      <div id="curr-feats" class="space-y-2"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex gap-3">
+      <a href="/admission" id="curr-apply-btn" class="btn btn-sky flex-1 py-3 text-sm justify-center">
+        <i class="fas fa-pen-to-square mr-1"></i> Apply Now
+      </a>
+      <a href="https://wa.me/918103170595" target="_blank" rel="noopener" class="btn py-3 px-4 text-sm justify-center" style="background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.3);color:#25d366">
+        <i class="fab fa-whatsapp text-base"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ADMISSION QUICK MODAL
+══════════════════════════════════════════════ -->
+<div class="modal-wrap" id="adm-modal" role="dialog" aria-modal="true">
+  <div class="modal-box max-w-md">
+    <button onclick="closeModal('adm-modal')" class="absolute top-4 right-4 th3 text-xl" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>
+    <div class="text-center mb-6">
+      <div class="w-14 h-14 rounded-2xl btn-gold flex items-center justify-center text-2xl mx-auto mb-3" style="background:var(--gold)">📝</div>
+      <h3 class="th font-black text-xl">Admission Inquiry</h3>
+      <p class="th2 text-sm mt-1" style="font-weight:300">Details bharein — 24 ghante mein call karenge</p>
+    </div>
+    <form onsubmit="submitAdmissionQuick(event)" class="space-y-4">
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div><label class="lbl">Student Name *</label><input type="text" id="a-name" class="inp" placeholder="Full name" required autocomplete="name"/></div>
+        <div><label class="lbl">Mobile *</label><input type="tel" id="a-mobile" class="inp" placeholder="10-digit" required maxlength="10" autocomplete="tel"/></div>
+      </div>
+      <div>
+        <label class="lbl">Select Course *</label>
+        <select id="a-course" class="inp" required>
+          <option value="">-- Choose Course --</option>
+          <option value="Summer Special Batch 2026" style="font-weight:700">☀️ Summer Special Batch 2026</option>
+          <option value="Basic Computer Course">💻 Basic Computer Course</option>
+          <option value="Advanced Computer Course">⚡ Advanced Computer Course</option>
+          <option value="Tally & Accounting">📊 Tally &amp; Accounting</option>
+          <option value="Programming Course">👨‍💻 Programming Course</option>
+          <option value="Web Design Course">🎨 Web Design Course</option>
+          <option value="DTP Course">🖼️ DTP Course</option>
+        </select>
+      </div>
+      <div>
+        <label class="lbl">Preferred Batch</label>
+        <select id="a-batch" class="inp">
+          <option value="">Select batch time</option>
+          <option>Morning 9:00 AM</option>
+          <option>Afternoon 2:00 PM</option>
+          <option>Evening 5:00 PM</option>
+        </select>
+      </div>
+      <div><label class="lbl">Message (optional)</label><textarea id="a-msg" class="inp" rows="2" placeholder="Koi sawaal ya baat..."></textarea></div>
+      <button type="submit" id="adm-submit-btn" class="btn btn-sky w-full py-3 text-sm justify-center">
+        <i class="fas fa-paper-plane mr-1"></i>Submit Inquiry
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     AUTH MODAL (minimal)
+══════════════════════════════════════════════ -->
+<div class="modal-wrap" id="auth-modal" role="dialog" aria-modal="true">
+  <div class="modal-box max-w-md">
+    <button onclick="closeModal('auth-modal')" class="absolute top-4 right-4 th3 text-xl" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>
+    <div class="text-center mb-6">
+      <img src="/bg-Logo.png" alt="Vision IT" class="w-12 h-12 mx-auto mb-3 rounded-xl object-contain bg-white" width="48" height="48"/>
+      <h3 class="th font-black text-xl">Login to Continue</h3>
+      <p class="th2 text-sm mt-1" style="font-weight:300">Login karein aur apna course apply karein</p>
+    </div>
+    <div id="login-div">
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div><label class="lbl">Email *</label><input type="email" id="l-email" class="inp" placeholder="your@email.com" required autocomplete="email"/></div>
+        <div>
+          <label class="lbl">Password *</label>
+          <div class="relative">
+            <input type="password" id="l-pass" class="inp pr-11" placeholder="Password" required autocomplete="current-password"/>
+            <button type="button" onclick="togglePwd('l-pass','eye-l')" class="absolute right-3 top-1/2 -translate-y-1/2 th3" style="background:none;border:none;cursor:pointer;"><i id="eye-l" class="fas fa-eye text-sm"></i></button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center">Login</button>
+      </form>
+      <p class="text-center th2 text-sm mt-4">Account nahi hai? <button onclick="switchForm('signup')" class="font-semibold" style="color:var(--sky);background:none;border:none;cursor:pointer;">Sign Up</button></p>
+    </div>
+    <div id="signup-div" class="hidden">
+      <form onsubmit="handleSignup(event)" class="space-y-4">
+        <div><label class="lbl">Full Name *</label><input type="text" id="s-name" class="inp" placeholder="Apna poora naam" required autocomplete="name"/></div>
+        <div><label class="lbl">Email *</label><input type="email" id="s-email" class="inp" placeholder="Email" required autocomplete="email"/></div>
+        <div><label class="lbl">Password *</label><input type="password" id="s-pass" class="inp" placeholder="Min 6 characters" required autocomplete="new-password"/></div>
+        <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center">Create Account</button>
+      </form>
+      <p class="text-center th2 text-sm mt-4">Already account hai? <button onclick="switchForm('login')" class="font-semibold" style="color:var(--sky);background:none;border:none;cursor:pointer;">Login</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+import { initTheme }        from '/assets/js/theme.js';
+import { initNav, initTopBanner } from '/assets/js/nav.js';
+import { loadBannerSettings, sanitizeForHtml, checkRateLimit, isValidMobile } from '/assets/js/db-helpers.js';
+import { auth, db }         from '/assets/js/firebase-config.js';
+import { loginUser, signupUser, logoutUser as fbLogout } from '/assets/js/auth.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { collection, getDocs, query, orderBy, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+// ── Init ──
+initTheme();
+initNav();
+initTopBanner(loadBannerSettings);
+
+// ── State ──
+let CU = null, allCourses = [], curCatFilter = 'all';
+
+onAuthStateChanged(auth, user => {
+  CU = user;
+  window.VIT_USER = user;
+  syncAuthUI(user);
+});
+
+function syncAuthUI(user) {
+  const loginBtn  = document.getElementById('nav-login-btn');
+  const userWrap  = document.getElementById('nav-user-wrap');
+  const mobLogin  = document.getElementById('mob-login-btn');
+  const mobUser   = document.getElementById('mob-user-row');
+  if (user) {
+    loginBtn?.classList.add('hidden');
+    userWrap?.classList.remove('hidden'); userWrap?.classList.add('flex');
+    mobLogin?.classList.add('hidden');
+    mobUser?.classList.remove('hidden');  mobUser?.classList.add('flex');
+    const name = user.displayName || user.email?.split('@')[0] || 'User';
+    ['nav-uname','mob-uname'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=name; });
+    ['nav-avatar-txt','mob-avatar-txt'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=name[0].toUpperCase(); });
+    if (user.photoURL) {
+      const pi=document.getElementById('nav-avatar-img'); const ph=document.getElementById('nav-avatar-photo'); const pt=document.getElementById('nav-avatar-txt');
+      if(pi&&ph&&pt){ph.src=user.photoURL;pi.classList.remove('hidden');pt.classList.add('hidden');}
+    }
+  } else {
+    loginBtn?.classList.remove('hidden');
+    userWrap?.classList.add('hidden');
+    mobLogin?.classList.remove('hidden');
+    mobUser?.classList.add('hidden');
+  }
+}
+
+// ── Modal helpers ──
+window.openModal  = id => document.getElementById(id)?.classList.add('open');
+window.closeModal = id => document.getElementById(id)?.classList.remove('open');
+document.querySelectorAll('.modal-wrap').forEach(m =>
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); })
+);
+window.logoutUser = async () => { await fbLogout(); window.toast?.('Logout ho gaye','inf'); };
+
+// ── Auth handlers ──
+window.switchForm = form => {
+  ['login-div','signup-div'].forEach(d => document.getElementById(d)?.classList.add('hidden'));
+  document.getElementById(form+'-div')?.classList.remove('hidden');
+};
+window.handleLogin = async e => {
+  e.preventDefault();
+  try {
+    await loginUser(document.getElementById('l-email').value, document.getElementById('l-pass').value);
+    closeModal('auth-modal');
+    toast('Login ho gaye! ✅','ok');
+    if (window._pendingCourse) { applyAdmission(window._pendingCourse); window._pendingCourse=null; }
+  } catch (err) { toast('Login failed: ' + err.message,'err'); }
+};
+window.handleSignup = async e => {
+  e.preventDefault();
+  try {
+    await signupUser(document.getElementById('s-name').value.trim(), document.getElementById('s-email').value.trim(), document.getElementById('s-pass').value);
+    closeModal('auth-modal');
+    toast('Account ban gaya! 🎉','ok');
+  } catch (err) { toast('Signup failed: ' + err.message,'err'); }
+};
+
+// ── Toast ──
+window.toast = (msg, type='inf') => {
+  const icons={ok:'✅',err:'❌',inf:'ℹ️'};
+  const t=document.getElementById('toast');
+  t.innerHTML=`<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
+  t.classList.add('show'); clearTimeout(t._tid);
+  t._tid=setTimeout(()=>t.classList.remove('show'),3500);
+};
+
+// ── Default Courses (fallback if Firestore empty) ──
+const DC = [
+  {id:'dc1',name:'Basic Computer Course',          duration:'3 Months', category:'basic',       level:'Beginner',              feeOrig:'₹3,000', fee:'₹2,500', discPct:17, icon:'💻', image:'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&q=80', description:'MS Word, Excel, PowerPoint, Internet, Typing — complete basics for job aur daily life.', curriculum:'MS Word Complete\nMS Excel Basics\nMS PowerPoint\nInternet & Email\nTyping (Hindi & English)\nPrinter & Scanner\nGoogle Services\nBasic Troubleshooting', features:'Govt. Recognised Certificate\nPlacement Support\nPractical Lab\nFree Study Material', rating:4.8, reviews:95},
+  {id:'dc2',name:'Advanced Computer Course',       duration:'4 Months', category:'advanced',    level:'Intermediate',          feeOrig:'₹5,500', fee:'₹4,500', discPct:18, icon:'⚡', image:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80', description:'Professional level — DTP, Tally, advanced Office, accounting mastery se career build karein.', curriculum:'Advanced MS Office\nDTP - PageMaker\nCorelDRAW Basics\nTally ERP 9\nAccounting Basics\nAdobe Photoshop\nCyber Security Basics\nData Entry Speed', features:'Govt. Recognised Certificate\nPlacement Support\nIndustry Projects\nMentor Access', rating:4.9, reviews:67},
+  {id:'dc3',name:'Programming Course',             duration:'6 Months', category:'programming', level:'Beginner to Intermediate',feeOrig:'₹7,000', fee:'₹5,500', discPct:21, icon:'👨‍💻',image:'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=500&q=80', description:'C, Python, web development aur database ke saath real programmer ban ke niklen.', curriculum:'C Programming\nC++ OOP Concepts\nPython Fundamentals\nHTML5 & CSS3\nJavaScript Basics\nMySQL Database\nProblem Solving\nMini Projects', features:'Industry Certificate\nLive Projects\nGitHub Portfolio\nJob Placement Help', rating:4.7, reviews:38},
+  {id:'dc4',name:'Tally & Accounting',             duration:'2 Months', category:'accounting',  level:'Beginner',              feeOrig:'',        fee:'₹2,000', discPct:0,  icon:'📊', image:'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&q=80', description:'Tally Prime aur GST accounting seekhein — shop, business ya government office mein job ke liye perfect.', curriculum:'Tally Prime Basics\nLedger Management\nGST Filing\nBank Reconciliation\nPayroll Management\nInventory Tracking\nBalance Sheet\nFinancial Reports', features:'Tally Certificate\nGST Practical Training\nJob Ready Skills\nReal Business Projects', rating:4.8, reviews:55},
+  {id:'dc5',name:'Web Design Course',              duration:'4 Months', category:'design',      level:'Beginner',              feeOrig:'₹4,500', fee:'₹3,500', discPct:22, icon:'🌐', image:'https://images.unsplash.com/photo-1547658719-da2b51169166?w=500&q=80', description:'Beautiful websites design karna seekhein — HTML, CSS aur JavaScript ke saath freelancing shuru karein.', curriculum:'HTML5 Fundamentals\nCSS3 & Flexbox\nResponsive Design\nBootstrap Framework\nJavaScript Basics\nWordPress\nPhotoshop for Web\nFreelancing Tips', features:'Portfolio Website\nFreelancing Guide\nCertificate\nLive Project', rating:4.6, reviews:29},
+  {id:'dc6',name:'DTP & Graphic Design',           duration:'2 Months', category:'design',      level:'Beginner',              feeOrig:'₹2,500', fee:'₹2,000', discPct:20, icon:'🎨', image:'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=500&q=80', description:'Printing, banner design aur publishing — CorelDRAW aur PageMaker ke saath creative career banayein.', curriculum:'CorelDRAW Complete\nPageMaker\nAdobe Photoshop\nBanner Designing\nBusiness Card Design\nBrochure Making\nPrinting Basics\nColor Theory', features:'Design Certificate\nPractical Projects\nFreelance Ready', rating:4.5, reviews:22},
+];
+
+// ── Helpers ──
+function discountPct(orig, fee, pct) {
+  if (pct) return Math.round(pct);
+  if (orig && fee) {
+    const o = parseFloat(String(orig).replace(/[^\d.]/g,''));
+    const f = parseFloat(String(fee).replace(/[^\d.]/g,''));
+    if (o > f) return Math.round(((o-f)/o)*100);
+  }
+  return 0;
+}
+
+function starsHtml(r) {
+  const n = Math.round(r || 4.5);
+  return '★'.repeat(n) + '☆'.repeat(5-n);
+}
+
+// ── Course Card HTML ──
+function getCourseCard(c) {
+  const img = c.image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&q=80';
+  const currArr = (c.curriculum||'').split('\n').filter(x=>x.trim());
+  const featArr = (c.features||'').split('\n').filter(x=>x.trim());
+  const safeName = (c.name||'').replace(/'/g,"\\'");
+  const pct = discountPct(c.feeOrig, c.fee, c.discPct);
+  const hasDiscount = pct > 0;
+  const rating = c.rating || 4.5;
+  const reviews = c.reviews || 0;
+  const stars = starsHtml(rating);
+  const catColors = { basic:'rgba(14,165,233,.85)', advanced:'rgba(139,92,246,.85)', programming:'rgba(16,185,129,.85)', design:'rgba(245,158,11,.85)', accounting:'rgba(239,68,68,.85)' };
+  const catColor = catColors[c.category] || catColors.basic;
+
+  return `<article class="course-card-full" id="course-${c.id}">
+    <!-- Image -->
+    <div class="relative overflow-hidden" style="height:185px;flex-shrink:0">
+      <img src="${img}" alt="${sanitizeForHtml(c.name)}" loading="lazy"
+        class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+        onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&q=80'"/>
+      <div class="absolute inset-0" style="background:linear-gradient(to bottom,rgba(0,0,0,.04) 0%,rgba(0,0,0,.65) 100%)"></div>
+      <!-- Level badge -->
+      <div class="absolute top-3 left-3">
+        <span class="text-xs font-bold px-2.5 py-1 rounded-full text-white" style="background:${catColor}">${sanitizeForHtml(c.level||'Beginner')}</span>
+      </div>
+      <!-- Icon -->
+      <div class="absolute top-3 right-3 w-10 h-10 rounded-xl flex items-center justify-center text-xl" style="background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2)">${c.icon||'💻'}</div>
+      <!-- Discount badge -->
+      ${hasDiscount ? `<div class="absolute bottom-3 left-3"><span class="text-xs font-black px-2.5 py-1 rounded-full text-white" style="background:linear-gradient(135deg,#ef4444,#dc2626)">${pct}% OFF</span></div>` : ''}
+      <!-- Duration -->
+      <div class="absolute bottom-3 right-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full text-white" style="background:rgba(0,0,0,.55)">${sanitizeForHtml(c.duration||'')}</span></div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-5 flex flex-col flex-1">
+      <h2 class="th font-black text-base leading-tight mb-2">${sanitizeForHtml(c.name)}</h2>
+
+      <!-- Rating -->
+      <div class="flex items-center gap-1.5 mb-3">
+        <span style="color:#f59e0b;font-size:.8rem">${stars}</span>
+        <span class="th font-bold text-sm">${rating}</span>
+        <span class="th3 text-xs">(${reviews} reviews)</span>
+      </div>
+
+      <!-- Fee -->
+      <div class="flex items-center gap-2 mb-3 flex-wrap">
+        ${hasDiscount ? `<span class="line-through th3 text-sm">${sanitizeForHtml(c.feeOrig)}</span>` : ''}
+        <span class="font-black text-xl" style="color:var(--gold)">${sanitizeForHtml(c.fee||'Contact Us')}</span>
+        ${hasDiscount ? `<span class="text-xs font-bold px-2 py-0.5 rounded" style="background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.25)">${pct}% OFF</span>` : ''}
+      </div>
+
+      <!-- Description -->
+      ${c.description ? `<p class="th2 text-xs leading-relaxed mb-3 lc2" style="font-weight:300">${sanitizeForHtml(c.description)}</p>` : ''}
+
+      <!-- Curriculum pills -->
+      ${currArr.length ? `<div class="flex flex-wrap gap-1.5 mb-3">
+        ${currArr.slice(0,4).map(t=>`<span class="text-xs px-2 py-0.5 rounded-md th2" style="background:rgba(var(--sky-rgb),.1);border:1px solid rgba(var(--sky-rgb),.2)">${sanitizeForHtml(t.trim())}</span>`).join('')}
+        ${currArr.length>4 ? `<span class="text-xs th3">+${currArr.length-4} more</span>` : ''}
+      </div>` : ''}
+
+      <!-- Features -->
+      ${featArr.length ? `<div class="space-y-1 mb-4">
+        ${featArr.slice(0,3).map(f=>`<div class="flex items-center gap-2"><i class="fas fa-check-circle text-xs flex-shrink-0" style="color:#34d399"></i><span class="th2 text-xs">${sanitizeForHtml(f.trim())}</span></div>`).join('')}
+      </div>` : ''}
+
+      <!-- Actions -->
+      <div class="mt-auto flex gap-2 pt-1">
+        <button onclick="viewCurriculum('${c.id}')"
+          class="flex-1 py-2.5 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all"
+          style="background:rgba(var(--sky-rgb),.1);border:1px solid rgba(var(--sky-rgb),.25);color:var(--sky)">
+          <i class="fas fa-list text-[10px]"></i> Curriculum
+        </button>
+        <button onclick="applyAdmission('${safeName}')"
+          class="flex-1 py-2.5 text-xs font-black rounded-xl text-white flex items-center justify-center gap-1.5 transition-all"
+          style="background:linear-gradient(135deg,var(--sky),var(--accent));box-shadow:0 4px 14px rgba(var(--sky-rgb),.3)">
+          <i class="fas fa-pen-to-square text-[10px]"></i> Apply Now
+        </button>
+      </div>
+    </div>
+  </article>`;
+}
+
+// ── Load courses ──
+async function loadCourses() {
+  try {
+    const snap = await getDocs(query(collection(db,'courses'), orderBy('createdAt','asc')));
+    let cs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    allCourses = cs.length > 0 ? cs : DC;
+  } catch {
+    allCourses = DC;
+  }
+  // Update hero count
+  const hc = document.getElementById('hero-course-count');
+  if (hc) hc.textContent = allCourses.length + '+';
+  renderCourses();
+}
+loadCourses();
+
+// ── Render courses ──
+window.renderCourses = function() {
+  const grid    = document.getElementById('all-courses-grid');
+  const noRes   = document.getElementById('no-results');
+  const cntEl   = document.getElementById('course-count');
+  if (!grid) return;
+
+  const search  = (document.getElementById('course-search')?.value || '').toLowerCase().trim();
+  const sort    = document.getElementById('course-sort')?.value || 'default';
+  let cs = [...allCourses];
+
+  if (curCatFilter !== 'all') cs = cs.filter(c => c.category === curCatFilter);
+  if (search) cs = cs.filter(c =>
+    (c.name||'').toLowerCase().includes(search) ||
+    (c.description||'').toLowerCase().includes(search) ||
+    (c.curriculum||'').toLowerCase().includes(search)
+  );
+
+  if (sort === 'rating')   cs.sort((a,b) => (b.rating||0) - (a.rating||0));
+  if (sort === 'fee-asc')  cs.sort((a,b) => parseFloat(String(a.fee||'0').replace(/[^\d.]/g,'')) - parseFloat(String(b.fee||'0').replace(/[^\d.]/g,'')));
+  if (sort === 'name')     cs.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+
+  if (cntEl) cntEl.textContent = cs.length + ' course' + (cs.length !== 1 ? 's' : '') + ' found';
+
+  if (!cs.length) {
+    grid.innerHTML = '';
+    noRes?.classList.remove('hidden');
+    return;
+  }
+  noRes?.classList.add('hidden');
+  grid.innerHTML = cs.map(getCourseCard).join('');
+};
+window.filterCourses = window.renderCourses;
+
+window.setCatFilter = (el, cat) => {
+  document.querySelectorAll('#cat-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  curCatFilter = cat;
+  window.renderCourses();
+};
+
+window.resetFilters = () => {
+  curCatFilter = 'all';
+  document.getElementById('course-search').value = '';
+  document.getElementById('course-sort').value = 'default';
+  document.querySelectorAll('#cat-filters .filter-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+  window.renderCourses();
+};
+
+// ── Curriculum modal ──
+window.viewCurriculum = id => {
+  const c = allCourses.find(x => x.id === id);
+  if (!c) return;
+
+  const set = (elId, val) => { const el=document.getElementById(elId); if(el) el.textContent=val; };
+  set('curr-icon', c.icon || '💻');
+  set('curr-name', c.name || '');
+
+  const pct = discountPct(c.feeOrig, c.fee, c.discPct);
+  const badges = document.getElementById('curr-badges');
+  if (badges) {
+    badges.innerHTML = [
+      c.duration ? `<span class="feat-pill">${sanitizeForHtml(c.duration)}</span>` : '',
+      c.level    ? `<span class="feat-pill" style="background:rgba(245,158,11,.15);color:var(--gold);border-color:rgba(245,158,11,.25)">${sanitizeForHtml(c.level)}</span>` : '',
+      c.fee      ? `<span class="feat-pill" style="background:rgba(16,185,129,.15);color:#34d399;border-color:rgba(16,185,129,.25)">${sanitizeForHtml(c.fee)}</span>` : '',
+      pct > 0    ? `<span class="feat-pill" style="background:rgba(239,68,68,.15);color:#f87171;border-color:rgba(239,68,68,.25)">${pct}% OFF</span>` : '',
+    ].join('');
+  }
+
+  const currItems = (c.curriculum||'').split('\n').filter(x=>x.trim());
+  const ci = document.getElementById('curr-items');
+  if (ci) ci.innerHTML = currItems.map((item,i) =>
+    `<div class="curr-item">
+      <div class="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center text-xs font-black" style="background:rgba(var(--sky-rgb),.2);color:#60a5d4">${i+1}</div>
+      <span style="color:#f0ede8;font-size:.875rem">${sanitizeForHtml(item.trim())}</span>
+    </div>`
+  ).join('');
+
+  const featItems = (c.features||'').split('\n').filter(x=>x.trim());
+  const cf = document.getElementById('curr-feats');
+  if (cf) cf.innerHTML = featItems.map(f =>
+    `<div class="flex items-center gap-3 text-sm" style="color:rgba(255,255,255,.75)">
+      <i class="fas fa-check-circle text-xs flex-shrink-0" style="color:#34d399"></i>
+      ${sanitizeForHtml(f.trim())}
+    </div>`
+  ).join('');
+
+  // Update apply button
+  const applyBtn = document.getElementById('curr-apply-btn');
+  if (applyBtn) {
+    applyBtn.onclick = () => { closeModal('curr-modal'); applyAdmission(c.name); };
+  }
+
+  openModal('curr-modal');
+};
+
+// ── Apply admission ──
+window.applyAdmission = course => {
+  const sel = document.getElementById('a-course');
+  if (sel) {
+    // Reset & rebuild options
+    sel.innerHTML = '<option value="">-- Choose Course --</option>';
+    const extras = ['Summer Special Batch 2026','Basic Computer Course','Advanced Computer Course','Tally & Accounting','Programming Course','Web Design Course','DTP Course'];
+    const names = allCourses.length ? allCourses.map(c=>c.name) : extras;
+    names.forEach(n => { const o=document.createElement('option'); o.value=n; o.textContent=n; sel.appendChild(o); });
+    if (course && course !== 'General') sel.value = course;
+  }
+  if (CU) {
+    const nameInp = document.getElementById('a-name');
+    if (nameInp && CU.displayName) nameInp.value = CU.displayName;
+    openModal('adm-modal');
+  } else {
+    window._pendingCourse = course;
+    openModal('auth-modal');
+  }
+};
+
+// ── Submit quick admission ──
+window.submitAdmissionQuick = async e => {
+  e.preventDefault();
+  if (!checkRateLimit('admission', 30000)) return;
+  const name   = document.getElementById('a-name')?.value.trim();
+  const mobile = document.getElementById('a-mobile')?.value.trim().replace(/\D/g,'');
+  const course = document.getElementById('a-course')?.value;
+  const batch  = document.getElementById('a-batch')?.value;
+  const msg    = document.getElementById('a-msg')?.value.trim();
+
+  if (!name)               { toast('Naam zaroori hai','err'); return; }
+  if (!isValidMobile(mobile)) { toast('Valid 10-digit mobile number dalein','err'); return; }
+  if (!course)             { toast('Course select karein','err'); return; }
+
+  const btn = document.getElementById('adm-submit-btn');
+  if (btn) { btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...'; }
+
+  try {
+    await addDoc(collection(db,'admission_queries'), {
+      studentName: name, mobile, course, batch, message: msg,
+      userId: CU?.uid || null, userEmail: CU?.email || null,
+      formType: 'courses_page', trackerStatus: 'new',
+      timestamp: serverTimestamp()
+    });
+    closeModal('adm-modal');
+    toast('Inquiry submit ho gaya! 24 ghante mein call karenge 🎉','ok');
+    e.target.reset();
+
+    // WhatsApp option
+    const waMsg = encodeURIComponent(`Hello Vision IT! Mera naam ${name} hai. Mobile: ${mobile}. Maine ${course} ke liye enquiry ki hai.`);
+    setTimeout(() => {
+      if (confirm('WhatsApp pe bhi inform karein?')) window.open(`https://wa.me/918103170595?text=${waMsg}`, '_blank');
+    }, 1200);
+  } catch (err) {
+    toast('Submit nahi hua: ' + err.message,'err');
+  } finally {
+    if (btn) { btn.disabled=false; btn.innerHTML='<i class="fas fa-paper-plane mr-1"></i>Submit Inquiry'; }
+  }
+};
+
+// ── URL hash → auto filter ──
+const hash = window.location.hash.replace('#','');
+if (hash) {
+  const btn = document.querySelector(`[data-cat="${hash}"]`);
+  if (btn) setTimeout(() => setCatFilter(btn, hash), 300);
+}
+
+</script>
+
+<!-- Inline JS: nav dropdowns, mobile menu, theme toggle -->
+<script>
+window.toggleNavDropdown = id => {
+  ['more-dropdown','portal-dropdown'].forEach(d => {
+    if (d !== id) document.getElementById(d)?.classList.add('hidden');
+  });
+  document.getElementById(id)?.classList.toggle('hidden');
+};
+window.closeNavDropdowns = () => {
+  ['more-dropdown','portal-dropdown'].forEach(d => document.getElementById(d)?.classList.add('hidden'));
+};
+document.addEventListener('click', e => {
+  if (!e.target.closest('#nav-more-wrap') && !e.target.closest('#nav-portal-wrap')) closeNavDropdowns();
+});
+
+document.getElementById('nav-hamburger')?.addEventListener('click', () => {
+  document.getElementById('mob-menu')?.classList.toggle('open');
+  document.getElementById('mob-overlay')?.classList.toggle('open');
+});
+document.getElementById('mob-overlay')?.addEventListener('click', () => {
+  document.getElementById('mob-menu')?.classList.remove('open');
+  document.getElementById('mob-overlay')?.classList.remove('open');
+});
+
+window.togglePwd = (inputId, iconId) => {
+  const inp = document.getElementById(inputId);
+  const icon = document.getElementById(iconId);
+  if (!inp) return;
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  if (icon) icon.className = inp.type === 'password' ? 'fas fa-eye text-sm' : 'fas fa-

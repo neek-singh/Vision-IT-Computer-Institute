@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Panel | Vision IT Computer Institute</title>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="icon" type="image/png" href="/bg-Logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/assets/css/style.css"/>
+
+<style>
+/* ── Admin panel always dark ── */
+:root,[data-theme="dark"]{
+  --ink:#f0ede8;--ink2:#b8b4ae;--ink3:#6b6762;
+  --bg:#0d0f14;--bg2:#12131a;--bg3:#1a1b24;
+  --surf:#12131a;--card-bg:#12131a;
+  --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);
+  --nav-bg:rgba(13,15,20,.97);--modal-bg:#1a1b24;
+  --inp-bg:#1a1b24;--inp-border:rgba(255,255,255,.15);
+  --shadow-card:0 1px 4px rgba(0,0,0,.4);
+}
+
+body{background:#0d0f14;color:#f0ede8;font-family:'DM Sans',system-ui,sans-serif;margin:0;}
+
+/* ── Layout ── */
+#admin-shell{display:flex;min-height:100vh;}
+#admin-sidebar{
+  width:220px;flex-shrink:0;background:#0a0c12;
+  border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+#admin-main{flex:1;overflow-y:auto;padding:1.5rem;min-width:0;}
+
+/* ── Login screen ── */
+#admin-login{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0a0c12 0%,#0d1117 100%);
+  padding:1rem;
+}
+
+/* ── Sidebar nav ── */
+.adm-link{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.55rem .85rem;border-radius:8px;
+  color:rgba(255,255,255,.5);font-size:.83rem;font-weight:500;
+  cursor:pointer;transition:all .15s;border-left:2px solid transparent;
+  text-decoration:none;
+}
+.adm-link:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85);}
+.adm-link.active{background:rgba(255,255,255,.08);color:#fff;border-left-color:var(--sky);}
+.adm-link i{width:16px;text-align:center;flex-shrink:0;}
+
+/* ── Section visibility ── */
+.adm-sec{display:none;}
+.adm-sec.active{display:block;}
+
+/* ── Cards ── */
+.adm-card{
+  background:#1a1b24;border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:1.25rem;
+}
+.adm-card-hover{transition:border-color .2s;}
+.adm-card-hover:hover{border-color:rgba(255,255,255,.16);}
+
+/* ── Stat cards ── */
+.stat-card{
+  background:#1a1b24;border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:1.25rem;text-align:center;
+  cursor:pointer;transition:all .2s;
+}
+.stat-card:hover{border-color:rgba(255,255,255,.2);background:#1e1f28;}
+
+/* ── Tables ── */
+.adm-table{width:100%;border-collapse:collapse;}
+.adm-table th{
+  padding:.6rem 1rem;text-align:left;
+  font-size:.72rem;font-weight:600;color:rgba(255,255,255,.4);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;
+}
+.adm-table td{
+  padding:.7rem 1rem;font-size:.875rem;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  color:rgba(255,255,255,.8);vertical-align:middle;
+}
+.adm-table tr:hover td{background:rgba(255,255,255,.03);}
+
+/* ── Status pills ── */
+.sp{display:inline-flex;align-items:center;gap:.25rem;padding:.18rem .6rem;border-radius:4px;font-size:.7rem;font-weight:600;white-space:nowrap;}
+.sp-new{background:rgba(99,102,241,.15);color:#818cf8;border:1px solid rgba(99,102,241,.3);}
+.sp-called{background:rgba(245,158,11,.12);color:#fbbf24;border:1px solid rgba(245,158,11,.25);}
+.sp-counselled{background:rgba(14,165,233,.12);color:#38bdf8;border:1px solid rgba(14,165,233,.25);}
+.sp-admitted{background:rgba(16,185,129,.12);color:#34d399;border:1px solid rgba(16,185,129,.25);}
+.sp-followup{background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12);}
+.sp-notinterested{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.2);}
+
+/* ── Upload zone ── */
+.upload-zone{
+  border:2px dashed rgba(255,255,255,.14);border-radius:12px;
+  padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s;
+}
+.upload-zone:hover{border-color:var(--sky);background:rgba(var(--sky-rgb),.04);}
+
+/* ── Note items ── */
+.note-item{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;padding:.7rem .9rem;display:flex;align-items:flex-start;gap:.75rem;
+}
+
+/* ── Mobile sidebar overlay ── */
+#sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;}
+#sidebar-overlay.open{display:block;}
+@media(max-width:768px){
+  #admin-sidebar{position:fixed;left:-220px;top:0;bottom:0;z-index:300;transition:left .25s;}
+  #admin-sidebar.open{left:0;}
+  #admin-main{padding:1rem;}
+  #mobile-sidebar-btn{display:flex!important;}
+}
+
+/* ── Spinner ── */
+.spin{width:32px;height:32px;border:2px solid rgba(255,255,255,.1);border-top-color:var(--sky);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── Toast ── */
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);z-index:9999;transition:transform .3s,opacity .25s;opacity:0;pointer-events:none;}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast-inner{padding:.6rem 1.2rem;border-radius:8px;font-size:.84rem;font-weight:500;display:flex;align-items:center;gap:.5rem;box-shadow:0 4px 24px rgba(0,0,0,.5);white-space:nowrap;border:1px solid rgba(255,255,255,.1);}
+.toast-ok{background:#1e7c5a;color:#fff;}
+.toast-err{background:#c0392b;color:#fff;}
+.toast-inf{background:#1a1b24;color:#fff;}
+
+/* ── Modal ── */
+.modal-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);z-index:1200;align-items:center;justify-content:center;padding:1rem;}
+.modal-wrap.open{display:flex;}
+.modal-box{background:#1a1b24;border:1px solid rgba(255,255,255,.1);border-radius:20px;max-height:90vh;overflow-y:auto;width:100%;position:relative;padding:1.75rem;box-shadow:0 24px 80px rgba(0,0,0,.5);}
+
+/* ── Star picker ── */
+.star-pick{font-size:1.5rem;cursor:pointer;color:rgba(255,255,255,.2);transition:color .15s;}
+.star-pick.lit{color:#f59e0b;}
+
+/* ── Tracker card ── */
+.tracker-row{
+  background:#1a1b24;border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:1rem 1.25rem;
+  display:flex;align-items:center;gap:1rem;
+  transition:border-color .2s;cursor:pointer;
+}
+.tracker-row:hover{border-color:rgba(255,255,255,.15);}
+</style>
+</head>
+
+<body>
+<div id="toast"></div>
+
+<!-- ══════════════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════════════ -->
+<div id="admin-login">
+  <div style="background:#1a1b24;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:2.5rem;width:100%;max-width:400px;box-shadow:0 32px 80px rgba(0,0,0,.5)">
+    <div class="text-center mb-8">
+      <img src="/bg-Logo.png" alt="Vision IT Logo" class="w-16 h-16 rounded-2xl object-contain mx-auto mb-4" style="background:#fff" width="64" height="64"/>
+      <h2 style="color:#fff;font-weight:900;font-size:1.5rem">Admin Portal</h2>
+      <p style="color:rgba(255,255,255,.4);font-size:.85rem;margin-top:.25rem">Vision IT Computer Institute</p>
+    </div>
+    <form id="login-form" class="space-y-4">
+      <div>
+        <label class="lbl">Admin Email</label>
+        <input type="email" id="adm-email" class="inp" placeholder="admin@visionit.com" required autocomplete="email"/>
+      </div>
+      <div>
+        <label class="lbl">Password</label>
+        <div class="relative">
+          <input type="password" id="adm-pass" class="inp pr-11" placeholder="Password" required autocomplete="current-password"/>
+          <button type="button" onclick="togglePwd('adm-pass','eye-adm')" class="absolute right-3 top-1/2 -translate-y-1/2" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)">
+            <i id="eye-adm" class="fas fa-eye text-sm"></i>
+          </button>
+        </div>
+      </div>
+      <button type="submit" id="login-btn" class="btn btn-sky w-full py-3 text-sm justify-center">
+        <i class="fas fa-lock mr-1"></i> Access Admin Panel
+      </button>
+    </form>
+    <div class="text-center mt-5">
+      <a href="/" style="color:rgba(255,255,255,.3);font-size:.85rem;text-decoration:none">← Back to Website</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ADMIN SHELL (after login)
+══════════════════════════════════════════ -->
+<div id="admin-shell" style="display:none">
+
+  <!-- Mobile sidebar overlay -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- ── SIDEBAR ── -->
+  <aside id="admin-sidebar">
+    <div style="padding:1rem 1rem .75rem;border-bottom:1px solid rgba(255,255,255,.06)">
+      <div class="flex items-center gap-2.5">
+        <img src="/bg-Logo.png" alt="Vision IT" class="w-9 h-9 rounded-xl object-contain" style="background:#fff" width="36" height="36"/>
+        <div>
+          <div style="color:#fff;font-weight:900;font-size:.9rem;line-height:1">Vision IT</div>
+          <div style="color:var(--sky);font-size:.65rem;font-weight:600;letter-spacing:.1em">ADMIN PANEL</div>
+        </div>
+      </div>
+    </div>
+
+    <nav style="flex:1;padding:.6rem .5rem;overflow-y:auto">
+      <p style="font-size:.62rem;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:.5rem .35rem .25rem;text-transform:uppercase">Main</p>
+      <a class="adm-link active" id="al-overview"    onclick="showSec('overview')">   <i class="fas fa-chart-pie"></i>Dashboard</a>
+      <a class="adm-link"        id="al-queries"     onclick="showSec('queries')">    <i class="fas fa-clipboard-list"></i>Admissions</a>
+      <a class="adm-link"        id="al-courses"     onclick="showSec('courses')">    <i class="fas fa-book-open"></i>Courses</a>
+      <a class="adm-link"        id="al-blogs"       onclick="showSec('blogs')">      <i class="fas fa-pen-nib"></i>Blog Posts</a>
+      <a class="adm-link"        id="al-contacts"    onclick="showSec('contacts')">   <i class="fas fa-envelope"></i>Messages</a>
+
+      <p style="font-size:.62rem;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:.85rem .35rem .25rem;text-transform:uppercase">Content</p>
+      <a class="adm-link"        id="al-gallery"     onclick="showSec('gallery')">    <i class="fas fa-images"></i>Gallery</a>
+      <a class="adm-link"        id="al-certificates" onclick="showSec('certificates')"><i class="fas fa-certificate"></i>Certificates</a>
+      <a class="adm-link"        id="al-results"     onclick="showSec('results')">    <i class="fas fa-chart-bar"></i>Results</a>
+      <a class="adm-link"        id="al-testimonials" onclick="showSec('testimonials')"><i class="fas fa-quote-right"></i>Testimonials</a>
+
+      <p style="font-size:.62rem;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:.85rem .35rem .25rem;text-transform:uppercase">Settings</p>
+      <a class="adm-link"        id="al-banner"      onclick="showSec('banner')">     <i class="fas fa-bullhorn"></i>Top Banner</a>
+      <a class="adm-link"        id="al-apps"        onclick="showSec('apps')">       <i class="fab fa-android"></i>App Downloads</a>
+    </nav>
+
+    <div style="padding:.5rem;border-top:1px solid rgba(255,255,255,.06)">
+      <a class="adm-link" style="color:#f87171" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
+      <a href="/" class="adm-link" style="color:rgba(255,255,255,.3)"><i class="fas fa-globe"></i>View Website</a>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div id="admin-main">
+
+    <!-- Mobile top bar -->
+    <div class="md:hidden flex items-center gap-3 mb-5 pb-3" style="border-bottom:1px solid rgba(255,255,255,.08)">
+      <button id="mobile-sidebar-btn" onclick="toggleSidebar()" style="display:none;background:rgba(255,255,255,.08);border:none;border-radius:8px;padding:.5rem .65rem;cursor:pointer;color:#fff;align-items:center;justify-content:center">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div style="color:#fff;font-weight:800;font-size:1rem">Vision IT Admin</div>
+    </div>
+
+    <!-- ════════════════════════════════════
+         SECTION: DASHBOARD
+    ════════════════════════════════════ -->
+    <section class="adm-sec active" id="sec-overview">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Dashboard</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Vision IT Admin Panel — Sabka ek jagah control</p>
+        </div>
+        <div style="color:rgba(255,255,255,.3);font-size:.8rem" id="dash-time"></div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="stat-card" onclick="showSec('courses')">
+          <div style="color:var(--sky);font-size:1.5rem;margin-bottom:.5rem">📚</div>
+          <div style="font-size:2rem;font-weight:900;color:#fff;line-height:1" id="d-courses">—</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.8rem;margin-top:.25rem">Courses</div>
+        </div>
+        <div class="stat-card" onclick="showSec('queries')">
+          <div style="color:#fbbf24;font-size:1.5rem;margin-bottom:.5rem">📝</div>
+          <div style="font-size:2rem;font-weight:900;color:#fff;line-height:1" id="d-queries">—</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.8rem;margin-top:.25rem">Inquiries</div>
+        </div>
+        <div class="stat-card" onclick="showSec('blogs')">
+          <div style="color:#34d399;font-size:1.5rem;margin-bottom:.5rem">📰</div>
+          <div style="font-size:2rem;font-weight:900;color:#fff;line-height:1" id="d-blogs">—</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.8rem;margin-top:.25rem">Blog Posts</div>
+        </div>
+        <div class="stat-card" onclick="showSec('contacts')">
+          <div style="color:#a78bfa;font-size:1.5rem;margin-bottom:.5rem">📬</div>
+          <div style="font-size:2rem;font-weight:900;color:#fff;line-height:1" id="d-contacts">—</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.8rem;margin-top:.25rem">Messages</div>
+        </div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="adm-card mb-5">
+        <h3 style="color:#fff;font-weight:700;margin-bottom:1rem">⚡ Quick Actions</h3>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="showSec('courses');setTimeout(openCourseForm,100)" class="btn btn-sky px-4 py-2 text-sm"><i class="fas fa-plus mr-1"></i>Add Course</button>
+          <button onclick="showSec('blogs');setTimeout(openBlogForm,100)" class="btn btn-ghost px-4 py-2 text-sm"><i class="fas fa-plus mr-1"></i>Add Blog</button>
+          <button onclick="showSec('queries')" class="btn btn-ghost px-4 py-2 text-sm"><i class="fas fa-clipboard-list mr-1"></i>View Inquiries</button>
+          <button onclick="showSec('banner')" class="btn btn-ghost px-4 py-2 text-sm"><i class="fas fa-bullhorn mr-1"></i>Top Banner</button>
+          <button onclick="showSec('certificates');setTimeout(openCertForm,100)" class="btn btn-ghost px-4 py-2 text-sm"><i class="fas fa-certificate mr-1"></i>Issue Certificate</button>
+        </div>
+      </div>
+
+      <!-- Recent inquiries -->
+      <div class="adm-card">
+        <div class="flex items-center justify-between mb-4">
+          <h3 style="color:#fff;font-weight:700">🕐 Recent Inquiries</h3>
+          <button onclick="showSec('queries')" style="background:none;border:none;cursor:pointer;color:var(--sky);font-size:.8rem">View All →</button>
+        </div>
+        <div id="dash-recent-list">
+          <div class="flex justify-center py-6"><div class="spin"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: ADMISSIONS
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-queries">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Admission Management</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Saari inquiries — status update, call log, export</p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="exportAdmCSV()" class="btn btn-ghost px-4 py-2 text-sm"><i class="fas fa-download mr-1"></i>CSV Export</button>
+          <button onclick="loadAdmissions()" class="btn btn-ghost px-3 py-2 text-sm" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+        </div>
+      </div>
+
+      <!-- Status stat cards -->
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-5">
+        <div class="stat-card" onclick="filterAdm('all')">
+          <div style="font-size:1.3rem;font-weight:900;color:#fff" id="as-all">0</div>
+          <div style="color:rgba(255,255,255,.35);font-size:.72rem;margin-top:.15rem">Total</div>
+        </div>
+        <div class="stat-card" onclick="filterAdm('new')">
+          <div style="font-size:1.3rem;font-weight:900;color:#818cf8" id="as-new">0</div>
+          <div style="color:rgba(255,255,255,.35);font-size:.72rem;margin-top:.15rem">New</div>
+        </div>
+        <div class="stat-card" onclick="filterAdm('called')">
+          <div style="font-size:1.3rem;font-weight:900;color:#fbbf24" id="as-called">0</div>
+          <div style="color:rgba(255,255,255,.35);font-size:.72rem;margin-top:.15rem">Called</div>
+        </div>
+        <div class="stat-card" onclick="filterAdm('counselled')">
+          <div style="font-size:1.3rem;font-weight:900;color:#38bdf8" id="as-counselled">0</div>
+          <div style="color:rgba(255,255,255,.35);font-size:.72rem;margin-top:.15rem">Counselled</div>
+        </div>
+        <div class="stat-card" onclick="filterAdm('admitted')">
+          <div style="font-size:1.3rem;font-weight:900;color:#34d399" id="as-admitted">0</div>
+          <div style="color:rgba(255,255,255,.35);font-size:.72rem;margin-top:.15rem">Admitted</div>
+        </div>
+        <div class="stat-card" onclick="filterAdm('notinterested')">
+          <div style="font-size:1.3rem;font-weight:900;color:#f87171" id="as-ni">0</div>
+          <div style="color:rgba(255,255,255,.35);font-size:.72rem;margin-top:.15rem">Not Int.</div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-col sm:flex-row gap-3 mb-4">
+        <div class="relative flex-1">
+          <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-sm" style="color:rgba(255,255,255,.25)"></i>
+          <input id="adm-search" class="inp pl-10 py-2.5 text-sm" placeholder="Name, mobile, course..." oninput="renderAdmList()"/>
+        </div>
+        <select id="adm-status-filter" class="inp w-auto py-2.5 px-3 text-sm" onchange="renderAdmList()">
+          <option value="all">All Status</option>
+          <option value="new">🆕 New</option>
+          <option value="called">📞 Called</option>
+          <option value="counselled">💬 Counselled</option>
+          <option value="admitted">✅ Admitted</option>
+          <option value="followup">🔁 Follow-Up</option>
+          <option value="notinterested">❌ Not Interested</option>
+        </select>
+        <select id="adm-sort" class="inp w-auto py-2.5 px-3 text-sm" onchange="renderAdmList()">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="name">Name A-Z</option>
+        </select>
+      </div>
+
+      <div id="adm-list" class="space-y-2.5">
+        <div class="flex justify-center py-12"><div class="spin"></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: COURSES
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-courses">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Courses</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Courses add, edit ya delete karein</p>
+        </div>
+        <button onclick="openCourseForm()" class="btn btn-sky px-4 py-2 text-sm"><i class="fas fa-plus mr-1"></i>Add Course</button>
+      </div>
+      <div id="courses-list" class="space-y-3">
+        <div class="flex justify-center py-12"><div class="spin"></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: BLOG
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-blogs">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Blog Management</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Blog posts add, edit ya delete karein</p>
+        </div>
+        <button onclick="openBlogForm()" class="btn btn-sky px-4 py-2 text-sm"><i class="fas fa-plus mr-1"></i>Add Post</button>
+      </div>
+      <div id="blogs-list" class="space-y-3">
+        <div class="flex justify-center py-12"><div class="spin"></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: CONTACTS
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-contacts">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Contact Messages</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Website visitors ke messages</p>
+        </div>
+        <button onclick="loadContacts()" class="btn btn-ghost px-3 py-2 text-sm"><i class="fas fa-sync-alt"></i></button>
+      </div>
+      <div class="adm-card" style="overflow-x:auto">
+        <table class="adm-table" id="contacts-table">
+          <thead><tr><th>Name</th><th>Contact</th><th>Subject</th><th>Course Interest</th><th>Message</th><th>Date</th></tr></thead>
+          <tbody id="contacts-tbody">
+            <tr><td colspan="6" style="text-align:center;padding:2rem;color:rgba(255,255,255,.3)">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: GALLERY
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-gallery">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Gallery Management</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Photos add, delete karein — gallery page pe dikhenge</p>
+        </div>
+        <button onclick="openGalleryForm()" class="btn btn-sky px-4 py-2 text-sm"><i class="fas fa-plus mr-1"></i>Add Photo</button>
+      </div>
+      <div id="gallery-admin-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div class="col-span-4 flex justify-center py-12"><div class="spin"></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: CERTIFICATES
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-certificates">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Certificates</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Issue, edit, revoke student certificates</p>
+        </div>
+        <button onclick="openCertForm()" class="btn btn-sky px-4 py-2 text-sm"><i class="fas fa-plus mr-1"></i>Issue Certificate</button>
+      </div>
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-3 mb-5">
+        <div class="stat-card"><div style="font-size:1.5rem;font-weight:900;color:#fff" id="cert-stat-total">0</div><div style="color:rgba(255,255,255,.35);font-size:.75rem;margin-top:.15rem">Total</div></div>
+        <div class="stat-card"><div style="font-size:1.5rem;font-weight:900;color:#34d399" id="cert-stat-valid">0</div><div style="color:rgba(255,255,255,.35);font-size:.75rem;margin-top:.15rem">Valid</div></div>
+        <div class="stat-card"><div style="font-size:1.5rem;font-weight:900;color:#fbbf24" id="cert-stat-pending">0</div><div style="color:rgba(255,255,255,.35);font-size:.75rem;margin-top:.15rem">Pending</div></div>
+      </div>
+      <!-- Search -->
+      <div class="relative mb-4">
+        <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-sm" style="color:rgba(255,255,255,.25)"></i>
+        <input id="cert-admin-search" class="inp pl-10 py-2.5 text-sm" placeholder="Name, mobile, certificate ID..." oninput="renderAdminCerts()"/>
+      </div>
+      <div id="cert-admin-list" class="space-y-3">
+        <div class="flex justify-center py-12"><div class="spin"></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: RESULTS
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-results">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Results Management</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Student results add, edit — student portal pe dikhenge</p>
+        </div>
+        <button onclick="openResultForm()" class="btn btn-sky px-4 py-2 text-sm"><i class="fas fa-plus mr-1"></i>Add Result</button>
+      </div>
+      <div class="relative mb-4">
+        <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-sm" style="color:rgba(255,255,255,.25)"></i>
+        <input id="result-admin-search" class="inp pl-10 py-2.5 text-sm" placeholder="Name, mobile, course..." oninput="renderAdminResults()"/>
+      </div>
+      <div id="result-admin-list" class="space-y-3">
+        <div class="flex justify-center py-12"><div class="spin"></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: TESTIMONIALS
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-testimonials">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Testimonials</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Student reviews manage karein — home page pe dikhenge</p>
+        </div>
+        <button onclick="openTestiForm()" class="btn btn-sky px-4 py-2 text-sm"><i class="fas fa-plus mr-1"></i>Add Review</button>
+      </div>
+      <div id="testi-admin-list" class="space-y-3">
+        <div class="flex justify-center py-12"><div class="spin"></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: TOP BANNER
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-banner">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Top Banner</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">Website ke sabse upar sticky banner manage karein</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <div style="display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.06);border-radius:10px;padding:.4rem .85rem;border:1px solid rgba(255,255,255,.1)">
+            <span style="color:rgba(255,255,255,.5);font-size:.82rem">Banner:</span>
+            <label style="position:relative;display:inline-flex;align-items:center;cursor:pointer">
+              <input type="checkbox" id="tb-master-toggle" class="sr-only peer" onchange="toggleBannerMaster(this.checked)">
+              <div style="width:42px;height:22px;border-radius:11px;background:#374151;position:relative;transition:background .2s" class="peer-checked:bg-indigo-500" id="tb-toggle-track">
+                <div id="tb-toggle-knob" style="position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s"></div>
+              </div>
+            </label>
+            <span id="tb-status-label" style="font-size:.78rem;font-weight:700;color:rgba(255,255,255,.35)">Off</span>
+          </div>
+          <button onclick="saveTopBanner()" class="btn btn-sky px-4 py-2 text-sm">Save &amp; Publish</button>
+        </div>
+      </div>
+
+      <!-- Live Preview -->
+      <div class="adm-card mb-5">
+        <p style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.6rem">Live Preview</p>
+        <div id="tb-preview" style="border-radius:10px;overflow:hidden;color:#fff;font-size:.85rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:.75rem;padding:.65rem 1rem;min-height:40px;background:linear-gradient(90deg,#6366f1,#8b5cf6)">
+          <span id="tb-prev-text">Banner text yahan dikhega</span>
+          <span id="tb-prev-cta" class="hidden" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);padding:.15rem .65rem;border-radius:20px;font-size:.78rem">CTA Button</span>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-5">
+        <!-- Left: Content -->
+        <div class="adm-card space-y-4">
+          <h3 style="color:#fff;font-weight:700">Banner Content</h3>
+          <div>
+            <label class="lbl">Banner Text *</label>
+            <input type="text" id="tb-text" class="inp text-sm" placeholder="🎉 Summer Batch shuru ho raha hai — Limited Seats!" oninput="updateBannerPreview()"/>
+          </div>
+          <div>
+            <label class="lbl">Color Theme</label>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.4rem">
+              <button type="button" onclick="setBannerTheme('indigo')" data-bt="indigo" class="banner-theme-btn" style="height:38px;border-radius:8px;font-weight:700;color:#fff;font-size:.78rem;border:none;cursor:pointer;background:linear-gradient(135deg,#6366f1,#8b5cf6)">Indigo</button>
+              <button type="button" onclick="setBannerTheme('red')"    data-bt="red"    class="banner-theme-btn" style="height:38px;border-radius:8px;font-weight:700;color:#fff;font-size:.78rem;border:none;cursor:pointer;background:linear-gradient(135deg,#dc2626,#ef4444)">Red 🔥</button>
+              <button type="button" onclick="setBannerTheme('green')"  data-bt="green"  class="banner-theme-btn" style="height:38px;border-radius:8px;font-weight:700;color:#fff;font-size:.78rem;border:none;cursor:pointer;background:linear-gradient(135deg,#059669,#10b981)">Green ✅</button>
+              <button type="button" onclick="setBannerTheme('gold')"   data-bt="gold"   class="banner-theme-btn" style="height:38px;border-radius:8px;font-weight:700;color:#fff;font-size:.78rem;border:none;cursor:pointer;background:linear-gradient(135deg,#d97706,#f59e0b)">Gold ⭐</button>
+            </div>
+            <input type="hidden" id="tb-theme" value="indigo"/>
+          </div>
+          <div>
+            <label class="lbl">CTA Button Text</label>
+            <input type="text" id="tb-cta-text" class="inp text-sm" placeholder="Apply Now, Enroll Today..." oninput="updateBannerPreview()"/>
+          </div>
+          <div>
+            <label class="lbl">CTA Action</label>
+            <select id="tb-cta-action" class="inp text-sm">
+              <option value="">-- No Button --</option>
+              <option value="admission">Open Admission Form</option>
+              <option value="courses">Go to Courses</option>
+              <option value="contact">Go to Contact</option>
+              <option value="whatsapp">WhatsApp Us</option>
+            </select>
+          </div>
+          <!-- Quick templates -->
+          <div>
+            <label class="lbl">Quick Templates</label>
+            <div class="space-y-2 mt-1">
+              <button type="button" onclick="applyBannerTemplate('admission')" style="width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .85rem;font-size:.82rem;color:rgba(255,255,255,.6);cursor:pointer;font-family:inherit">🎓 Admission Open — Seats Limited!</button>
+              <button type="button" onclick="applyBannerTemplate('offer')"     style="width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .85rem;font-size:.82rem;color:rgba(255,255,255,.6);cursor:pointer;font-family:inherit">🔥 Special Discount Offer!</button>
+              <button type="button" onclick="applyBannerTemplate('batch')"     style="width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .85rem;font-size:.82rem;color:rgba(255,255,255,.6);cursor:pointer;font-family:inherit">📅 New Batch Starting!</button>
+              <button type="button" onclick="applyBannerTemplate('holiday')"   style="width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem .85rem;font-size:.82rem;color:rgba(255,255,255,.6);cursor:pointer;font-family:inherit">🏖️ Holiday Notice</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Schedule -->
+        <div class="adm-card space-y-4">
+          <h3 style="color:#fff;font-weight:700">Schedule &amp; Options</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+            <div><label class="lbl">Start Date &amp; Time</label><input type="datetime-local" id="tb-start" class="inp text-sm"/></div>
+            <div><label class="lbl">End Date &amp; Time</label><input type="datetime-local" id="tb-end" class="inp text-sm"/></div>
+          </div>
+          <label style="display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.75rem;cursor:pointer">
+            <input type="checkbox" id="tb-countdown" style="width:16px;height:16px;border-radius:4px" onchange="updateBannerPreview()"/>
+            <span style="color:rgba(255,255,255,.7);font-size:.85rem">⏱ Countdown timer dikhao</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.75rem;cursor:pointer">
+            <input type="checkbox" id="tb-dismissible" checked style="width:16px;height:16px;border-radius:4px"/>
+            <span style="color:rgba(255,255,255,.7);font-size:.85rem">✕ User close kar sake</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.75rem;cursor:pointer">
+            <input type="checkbox" id="tb-scroll-hide" checked style="width:16px;height:16px;border-radius:4px"/>
+            <span style="color:rgba(255,255,255,.7);font-size:.85rem">👆 Scroll karne pe hide ho</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION: APP DOWNLOADS
+    ════════════════════════════════════ -->
+    <section class="adm-sec" id="sec-apps">
+      <div class="mb-5">
+        <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">App Downloads</h1>
+        <p style="color:rgba(255,255,255,.35);font-size:.85rem">APK upload ya link set karein — download stats bhi dekhen</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+
+        <!-- Student App -->
+        <div class="adm-card" style="border:1px solid rgba(14,165,233,.2)">
+          <div style="display:flex;align-items:center;gap:.85rem;margin-bottom:1.25rem">
+            <div style="width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;background:linear-gradient(135deg,#0ea5e9,#0284c7)">🎓</div>
+            <div><div style="color:#fff;font-weight:900;font-size:1rem">VIT Student App</div><div style="color:#38bdf8;font-size:.72rem;font-weight:600">Student APK</div></div>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <label class="lbl">Upload APK File</label>
+              <div id="s-drop-zone" class="upload-zone" onclick="document.getElementById('s-apk-file').click()">
+                <i class="fab fa-android" style="font-size:1.5rem;color:#38bdf8;margin-bottom:.4rem;display:block"></i>
+                <div style="color:rgba(255,255,255,.6);font-size:.82rem;font-weight:600">Click ya Drag &amp; Drop</div>
+                <div style="color:rgba(255,255,255,.35);font-size:.75rem">.apk file yahan drop karein</div>
+                <input type="file" id="s-apk-file" accept=".apk" class="hidden" onchange="apkSelected(this,'student')"/>
+              </div>
+              <div id="s-upload-progress" class="hidden mt-2">
+                <div style="display:flex;justify-content:space-between;margin-bottom:.25rem">
+                  <span id="s-upload-name" style="color:rgba(255,255,255,.6);font-size:.78rem">Uploading...</span>
+                  <span id="s-upload-pct" style="color:#38bdf8;font-size:.78rem;font-weight:700">0%</span>
+                </div>
+                <div style="height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden">
+                  <div id="s-upload-bar" style="height:100%;background:linear-gradient(90deg,#0ea5e9,#38bdf8);width:0%;transition:width .3s;border-radius:3px"></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.5rem"><div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div><span style="color:rgba(255,255,255,.3);font-size:.75rem;font-weight:600">YA</span><div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div></div>
+            <div>
+              <label class="lbl">Direct URL / Path</label>
+              <div style="display:flex;gap:.5rem">
+                <input type="text" id="s-apk-path" class="inp flex-1 text-sm" placeholder="https://... ya apps/VIT-Student.apk"/>
+                <button onclick="saveAppLink('student')" class="btn btn-sky px-4 text-sm" style="flex-shrink:0;white-space:nowrap">Save Link</button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+              <div><label class="lbl">Version</label><input type="text" id="s-apk-ver" class="inp text-sm" placeholder="v1.0" value="v1.0"/></div>
+              <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+                <div style="font-size:1.3rem;font-weight:900;color:#38bdf8" id="s-dl-count">—</div>
+                <div style="color:rgba(255,255,255,.35);font-size:.72rem">Downloads</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teacher App -->
+        <div class="adm-card" style="border:1px solid rgba(245,158,11,.2)">
+          <div style="display:flex;align-items:center;gap:.85rem;margin-bottom:1.25rem">
+            <div style="width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;background:linear-gradient(135deg,#f59e0b,#d97706)">👨‍🏫</div>
+            <div><div style="color:#fff;font-weight:900;font-size:1rem">VIT Teacher App</div><div style="color:#fbbf24;font-size:.72rem;font-weight:600">Teacher APK</div></div>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <label class="lbl">Upload APK File</label>
+              <div id="t-drop-zone" class="upload-zone" onclick="document.getElementById('t-apk-file').click()">
+                <i class="fab fa-android" style="font-size:1.5rem;color:#fbbf24;margin-bottom:.4rem;display:block"></i>
+                <div style="color:rgba(255,255,255,.6);font-size:.82rem;font-weight:600">Click ya Drag &amp; Drop</div>
+                <div style="color:rgba(255,255,255,.35);font-size:.75rem">.apk file yahan drop karein</div>
+                <input type="file" id="t-apk-file" accept=".apk" class="hidden" onchange="apkSelected(this,'teacher')"/>
+              </div>
+              <div id="t-upload-progress" class="hidden mt-2">
+                <div style="display:flex;justify-content:space-between;margin-bottom:.25rem">
+                  <span id="t-upload-name" style="color:rgba(255,255,255,.6);font-size:.78rem">Uploading...</span>
+                  <span id="t-upload-pct" style="color:#fbbf24;font-size:.78rem;font-weight:700">0%</span>
+                </div>
+                <div style="height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden">
+                  <div id="t-upload-bar" style="height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);width:0%;transition:width .3s;border-radius:3px"></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.5rem"><div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div><span style="color:rgba(255,255,255,.3);font-size:.75rem;font-weight:600">YA</span><div style="flex:1;height:1px;background:rgba(255,255,255,.08)"></div></div>
+            <div>
+              <label class="lbl">Direct URL / Path</label>
+              <div style="display:flex;gap:.5rem">
+                <input type="text" id="t-apk-path" class="inp flex-1 text-sm" placeholder="https://... ya apps/VIT-Teacher.apk"/>
+                <button onclick="saveAppLink('teacher')" class="btn btn-gold px-4 text-sm" style="flex-shrink:0;white-space:nowrap">Save Link</button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+              <div><label class="lbl">Version</label><input type="text" id="t-apk-ver" class="inp text-sm" placeholder="v1.0" value="v1.0"/></div>
+              <div class="stat-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+                <div style="font-size:1.3rem;font-weight:900;color:#fbbf24" id="t-dl-count">—</div>
+                <div style="color:rgba(255,255,255,.35);font-size:.72rem">Downloads</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent downloads -->
+      <div class="adm-card mt-5">
+        <h3 style="color:#fff;font-weight:700;margin-bottom:1rem">Recent Download Activity</h3>
+        <div style="overflow-x:auto">
+          <table class="adm-table">
+            <thead><tr><th>App</th><th>Date &amp; Time</th></tr></thead>
+            <tbody id="dl-log-tbody"><tr><td colspan="2" style="text-align:center;padding:1.5rem;color:rgba(255,255,255,.3)">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /#admin-main -->
+</div><!-- /#admin-shell -->
+
+<!-- ══════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════ -->
+
+<!-- Admission Detail Modal -->
+<div class="modal-wrap" id="adm-detail-modal">
+  <div class="modal-box" style="max-width:580px">
+    <button onclick="closeModal('adm-detail-modal')" class="absolute top-4 right-4 text-xl" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)"><i class="fas fa-times"></i></button>
+
+    <div id="adm-detail-header" class="mb-5"></div>
+
+    <div class="grid sm:grid-cols-2 gap-4 mb-5">
+      <div>
+        <label class="lbl">Status</label>
+        <div class="flex flex-wrap gap-1.5 mt-1" id="adm-status-btns">
+          <button onclick="setAdmStatus('new')"          data-s="new"           class="adm-s-btn sp sp-new cursor-pointer">🆕 New</button>
+          <button onclick="setAdmStatus('called')"       data-s="called"        class="adm-s-btn sp sp-called cursor-pointer">📞 Called</button>
+          <button onclick="setAdmStatus('counselled')"   data-s="counselled"    class="adm-s-btn sp sp-counselled cursor-pointer">💬 Counselled</button>
+          <button onclick="setAdmStatus('admitted')"     data-s="admitted"      class="adm-s-btn sp sp-admitted cursor-pointer">✅ Admitted</button>
+          <button onclick="setAdmStatus('followup')"     data-s="followup"      class="adm-s-btn sp sp-followup cursor-pointer">🔁 Follow-Up</button>
+          <button onclick="setAdmStatus('notinterested')" data-s="notinterested" class="adm-s-btn sp sp-notinterested cursor-pointer">❌ Not Int.</button>
+        </div>
+        <input type="hidden" id="adm-detail-status"/>
+      </div>
+      <div>
+        <label class="lbl">Next Follow-Up</label>
+        <input type="date" id="adm-detail-followup" class="inp text-sm"/>
+      </div>
+      <div>
+        <label class="lbl">Assigned To</label>
+        <input type="text" id="adm-detail-assigned" class="inp text-sm" placeholder="Staff name"/>
+      </div>
+      <div>
+        <label class="lbl">Fee Collected (₹)</label>
+        <input type="text" id="adm-detail-fee" class="inp text-sm" placeholder="0"/>
+      </div>
+      <div>
+        <label class="lbl">Batch</label>
+        <select id="adm-detail-batch" class="inp text-sm">
+          <option value="">Select batch</option>
+          <option>Morning 8:00 AM</option>
+          <option>Morning 10:00 AM</option>
+          <option>Afternoon 2:00 PM</option>
+          <option>Evening 5:00 PM</option>
+        </select>
+      </div>
+      <div>
+        <label class="lbl">Receipt No.</label>
+        <input type="text" id="adm-detail-receipt" class="inp text-sm" placeholder="Receipt number"/>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="mb-5">
+      <label class="lbl">Add Note / Call Log</label>
+      <div class="flex gap-2 mt-1">
+        <select id="adm-note-icon" class="inp w-auto py-2 px-2 text-sm flex-shrink-0" style="max-width:80px">
+          <option value="📞">📞</option>
+          <option value="💬">💬</option>
+          <option value="📝">📝</option>
+          <option value="✅">✅</option>
+          <option value="❌">❌</option>
+        </select>
+        <input type="text" id="adm-note-inp" class="inp flex-1 text-sm" placeholder="Call detail ya note..." onkeydown="if(event.key==='Enter')addAdmNote()"/>
+        <button onclick="addAdmNote()" class="btn btn-sky px-4 text-sm flex-shrink-0"><i class="fas fa-plus"></i></button>
+      </div>
+      <div id="adm-notes-list" class="space-y-2 mt-3 max-h-40 overflow-y-auto pr-1"></div>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <button onclick="saveAdmDetail()" class="btn btn-sky flex-1 py-2.5 text-sm justify-center min-w-28"><i class="fas fa-save mr-1"></i>Save</button>
+      <a id="adm-call-btn"  href="#" class="btn btn-green px-4 py-2.5 text-sm"><i class="fas fa-phone mr-1"></i>Call</a>
+      <a id="adm-wa-btn"    href="#" target="_blank" class="btn btn-green px-4 py-2.5 text-sm"><i class="fab fa-whatsapp mr-1"></i>WA</a>
+      <button onclick="deleteAdmEntry()" class="btn btn-red px-3 py-2.5 text-sm"><i class="fas fa-trash"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Course Form Modal -->
+<div class="modal-wrap" id="course-modal">
+  <div class="modal-box" style="max-width:600px">
+    <button onclick="closeModal('course-modal')" class="absolute top-4 right-4 text-xl" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)"><i class="fas fa-times"></i></button>
+    <h3 style="color:#fff;font-weight:900;font-size:1.2rem;margin-bottom:1.25rem" id="course-modal-title">Add Course</h3>
+    <input type="hidden" id="cf-id"/>
+    <form onsubmit="saveCourse(event)" class="space-y-4">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="sm:col-span-2"><label class="lbl">Course Name *</label><input type="text" id="cf-name" class="inp" placeholder="Basic Computer Course" required/></div>
+        <div>
+          <label class="lbl">Category</label>
+          <select id="cf-cat" class="inp">
+            <option value="basic">Basic</option>
+            <option value="advanced">Advanced</option>
+            <option value="programming">Programming</option>
+            <option value="design">Design</option>
+            <option value="accounting">Accounting</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl">Level</label>
+          <select id="cf-level" class="inp">
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Beginner to Intermediate</option>
+            <option>Advanced</option>
+          </select>
+        </div>
+        <div><label class="lbl">Duration</label><input type="text" id="cf-dur" class="inp" placeholder="3 Months"/></div>
+        <div><label class="lbl">Icon (Emoji)</label><input type="text" id="cf-icon" class="inp" placeholder="💻" maxlength="4"/></div>
+        <div><label class="lbl">Fee (e.g. ₹2,500)</label><input type="text" id="cf-fee" class="inp" placeholder="₹2,500"/></div>
+        <div><label class="lbl">Original Fee (for discount)</label><input type="text" id="cf-fee-orig" class="inp" placeholder="₹3,000"/></div>
+      </div>
+      <div>
+        <label class="lbl">Rating (1-5) &nbsp; <span id="star-display" style="color:#f59e0b"></span></label>
+        <div class="flex gap-1 mt-1" id="star-picker">
+          <span class="star-pick" data-val="1" onclick="setStars(1)">★</span>
+          <span class="star-pick" data-val="2" onclick="setStars(2)">★</span>
+          <span class="star-pick" data-val="3" onclick="setStars(3)">★</span>
+          <span class="star-pick" data-val="4" onclick="setStars(4)">★</span>
+          <span class="star-pick" data-val="5" onclick="setStars(5)">★</span>
+        </div>
+        <input type="hidden" id="cf-rating" value="4.5"/>
+      </div>
+      <div><label class="lbl">Review Count</label><input type="number" id="cf-reviews" class="inp" placeholder="0" min="0"/></div>
+      <div>
+        <label class="lbl">Image URL</label>
+        <input type="url" id="cf-img" class="inp text-sm" placeholder="https://images.unsplash.com/..." oninput="previewCfImg()"/>
+        <div class="grid grid-cols-2 gap-2 mt-2">
+          <div class="upload-zone" onclick="document.getElementById('cf-img-file').click()" style="padding:.75rem">
+            <i class="fas fa-upload text-sm" style="color:var(--sky)"></i>
+            <span style="color:rgba(255,255,255,.5);font-size:.78rem;margin-left:.4rem">Upload Image</span>
+            <input type="file" id="cf-img-file" accept="image/*" class="hidden" onchange="handleCfImgFile(this)"/>
+          </div>
+          <img id="cf-img-preview" src="" class="hidden h-14 rounded-xl object-cover"/>
+        </div>
+      </div>
+      <div><label class="lbl">Description</label><textarea id="cf-desc" class="inp text-sm" rows="2" placeholder="Short course description..."></textarea></div>
+      <div><label class="lbl">Curriculum (ek line mein ek topic)</label><textarea id="cf-curr" class="inp text-sm font-mono" rows="5" placeholder="MS Word Complete&#10;MS Excel Basics&#10;MS PowerPoint&#10;Internet & Email"></textarea></div>
+      <div><label class="lbl">Features (ek line mein ek feature)</label><textarea id="cf-feat" class="inp text-sm font-mono" rows="3" placeholder="Govt. Recognised Certificate&#10;Placement Support&#10;Practical Lab"></textarea></div>
+      <div class="flex gap-3 pt-1">
+        <button type="submit" class="btn btn-sky flex-1 py-3 text-sm justify-center">Save Course</button>
+        <button type="button" onclick="closeModal('course-modal')" class="btn btn-ghost flex-1 py-3 text-sm justify-center">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Blog Form Modal -->
+<div class="modal-wrap" id="blog-modal">
+  <div class="modal-box" style="max-width:680px">
+    <button onclick="closeModal('blog-modal')" class="absolute top-4 right-4 text-xl" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)"><i class="fas fa-times"></i></button>
+    <h3 style="color:#fff;font-weight:900;font-size:1.2rem;margin-bottom:1.25rem" id="blog-modal-title">Add Blog Post</h3>
+    <input type="hidden" id="bf-id"/>
+    <form onsubmit="saveBlog(event)" class="space-y-4">
+      <div><label class="lbl">Title *</label><input type="text" id="bf-name" class="inp" placeholder="Blog post title" required/></div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="lbl">Category</label>
+          <select id="bf-cat" class="inp">
+            <option>Career Tips</option>
+            <option>Technology</option>
+            <option>Programming</option>
+            <option>Tutorial</option>
+            <option>News</option>
+            <option>General</option>
+          </select>
+        </div>
+        <div><label class="lbl">Author</label><input type="text" id="bf-author" class="inp" placeholder="Author name"/></div>
+      </div>
+      <div>
+        <label class="lbl">Featured Image URL</label>
+        <input type="url" id="bf-img" class="inp text-sm" placeholder="https://images.unsplash.com/..." oninput="previewBfImg()"/>
+        <div class="flex gap-2 mt-2 items-center">
+          <div class="upload-zone flex-1" onclick="document.getElementById('bf-img-file').click()" style="padding:.65rem">
+            <i class="fas fa-upload text-sm" style="color:var(--sky)"></i>
+            <span style="color:rgba(255,255,255,.5);font-size:.78rem;margin-left:.4rem">Upload Image</span>
+            <input type="file" id="bf-img-file" accept="image/*" class="hidden" onchange="handleBfImgFile(this)"/>
+          </div>
+          <img id="bf-img-preview" src="" class="hidden h-14 rounded-xl object-cover flex-shrink-0" style="width:80px"/>
+        </div>
+      </div>
+      <div><label class="lbl">Description *</label><textarea id="bf-desc" class="inp text-sm" rows="2" placeholder="Short description (shown in card)..." required></textarea></div>
+      <div>
+        <label class="lbl">Content
+          <span style="color:rgba(255,255,255,.3);font-weight:400;font-size:.75rem;margin-left:.5rem">Tags: [h2]...[/h2] [b]...[/b] [bullet]...[/bullet] [code]...[/code]</span>
+        </label>
+        <div class="flex gap-1 mb-1 flex-wrap">
+          <button type="button" onclick="insertBlogTag('h2')"    class="btn btn-ghost px-2 py-1 text-xs">H2</button>
+          <button type="button" onclick="insertBlogTag('b')"     class="btn btn-ghost px-2 py-1 text-xs">Bold</button>
+          <button type="button" onclick="insertBlogTag('bullet')" class="btn btn-ghost px-2 py-1 text-xs">• Bullet</button>
+          <button type="button" onclick="insertBlogTag('code')"  class="btn btn-ghost px-2 py-1 text-xs">&lt;/&gt; Code</button>
+          <button type="button" onclick="insertBlogTag('link')"  class="btn btn-ghost px-2 py-1 text-xs">🔗 Link</button>
+        </div>
+        <textarea id="bf-content" class="inp text-sm font-mono" rows="10" placeholder="[h2]Section Title[/h2]&#10;Paragraph text...&#10;&#10;[bullet]List item[/bullet]&#10;&#10;[code]&#10;code here&#10;[/code]"></textarea>
+      </div>
+      <div class="flex gap-3 pt-1">
+        <button type="submit" class="btn btn-sky flex-1 py-3 text-sm justify-center">Publish Post</button>
+        <button type="button" onclick="closeModal('blog-modal')" class="btn btn-ghost flex-1 py-3 text-sm justify-center">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Gallery Form Modal -->
+<div class="modal-wrap" id="gallery-modal">
+  <div class="modal-box" style="max-width:480px">
+    <button onclick="closeModal('gallery-modal')" class="absolute top-4 right-4 text-xl" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)"><i class="fas fa-times"></i></button>
+    <h3 style="color:#fff;font-weight:900;font-size:1.2rem;margin-bottom:1.25rem">Add Photo</h3>
+    <form onsubmit="saveGalleryPhoto(event)" class="space-y-4">
+      <div>
+        <label class="lbl">Photo URL</label>
+        <input type="url" id="gf-url" class="inp text-sm" placeholder="https://images.unsplash.com/..." oninput="previewGalleryImg(this)"/>
+      </div>
+      <div>
+        <label class="lbl">Ya Upload Karein</label>
+        <div class="upload-zone" onclick="document.getElementById('gf-file').click()" style="padding:.75rem">
+          <i class="fas fa-upload" style="color:var(--sky);margin-right:.4rem"></i>
+          <span style="color:rgba(255,255,255,.5);font-size:.8rem">Image Upload</span>
+          <input type="file" id="gf-file" accept="image/*" class="hidden" onchange="previewGalleryFile(this)"/>
+        </div>
+        <img id="gf-preview-img" src="" class="hidden mt-2 h-28 w-full rounded-xl object-cover"/>
+      </div>
+      <div><label class="lbl">Caption</label><input type="text" id="gf-caption" class="inp" placeholder="💻 Practical Lab Session"/></div>
+      <div>
+        <label class="lbl">Category</label>
+        <select id="gf-category" class="inp">
+          <option value="lab">💻 Lab Sessions</option>
+          <option value="ceremony">🏆 Ceremonies</option>
+          <option value="classroom">📚 Classroom</option>
+          <option value="workshop">🎯 Workshops</option>
+          <option value="campus">🏫 Campus</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:.75rem;padding-top:.25rem">
+        <button type="submit" class="btn btn-sky flex-1 py-3 text-sm justify-center">Add Photo</button>
+        <button type="button" onclick="closeModal('gallery-modal')" class="btn btn-ghost flex-1 py-3 text-sm justify-center">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Certificate Form Modal -->
+<div class="modal-wrap" id="cert-modal">
+  <div class="modal-box" style="max-width:560px">
+    <button onclick="closeModal('cert-modal')" class="absolute top-4 right-4 text-xl" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)"><i class="fas fa-times"></i></button>
+    <h3 style="color:#fff;font-weight:900;font-size:1.2rem;margin-bottom:1.25rem" id="cert-modal-title">Issue Certificate</h3>
+    <input type="hidden" id="cert-edit-id"/>
+    <form onsubmit="saveCert(event)" class="space-y-4">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div><label class="lbl">Student Name *</label><input type="text" id="cert-name" class="inp" placeholder="Full name" required/></div>
+        <div><label class="lbl">Mobile *</label><input type="tel" id="cert-mobile" class="inp" placeholder="10-digit" required/></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div><label class="lbl">Course *</label><input type="text" id="cert-course" class="inp" placeholder="Course name" required/></div>
+        <div><label class="lbl">Batch</label><input type="text" id="cert-batch" class="inp" placeholder="Jan 2025 Batch"/></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem">
+        <div>
+          <label class="lbl">Grade</label>
+          <select id="cert-grade" class="inp">
+            <option>A+</option><option>A</option><option>B+</option><option>B</option><option>C</option><option>D</option><option>F</option>
+          </select>
+        </div>
+        <div><label class="lbl">Percentage %</label><input type="number" id="cert-pct" class="inp" min="0" max="100" placeholder="92"/></div>
+        <div><label class="lbl">Issue Date</label><input type="date" id="cert-date" class="inp"/></div>
+      </div>
+      <div>
+        <label class="lbl">Certificate ID</label>
+        <div style="display:flex;gap:.5rem">
+          <input type="text" id="cert-certid" class="inp flex-1 font-mono text-sm" placeholder="VIT-2026-000001" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"/>
+          <button type="button" onclick="autoGenCertId()" class="btn btn-ghost px-3 text-xs" style="flex-shrink:0">Generate</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:.75rem;padding-top:.25rem">
+        <button type="submit" class="btn btn-sky flex-1 py-3 text-sm justify-center">Issue Certificate</button>
+        <button type="button" onclick="closeModal('cert-modal')" class="btn btn-ghost flex-1 py-3 text-sm justify-center">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Result Form Modal -->
+<div class="modal-wrap" id="result-modal">
+  <div class="modal-box" style="max-width:580px">
+    <button onclick="closeModal('result-modal')" class="absolute top-4 right-4 text-xl" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)"><i class="fas fa-times"></i></button>
+    <h3 style="color:#fff;font-weight:900;font-size:1.2rem;margin-bottom:1.25rem" id="result-modal-title">Add Result</h3>
+    <input type="hidden" id="result-edit-id"/>
+    <form onsubmit="saveResult(event)" class="space-y-4">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div><label class="lbl">Student Name *</label><input type="text" id="rf-name" class="inp" required/></div>
+        <div><label class="lbl">Mobile *</label><input type="tel" id="rf-mobile" class="inp" required/></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div><label class="lbl">Course *</label><input type="text" id="rf-course" class="inp" required/></div>
+        <div><label class="lbl">Batch</label><input type="text" id="rf-batch" class="inp" placeholder="Jan 2025"/></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div><label class="lbl">Exam Date</label><input type="date" id="rf-date" class="inp"/></div>
+        <div>
+          <label class="lbl">Grade</label>
+          <select id="rf-grade" class="inp"><option>A+</option><option>A</option><option>B+</option><option>B</option><option>C</option><option>D</option><option>F</option></select>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+          <label class="lbl" style="margin:0">Subject-wise Marks</label>
+          <button type="button" onclick="addSubjectRow()" class="btn btn-ghost px-3 py-1 text-xs">+ Add Subject</button>
+        </div>
+        <div id="rf-subjects" class="space-y-2 max-h-44 overflow-y-auto pr-1"></div>
+      </div>
+      <div><label class="lbl">Total % <span style="color:rgba(255,255,255,.3);font-weight:400">(auto ya manual)</span></label><input type="number" id="rf-pct" class="inp" min="0" max="100" placeholder="Auto-calc from subjects"/></div>
+      <div><label class="lbl">Remarks</label><textarea id="rf-remarks" class="inp text-sm" rows="2" placeholder="Optional teacher remarks..."></textarea></div>
+      <div style="display:flex;gap:.75rem;padding-top:.25rem">
+        <button type="submit" class="btn btn-sky flex-1 py-3 text-sm justify-center">Save Result</button>
+        <button type="button" onclick="closeModal('result-modal')" class="btn btn-ghost flex-1 py-3 text-sm justify-center">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Testimonial Form Modal -->
+<div class="modal-wrap" id="testi-modal">
+  <div class="modal-box" style="max-width:480px">
+    <button onclick="closeModal('testi-modal')" class="absolute top-4 right-4 text-xl" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)"><i class="fas fa-times"></i></button>
+    <h3 style="color:#fff;font-weight:900;font-size:1.2rem;margin-bottom:1.25rem" id="testi-modal-title">Add Testimonial</h3>
+    <input type="hidden" id="testi-edit-id"/>
+    <form onsubmit="saveTesti(event)" class="space-y-4">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div><label class="lbl">Student Name *</label><input type="text" id="tf-name" class="inp" placeholder="Rahul Verma" required/></div>
+        <div><label class="lbl">Course / Batch</label><input type="text" id="tf-course" class="inp" placeholder="Basic Computer Graduate"/></div>
+      </div>
+      <div>
+        <label class="lbl">Rating *</label>
+        <div style="display:flex;align-items:center;gap:.5rem;margin-top:.25rem">
+          <div style="display:flex;gap:.25rem" id="testi-star-picker">
+            <span onclick="setTestiStars(1)" style="font-size:1.5rem;cursor:pointer;color:rgba(255,255,255,.2);transition:color .15s" data-v="1">★</span>
+            <span onclick="setTestiStars(2)" style="font-size:1.5rem;cursor:pointer;color:rgba(255,255,255,.2);transition:color .15s" data-v="2">★</span>
+            <span onclick="setTestiStars(3)" style="font-size:1.5rem;cursor:pointer;color:rgba(255,255,255,.2);transition:color .15s" data-v="3">★</span>
+            <span onclick="setTestiStars(4)" style="font-size:1.5rem;cursor:pointer;color:rgba(255,255,255,.2);transition:color .15s" data-v="4">★</span>
+            <span onclick="setTestiStars(5)" style="font-size:1.5rem;cursor:pointer;color:#f59e0b;transition:color .15s" data-v="5">★</span>
+          </div>
+          <input type="hidden" id="tf-rating" value="5"/>
+          <span style="color:#f59e0b;font-weight:700;font-size:.85rem" id="tf-rating-label">5 / 5</span>
+        </div>
+      </div>
+      <div><label class="lbl">Review Text *</label><textarea id="tf-text" class="inp" rows="3" placeholder="Student ne kya kaha..." required></textarea></div>
+      <div><label class="lbl">Photo URL <span style="color:rgba(255,255,255,.3);font-weight:400">(optional)</span></label><input type="url" id="tf-photo" class="inp text-sm" placeholder="https://..."/></div>
+      <label style="display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.75rem;cursor:pointer">
+        <input type="checkbox" id="tf-featured" style="width:16px;height:16px" checked/>
+        <span style="color:rgba(255,255,255,.7);font-size:.85rem">Home page pe dikhao (featured)</span>
+      </label>
+      <div style="display:flex;gap:.75rem;padding-top:.25rem">
+        <button type="submit" class="btn btn-sky flex-1 py-3 text-sm justify-center">Save Review</button>
+        <button type="button" onclick="closeModal('testi-modal')" class="btn btn-ghost flex-1 py-3 text-sm justify-center">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Confirm Dialog -->
+<div id="confirm-dlg" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);padding:1rem">
+  <div style="background:#1a1b24;border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:2rem;max-width:360px;width:100%;text-align:center">
+    <div style="font-size:2.5rem;margin-bottom:.75rem">⚠️</div>
+    <p id="confirm-msg" style="color:#f0ede8;font-weight:600;margin-bottom:1.5rem;line-height:1.5">Are you sure?</p>
+    <div style="display:flex;gap:.75rem;justify-content:center">
+      <button onclick="document.getElementById('confirm-dlg').style.display='none'" class="btn btn-ghost px-5 py-2">Cancel</button>
+      <button id="confirm-yes-btn" class="btn btn-red px-5 py-2">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script type="module">
+import { auth, db, storage } from '/assets/js/firebase-config.js';
+import {
+  signInWithEmailAndPassword, signOut, onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import {
+  collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc,
+  doc, query, orderBy, limit, serverTimestamp, setDoc
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import {
+  ref, uploadBytesResumable, getDownloadURL
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
+
+// ── Admin email list ──
+const ADMIN_EMAILS = ['visionitpratappur@gmail.com'];
+
+// ── State ──
+let _admAll = [], _admCurrentId = null, _admNotes = [], _admCurStatus = 'new';
+let _cfStarVal = 4.5;
+
+// ── Toast ──
+window.toast = (msg, type='inf') => {
+  const icons = { ok:'✅', err:'❌', inf:'ℹ️' };
+  const t = document.getElementById('toast');
+  t.innerHTML = `<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
+  t.classList.add('show'); clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove('show'), 3500);
+};
+
+// ── Modal ──
+window.openModal  = id => document.getElementById(id)?.classList.add('open');
+window.closeModal = id => document.getElementById(id)?.classList.remove('open');
+document.querySelectorAll('.modal-wrap').forEach(m =>
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); })
+);
+
+// ── Confirm dialog ──
+function confirmAction(msg, onYes, label='Delete') {
+  const dlg = document.getElementById('confirm-dlg');
+  document.getElementById('confirm-msg').textContent = msg;
+  document.getElementById('confirm-yes-btn').textContent = label;
+  dlg.style.display = 'flex';
+  document.getElementById('confirm-yes-btn').onclick = () => {
+    dlg.style.display = 'none'; onYes();
+  };
+}
+
+// ── Section switcher ──
+window.showSec = id => {
+  document.querySelectorAll('.adm-sec').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + id)?.classList.add('active');
+  document.querySelectorAll('.adm-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('al-' + id)?.classList.add('active');
+  document.getElementById('sidebar-overlay')?.classList.remove('open');
+  document.getElementById('admin-sidebar')?.classList.remove('open');
+
+  const loaders = {
+    overview:  loadDashboard,
+    queries:   loadAdmissions,
+    courses:   loadCourses,
+    blogs:     loadBlogs,
+    contacts:  loadContacts,
+    gallery:   loadGalleryMgmt,
+    certificates: loadCertsMgmt,
+    results:   loadResultsMgmt,
+    testimonials: loadTestiMgmt,
+    banner:    loadBannerMgmt,
+    apps:      loadAppsMgmt,
+  };
+  loaders[id]?.();
+};
+
+// ── Auth ──
+document.getElementById('login-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Logging in...';
+  try {
+    const cred = await signInWithEmailAndPassword(auth,
+      document.getElementById('adm-email').value,
+      document.getElementById('adm-pass').value
+    );
+    if (!ADMIN_EMAILS.includes(cred.user.email?.toLowerCase())) {
+      await signOut(auth);
+      toast('Access denied — admin account nahi hai', 'err');
+      btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock mr-1"></i>Access Admin Panel';
+      return;
+    }
+    showAdminPanel();
+    toast('Admin login successful ✅', 'ok');
+    loadDashboard();
+  } catch (err) {
+    toast('Login failed: ' + err.message, 'err');
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock mr-1"></i>Access Admin Panel';
+  }
+});
+
+function showAdminPanel() {
+  document.getElementById('admin-login').style.display = 'none';
+  document.getElementById('admin-shell').style.display  = 'flex';
+}
+
+onAuthStateChanged(auth, user => {
+  if (user && ADMIN_EMAILS.includes(user.email?.toLowerCase())) {
+    showAdminPanel();
+  }
+});
+
+window.adminLogout = async () => {
+  await signOut(auth);
+  document.getElementById('admin-login').style.display = 'flex';
+  document.getElementById('admin-shell').style.display  = 'none';
+  toast('Logout ho gaye', 'inf');
+};
+
+// ── Dashboard ──
+async function loadDashboard() {
+  // Clock
+  const tick = () => {
+    const el = document.getElementById('dash-time');
+    if (el) el.textContent = new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  };
+  tick(); setInterval(tick, 1000);
+
+  try {
+    const [cs, qs, bs, cts] = await Promise.all([
+      getDocs(collection(db,'courses')),
+      getDocs(collection(db,'admission_queries')),
+      getDocs(collection(db,'blogs')),
+      getDocs(collection(db,'contacts')),
+    ]);
+    const s = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+    s('d-courses',  cs.size);
+    s('d-queries',  qs.size);
+    s('d-blogs',    bs.size);
+    s('d-contacts', cts.size);
+  } catch (e) { console.error(e); }
+
+  // Recent inquiries
+  try {
+    const snap = await getDocs(query(collection(db,'admission_queries'), orderBy('timestamp','desc'), limit(5)));
+    const rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const el = document.getElementById('dash-recent-list');
+    if (!rows.length) { el.innerHTML = '<p style="color:rgba(255,255,255,.3);text-align:center;padding:1.5rem">Koi inquiry nahi abhi tak</p>'; return; }
+    el.innerHTML = rows.map(r => {
+      const date = r.timestamp?.toDate ? r.timestamp.toDate().toLocaleDateString('en-IN') : '';
+      const status = r.trackerStatus || 'new';
+      return `<div class="tracker-row mb-2" onclick="showSec('queries')">
+        <div style="flex:1;min-width:0">
+          <div style="color:#fff;font-weight:600;font-size:.9rem">${r.studentName||'-'}</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.78rem">${r.course||''} • ${r.mobile||''}</div>
+        </div>
+        <span class="sp sp-${status}">${STATUS_LABELS[status]||'New'}</span>
+        <span style="color:rgba(255,255,255,.3);font-size:.75rem;flex-shrink:0">${date}</span>
+      </div>`;
+    }).join('');
+  } catch {}
+}
+
+const STATUS_LABELS = { new:'🆕 New', called:'📞 Called', counselled:'💬 Counselled', admitted:'✅ Admitted', followup:'🔁 Follow-Up', notinterested:'❌ Not Int.' };
+
+// ── Admissions ──
+async function loadAdmissions() {
+  document.getElementById('adm-list').innerHTML = '<div style="display:flex;justify-content:center;padding:3rem"><div class="spin"></div></div>';
+  try {
+    const snap = await getDocs(query(collection(db,'admission_queries'), orderBy('timestamp','desc')));
+    _admAll = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    updateAdmStats();
+    renderAdmList();
+  } catch (e) {
+    document.getElementById('adm-list').innerHTML = `<p style="color:#f87171;text-align:center;padding:2rem">Load failed: ${e.message}</p>`;
+  }
+}
+
+function updateAdmStats() {
+  const counts = { all: _admAll.length, new:0, called:0, counselled:0, admitted:0, notinterested:0 };
+  _admAll.forEach(r => { const s = r.trackerStatus||'new'; if (counts[s]!==undefined) counts[s]++; else counts.new++; });
+  const m = { all:'as-all', new:'as-new', called:'as-called', counselled:'as-counselled', admitted:'as-admitted', notinterested:'as-ni' };
+  Object.entries(m).forEach(([k, id]) => { const el=document.getElementById(id); if(el) el.textContent=counts[k]; });
+}
+
+window.filterAdm = status => {
+  document.getElementById('adm-status-filter').value = status;
+  renderAdmList();
+};
+
+window.renderAdmList = () => {
+  const search = (document.getElementById('adm-search')?.value||'').toLowerCase();
+  const sf     = document.getElementById('adm-status-filter')?.value || 'all';
+  const sort   = document.getElementById('adm-sort')?.value || 'newest';
+  let data = [..._admAll];
+  if (sf !== 'all') data = data.filter(r => (r.trackerStatus||'new') === sf);
+  if (search) data = data.filter(r =>
+    (r.studentName||'').toLowerCase().includes(search) ||
+    (r.mobile||'').includes(search) ||
+    (r.course||'').toLowerCase().includes(search)
+  );
+  if (sort === 'oldest') data = [...data].reverse();
+  if (sort === 'name')   data.sort((a,b) => (a.studentName||'').localeCompare(b.studentName||''));
+
+  const el = document.getElementById('adm-list');
+  if (!data.length) { el.innerHTML = '<p style="color:rgba(255,255,255,.3);text-align:center;padding:2rem">Koi result nahi mila</p>'; return; }
+  el.innerHTML = data.map(r => {
+    const s    = r.trackerStatus || 'new';
+    const date = r.timestamp?.toDate ? r.timestamp.toDate().toLocaleDateString('en-IN') : '-';
+    return `<div class="tracker-row" onclick="openAdmDetail('${r.id}')">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.25rem">
+          <span style="color:#fff;font-weight:700">${r.studentName||'-'}</span>
+          <span class="sp sp-${s}">${STATUS_LABELS[s]||s}</span>
+          ${r.followupDate ? `<span style="color:#fbbf24;font-size:.72rem"><i class="fas fa-calendar-alt mr-1"></i>${r.followupDate}</span>` : ''}
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem;font-size:.8rem;color:rgba(255,255,255,.45)">
+          <span><i class="fas fa-phone mr-1"></i>${r.mobile||'-'}</span>
+          <span><i class="fas fa-book mr-1"></i>${r.course||'-'}</span>
+          <span><i class="fas fa-clock mr-1"></i>${date}</span>
+          ${(r.notes||[]).length ? `<span><i class="fas fa-sticky-note mr-1" style="color:#fbbf24"></i>${r.notes.length} notes</span>` : ''}
+        </div>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-shrink:0">
+        <a href="tel:+91${r.mobile}" onclick="event.stopPropagation()" class="btn btn-green px-3 py-1.5 text-xs"><i class="fas fa-phone"></i></a>
+        <a href="https://wa.me/91${r.mobile}?text=Hello+${encodeURIComponent(r.studentName||'')}%2C+Vision+IT+se+baat+kar+rahe+hain." target="_blank" onclick="event.stopPropagation()" class="btn btn-green px-3 py-1.5 text-xs"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>`;
+  }).join('');
+};
+
+window.openAdmDetail = id => {
+  const r = _admAll.find(x => x.id === id);
+  if (!r) return;
+  _admCurrentId = id;
+  _admNotes     = r.notes ? [...r.notes] : [];
+  _admCurStatus = r.trackerStatus || 'new';
+
+  const date = r.timestamp?.toDate ? r.timestamp.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+  document.getElementById('adm-detail-header').innerHTML = `
+    <div style="display:flex;align-items:flex-start;gap:1rem">
+      <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--sky),#0284c7);display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:1.1rem;flex-shrink:0">${(r.studentName||'S')[0].toUpperCase()}</div>
+      <div style="flex:1;min-width:0">
+        <div style="color:#fff;font-weight:900;font-size:1.1rem">${r.studentName||'-'}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem;font-size:.82rem;color:rgba(255,255,255,.5);margin-top:.25rem">
+          <span><i class="fas fa-phone mr-1"></i>${r.mobile||'-'}</span>
+          <span><i class="fas fa-book mr-1"></i>${r.course||'-'}</span>
+          ${r.batch?`<span><i class="fas fa-clock mr-1"></i>${r.batch}</span>`:''}
+          ${r.email?`<span><i class="fas fa-envelope mr-1"></i>${r.email}</span>`:''}
+        </div>
+        ${r.message?`<p style="color:rgba(255,255,255,.4);font-size:.82rem;margin-top:.4rem">${r.message}</p>`:''}
+        <div style="color:rgba(255,255,255,.25);font-size:.75rem;margin-top:.25rem">${date}</div>
+      </div>
+    </div>`;
+
+  // Set status buttons
+  setAdmStatus(_admCurStatus);
+  const fv = id => document.getElementById(id);
+  if (fv('adm-detail-followup')) fv('adm-detail-followup').value = r.followupDate || '';
+  if (fv('adm-detail-assigned')) fv('adm-detail-assigned').value = r.assignedTo || '';
+  if (fv('adm-detail-fee'))      fv('adm-detail-fee').value      = r.feeCollected || '';
+  if (fv('adm-detail-receipt'))  fv('adm-detail-receipt').value  = r.receiptNo || '';
+  if (fv('adm-detail-batch'))    fv('adm-detail-batch').value    = r.batch || '';
+
+  // Call/WA links
+  const ca = document.getElementById('adm-call-btn');
+  const wa = document.getElementById('adm-wa-btn');
+  if (ca) ca.href = `tel:+91${r.mobile}`;
+  if (wa) wa.href = `https://wa.me/91${r.mobile}?text=Hello+${encodeURIComponent(r.studentName||'')}%2C+Vision+IT+se+baat+kar+rahe+hain.+Aapne+${encodeURIComponent(r.course||'')}+course+ke+liye+enquiry+ki+thi.`;
+
+  renderAdmNotes();
+  openModal('adm-detail-modal');
+};
+
+window.setAdmStatus = s => {
+  _admCurStatus = s;
+  document.getElementById('adm-detail-status').value = s;
+  document.querySelectorAll('.adm-s-btn').forEach(b => {
+    const active = b.dataset.s === s;
+    b.style.opacity = active ? '1' : '0.4';
+    b.style.transform = active ? 'scale(1.05)' : 'scale(1)';
+  });
+};
+
+window.addAdmNote = () => {
+  const inp  = document.getElementById('adm-note-inp');
+  const icon = document.getElementById('adm-note-icon')?.value || '📝';
+  const text = inp?.value.trim();
+  if (!text) return;
+  _admNotes.push({ icon, text, by:'Admin', at: new Date().toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) });
+  if (inp) inp.value = '';
+  renderAdmNotes();
+};
+
+function renderAdmNotes() {
+  const el = document.getElementById('adm-notes-list');
+  if (!el) return;
+  if (!_admNotes.length) { el.innerHTML = '<p style="color:rgba(255,255,255,.25);font-size:.8rem;text-align:center;padding:.75rem">Koi note nahi — call log add karein</p>'; return; }
+  el.innerHTML = [..._admNotes].reverse().map((n, ri) => {
+    const realIdx = _admNotes.length - 1 - ri;
+    return `<div class="note-item">
+      <span style="font-size:1.1rem;flex-shrink:0">${n.icon||'📝'}</span>
+      <div style="flex:1;min-width:0">
+        <p style="color:rgba(255,255,255,.8);font-size:.85rem">${n.text}</p>
+        <span style="color:rgba(255,255,255,.3);font-size:.72rem">${n.by||'Admin'} • ${n.at||''}</span>
+      </div>
+      <button onclick="_admNotes.splice(${realIdx},1);renderAdmNotes()" style="background:none;border:none;cursor:pointer;color:#f87171;font-size:.8rem;flex-shrink:0"><i class="fas fa-times"></i></button>
+    </div>`;
+  }).join('');
+}
+window.renderAdmNotes = renderAdmNotes;
+
+window.saveAdmDetail = async () => {
+  if (!_admCurrentId) return;
+  const g = id => document.getElementById(id)?.value?.trim() || '';
+  const data = {
+    trackerStatus: _admCurStatus,
+    followupDate:  g('adm-detail-followup'),
+    assignedTo:    g('adm-detail-assigned'),
+    feeCollected:  g('adm-detail-fee'),
+    receiptNo:     g('adm-detail-receipt'),
+    batch:         document.getElementById('adm-detail-batch')?.value || '',
+    notes:         _admNotes,
+    updatedAt:     serverTimestamp(),
+  };
+  try {
+    await updateDoc(doc(db,'admission_queries',_admCurrentId), data);
+    const idx = _admAll.findIndex(x => x.id === _admCurrentId);
+    if (idx >= 0) _admAll[idx] = { ..._admAll[idx], ...data };
+    updateAdmStats();
+    renderAdmList();
+    closeModal('adm-detail-modal');
+    toast('Saved! ✅','ok');
+  } catch (e) { toast('Save nahi hua: '+e.message,'err'); }
+};
+
+window.deleteAdmEntry = async () => {
+  if (!_admCurrentId) return;
+  confirmAction('Is inquiry ko permanently delete karein?', async () => {
+    try {
+      await deleteDoc(doc(db,'admission_queries',_admCurrentId));
+      _admAll = _admAll.filter(x => x.id !== _admCurrentId);
+      updateAdmStats(); renderAdmList();
+      closeModal('adm-detail-modal');
+      toast('Deleted','inf');
+    } catch (e) { toast('Delete nahi hua','err'); }
+  });
+};
+
+window.exportAdmCSV = () => {
+  if (!_admAll.length) { toast('Koi data nahi','err'); return; }
+  const headers = ['Name','Mobile','Email','Course','Batch','Status','Fee','Source','Date'];
+  const rows = _admAll.map(r => [
+    r.studentName||'', r.mobile||'', r.email||'', r.course||'',
+    (r.batch||'').replace(/,/g,';'),
+    STATUS_LABELS[r.trackerStatus||'new']?.replace(/[🆕📞💬✅🔁❌ ]/g,'')||'New',
+    r.feeCollected||'0', r.source||'',
+    r.timestamp?.toDate?r.timestamp.toDate().toLocaleDateString('en-IN'):''
+  ].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download = `VIT_Admissions_${new Date().toLocaleDateString('en-IN').replace(/\//g,'-')}.csv`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  toast('CSV export ho gaya! 📊','ok');
+};
+window.refreshAdmList = loadAdmissions;
+
+// ── Courses ──
+async function loadCourses() {
+  document.getElementById('courses-list').innerHTML = '<div style="display:flex;justify-content:center;padding:3rem"><div class="spin"></div></div>';
+  try {
+    const snap = await getDocs(query(collection(db,'courses'), orderBy('createdAt','asc')));
+    const cs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!cs.length) { document.getElementById('courses-list').innerHTML = '<p style="color:rgba(255,255,255,.3);text-align:center;padding:2rem">Koi course nahi — pehla course add karein!</p>'; return; }
+    document.getElementById('courses-list').innerHTML = cs.map(c => `
+      <div class="adm-card adm-card-hover" style="display:flex;align-items:center;gap:1rem">
+        ${c.image ? `<img src="${c.image}" style="width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'"/>` : `<div style="width:56px;height:56px;border-radius:10px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">${c.icon||'💻'}</div>`}
+        <div style="flex:1;min-width:0">
+          <div style="color:#fff;font-weight:700">${c.name}</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.8rem">${c.duration||''} • ${c.category||'basic'} • ${c.fee||'N/A'} • ⭐ ${c.rating||4.5}</div>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-shrink:0">
+          <button onclick="editCourse('${c.id}')" class="btn btn-ghost px-3 py-1.5 text-xs"><i class="fas fa-pen"></i></button>
+          <button onclick="deleteCourse('${c.id}')" class="btn btn-red px-3 py-1.5 text-xs"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>`).join('');
+  } catch (e) { document.getElementById('courses-list').innerHTML = `<p style="color:#f87171;text-align:center;padding:2rem">Load failed: ${e.message}</p>`; }
+}
+
+window.openCourseForm = () => {
+  document.getElementById('course-modal-title').textContent = 'Add Course';
+  document.getElementById('cf-id').value = '';
+  ['cf-name','cf-dur','cf-fee','cf-fee-orig','cf-icon','cf-img','cf-curr','cf-feat','cf-desc'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('cf-icon').value = '💻';
+  document.getElementById('cf-cat').value  = 'basic';
+  document.getElementById('cf-level').value = 'Beginner';
+  document.getElementById('cf-rating').value = '4.5';
+  document.getElementById('cf-reviews').value = '0';
+  setStars(4.5);
+  document.getElementById('cf-img-preview')?.classList.add('hidden');
+  openModal('course-modal');
+};
+
+window.editCourse = async id => {
+  try {
+    const d = await getDoc(doc(db,'courses',id));
+    if (!d.exists()) return;
+    const c = { id: d.id, ...d.data() };
+    document.getElementById('course-modal-title').textContent = 'Edit Course';
+    document.getElementById('cf-id').value = id;
+    const s = (eid, v) => { const el=document.getElementById(eid); if(el) el.value=v||''; };
+    s('cf-name',c.name); s('cf-dur',c.duration); s('cf-fee',c.fee); s('cf-fee-orig',c.feeOrig);
+    s('cf-icon',c.icon||'💻'); s('cf-img',c.image); s('cf-curr',c.curriculum);
+    s('cf-feat',c.features); s('cf-desc',c.description);
+    document.getElementById('cf-cat').value     = c.category || 'basic';
+    document.getElementById('cf-level').value   = c.level    || 'Beginner';
+    document.getElementById('cf-rating').value  = c.rating   || 4.5;
+    document.getElementById('cf-reviews').value = c.reviews  || 0;
+    setStars(c.rating || 4.5);
+    if (c.image) { const p=document.getElementById('cf-img-preview'); if(p){p.src=c.image;p.classList.remove('hidden');} }
+    openModal('course-modal');
+  } catch (e) { toast('Load failed: '+e.message,'err'); }
+};
+
+window.saveCourse = async e => {
+  e.preventDefault();
+  const eid    = document.getElementById('cf-id')?.value;
+  const imgFile= document.getElementById('cf-img-file')?.files[0];
+  let   imgUrl = document.getElementById('cf-img')?.value.trim();
+  if (imgFile) { toast('Image upload ho rahi hai...','inf'); imgUrl = await uploadFileToStorage(imgFile, `courses/${Date.now()}_${imgFile.name}`); }
+  const g = id => document.getElementById(id)?.value.trim() || '';
+  const data = {
+    name: g('cf-name'), duration: g('cf-dur'), fee: g('cf-fee'), feeOrig: g('cf-fee-orig'),
+    icon: g('cf-icon')||'💻', image: imgUrl, curriculum: g('cf-curr'),
+    features: g('cf-feat'), description: g('cf-desc'),
+    category: document.getElementById('cf-cat')?.value  || 'basic',
+    level:    document.getElementById('cf-level')?.value || 'Beginner',
+    rating:   parseFloat(document.getElementById('cf-rating')?.value) || 4.5,
+    reviews:  parseInt(document.getElementById('cf-reviews')?.value) || 0,
+  };
+  try {
+    if (eid) { await updateDoc(doc(db,'courses',eid), data); toast('Course updated ✅','ok'); }
+    else     { await addDoc(collection(db,'courses'), { ...data, createdAt: serverTimestamp() }); toast('Course added ✅','ok'); }
+    closeModal('course-modal'); loadCourses();
+  } catch (err) { toast('Save nahi hua: '+err.message,'err'); }
+};
+
+window.deleteCourse = id => {
+  confirmAction('Course delete karein?', async () => {
+    try { await deleteDoc(doc(db,'courses',id)); toast('Deleted','inf'); loadCourses(); }
+    catch { toast('Delete nahi hua','err'); }
+  });
+};
+
+// ── Blogs ──
+async function loadBlogs() {
+  document.getElementById('blogs-list').innerHTML = '<div style="display:flex;justify-content:center;padding:3rem"><div class="spin"></div></div>';
+  try {
+    const snap = await getDocs(query(collection(db,'blogs'), orderBy('createdAt','desc')));
+    const bs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!bs.length) { document.getElementById('blogs-list').innerHTML = '<p style="color:rgba(255,255,255,.3);text-align:center;padding:2rem">Koi post nahi — pehla post add karein!</p>'; return; }
+    document.getElementById('blogs-list').innerHTML = bs.map(b => `
+      <div class="adm-card adm-card-hover" style="display:flex;align-items:center;gap:1rem">
+        ${b.image ? `<img src="${b.image}" style="width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'"/>` : `<div style="width:56px;height:56px;border-radius:10px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">📰</div>`}
+        <div style="flex:1;min-width:0">
+          <div style="color:#fff;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.title||'-'}</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.8rem">${b.category||'General'} • ❤️ ${b.likes||0} • 💬 ${b.comments||0}</div>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-shrink:0">
+          <button onclick="editBlog('${b.id}')" class="btn btn-ghost px-3 py-1.5 text-xs"><i class="fas fa-pen"></i></button>
+          <button onclick="deleteBlog('${b.id}')" class="btn btn-red px-3 py-1.5 text-xs"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>`).join('');
+  } catch (e) { document.getElementById('blogs-list').innerHTML = `<p style="color:#f87171;text-align:center;padding:2rem">Load failed: ${e.message}</p>`; }
+}
+
+window.openBlogForm = () => {
+  document.getElementById('blog-modal-title').textContent = 'Add Blog Post';
+  document.getElementById('bf-id').value = '';
+  ['bf-name','bf-cat','bf-author','bf-img','bf-desc','bf-content'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('bf-img-preview')?.classList.add('hidden');
+  openModal('blog-modal');
+};
+
+window.editBlog = async id => {
+  try {
+    const d = await getDoc(doc(db,'blogs',id));
+    if (!d.exists()) return;
+    const b = { id: d.id, ...d.data() };
+    document.getElementById('blog-modal-title').textContent = 'Edit Blog Post';
+    document.getElementById('bf-id').value = id;
+    const s = (eid, v) => { const el=document.getElementById(eid); if(el) el.value=v||''; };
+    s('bf-name',b.title); s('bf-cat',b.category); s('bf-author',b.author);
+    s('bf-img',b.image); s('bf-desc',b.description); s('bf-content',b.content);
+    if (b.image) { const p=document.getElementById('bf-img-preview'); if(p){p.src=b.image;p.classList.remove('hidden');} }
+    openModal('blog-modal');
+  } catch (e) { toast('Load failed: '+e.message,'err'); }
+};
+
+window.saveBlog = async e => {
+  e.preventDefault();
+  const eid     = document.getElementById('bf-id')?.value;
+  const imgFile = document.getElementById('bf-img-file')?.files[0];
+  let   imgUrl  = document.getElementById('bf-img')?.value.trim();
+  if (imgFile) { toast('Image upload ho rahi hai...','inf'); imgUrl = await uploadFileToStorage(imgFile, `blogs/${Date.now()}_${imgFile.name}`); }
+  const g = id => document.getElementById(id)?.value.trim() || '';
+  const data = { title: g('bf-name'), category: g('bf-cat'), author: g('bf-author'), image: imgUrl, description: g('bf-desc'), content: g('bf-content') };
+  try {
+    if (eid) { await updateDoc(doc(db,'blogs',eid), data); toast('Post updated ✅','ok'); }
+    else     { await addDoc(collection(db,'blogs'), { ...data, likes:0, comments:0, createdAt: serverTimestamp() }); toast('Post added ✅','ok'); }
+    closeModal('blog-modal'); loadBlogs();
+  } catch (err) { toast('Save nahi hua: '+err.message,'err'); }
+};
+
+window.deleteBlog = id => {
+  confirmAction('Blog post delete karein?', async () => {
+    try { await deleteDoc(doc(db,'blogs',id)); toast('Deleted','inf'); loadBlogs(); }
+    catch { toast('Delete nahi hua','err'); }
+  });
+};
+
+// ── Contacts ──
+async function loadContacts() {
+  document.getElementById('contacts-tbody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:rgba(255,255,255,.3)">Loading...</td></tr>';
+  try {
+    const snap = await getDocs(query(collection(db,'contacts'), orderBy('timestamp','desc')));
+    const rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!rows.length) { document.getElementById('contacts-tbody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:rgba(255,255,255,.3)">Koi message nahi abhi tak</td></tr>'; return; }
+    document.getElementById('contacts-tbody').innerHTML = rows.map(r => {
+      const date = r.timestamp?.toDate ? r.timestamp.toDate().toLocaleDateString('en-IN') : '-';
+      return `<tr>
+        <td style="font-weight:600">${r.name||'-'}</td>
+        <td>${r.contact||'-'}</td>
+        <td>${r.subject||'-'}</td>
+        <td>${r.interest||'-'}</td>
+        <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.message||''}">${r.message||'-'}</td>
+        <td style="color:rgba(255,255,255,.4)">${date}</td>
+      </tr>`;
+    }).join('');
+  } catch (e) { document.getElementById('contacts-tbody').innerHTML = `<tr><td colspan="6" style="text-align:center;color:#f87171;padding:2rem">Load failed: ${e.message}</td></tr>`; }
+}
+
+// ── Gallery ──
+async function loadGalleryMgmt() {
+  const grid = document.getElementById('gallery-admin-grid');
+  if (!grid) return;
+  grid.innerHTML = '<div class="col-span-4 flex justify-center py-12"><div class="spin"></div></div>';
+  try {
+    const snap = await getDocs(query(collection(db,'gallery'), orderBy('createdAt','desc')));
+    const photos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!photos.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,.3);padding:2rem">Koi photo nahi — pehli add karein!</div>'; return; }
+    grid.innerHTML = photos.map(p => `
+      <div style="position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;group">
+        <img src="${p.url||p.image||''}" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.parentElement.style.display='none'"/>
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem" class="photo-overlay" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0'">
+          <span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;padding:.2rem .6rem;border-radius:20px">${p.category||'campus'}</span>
+          <button onclick="deleteGalleryPhoto('${p.id}')" class="btn btn-red px-3 py-1.5 text-xs"><i class="fas fa-trash mr-1"></i>Delete</button>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:.5rem .65rem;background:linear-gradient(to top,rgba(0,0,0,.8),transparent)">
+          <p style="color:#fff;font-size:.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.caption||'No caption'}</p>
+        </div>
+      </div>`).join('');
+  } catch (e) { grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#f87171;padding:2rem">Load failed: ${e.message}</div>`; }
+}
+
+window.openGalleryForm = () => {
+  document.getElementById('gf-url').value = '';
+  document.getElementById('gf-caption').value = '';
+  document.getElementById('gf-file').value = '';
+  document.getElementById('gf-preview-img')?.classList.add('hidden');
+  openModal('gallery-modal');
+};
+
+window.previewGalleryImg = el => {
+  const p = document.getElementById('gf-preview-img');
+  if (p && el.value.trim()) { p.src = el.value.trim(); p.classList.remove('hidden'); p.onerror = () => p.classList.add('hidden'); }
+};
+
+window.previewGalleryFile = el => {
+  const f = el.files?.[0]; if (!f) return;
+  const p = document.getElementById('gf-preview-img');
+  if (p) { const r = new FileReader(); r.onload = e => { p.src = e.target.result; p.classList.remove('hidden'); }; r.readAsDataURL(f); }
+};
+
+window.saveGalleryPhoto = async e => {
+  e.preventDefault();
+  const file = document.getElementById('gf-file')?.files[0];
+  let url = document.getElementById('gf-url')?.value.trim();
+  if (file) { toast('Uploading image...','inf'); url = await uploadFileToStorage(file, `gallery/${Date.now()}_${file.name}`); }
+  if (!url) { toast('Photo URL ya file zaroori hai','err'); return; }
+  const data = { url, caption: document.getElementById('gf-caption')?.value.trim(), category: document.getElementById('gf-category')?.value || 'campus' };
+  try {
+    await addDoc(collection(db,'gallery'), { ...data, createdAt: serverTimestamp() });
+    toast('Photo add ho gayi ✅','ok');
+    closeModal('gallery-modal');
+    loadGalleryMgmt();
+  } catch (err) { toast('Save nahi hua: '+err.message,'err'); }
+};
+
+window.deleteGalleryPhoto = id => {
+  confirmAction('Photo delete karein?', async () => {
+    try { await deleteDoc(doc(db,'gallery',id)); toast('Deleted','inf'); loadGalleryMgmt(); }
+    catch { toast('Delete nahi hua','err'); }
+  });
+};
+
+// ── Certificates ──
+let _allCerts = [];
+async function loadCertsMgmt() {
+  const el = document.getElementById('cert-admin-list');
+  if (!el) return;
+  el.innerHTML = '<div style="display:flex;justify-content:center;padding:3rem"><div class="spin"></div></div>';
+  try {
+    const snap = await getDocs(query(collection(db,'certificates'), orderBy('createdAt','desc')));
+    _allCerts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const s = (id, v) => { const e=document.getElementById(id); if(e) e.textContent=v; };
+    s('cert-stat-total',  _allCerts.length);
+    s('cert-stat-valid',  _allCerts.filter(c => c.status !== 'revoked').length);
+    s('cert-stat-pending',_allCerts.filter(c => !c.status || c.status === 'pending').length);
+    renderAdminCerts();
+  } catch (e) { el.innerHTML = `<p style="color:#f87171;text-align:center;padding:2rem">Load failed: ${e.message}</p>`; }
+}
+
+window.renderAdminCerts = () => {
+  const el = document.getElementById('cert-admin-list'); if (!el) return;
+  const q = (document.getElementById('cert-admin-search')?.value || '').toLowerCase();
+  let data = _allCerts.filter(c =>
+    !q || (c.studentName||'').toLowerCase().includes(q) ||
+    (c.mobile||'').includes(q) || (c.certId||c.id).toLowerCase().includes(q) ||
+    (c.course||'').toLowerCase().includes(q)
+  );
+  if (!data.length) { el.innerHTML = '<p style="color:rgba(255,255,255,.3);text-align:center;padding:2rem">Koi certificate nahi mila</p>'; return; }
+  el.innerHTML = data.map(c => {
+    const isValid = c.status !== 'revoked';
+    return `<div class="adm-card adm-card-hover" style="display:flex;align-items:center;gap:1rem">
+      <div style="width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;background:linear-gradient(135deg,#d97706,#f59e0b)">🎓</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+          <span style="color:#fff;font-weight:700">${c.studentName||'—'}</span>
+          <span style="font-size:.7rem;font-weight:700;padding:.15rem .55rem;border-radius:20px;background:${isValid?'rgba(16,185,129,.15)':'rgba(239,68,68,.15)'};color:${isValid?'#34d399':'#f87171'}">${isValid?'Valid':'Revoked'}</span>
+        </div>
+        <div style="color:rgba(255,255,255,.4);font-size:.8rem">${c.course||'—'} • <span style="font-family:monospace">${c.certId||c.id}</span></div>
+        <div style="color:rgba(255,255,255,.3);font-size:.75rem">${c.grade||'—'} • ${c.percentage||'—'}% • ${c.mobile||'—'}</div>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-shrink:0">
+        <button onclick="editCert('${c.id}')" class="btn btn-ghost px-3 py-1.5 text-xs"><i class="fas fa-pen"></i></button>
+        <button onclick="toggleRevoke('${c.id}','${c.status||'valid'}')" class="btn ${isValid?'btn-red':'btn-green'} px-3 py-1.5 text-xs">${isValid?'Revoke':'Restore'}</button>
+        <button onclick="deleteCert('${c.id}')" class="btn btn-red px-3 py-1.5 text-xs"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`;
+  }).join('');
+};
+
+window.openCertForm = () => {
+  document.getElementById('cert-modal-title').textContent = 'Issue Certificate';
+  document.getElementById('cert-edit-id').value = '';
+  ['cert-name','cert-mobile','cert-course','cert-batch','cert-pct','cert-remarks'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('cert-grade').value = 'A';
+  document.getElementById('cert-date').value  = new Date().toISOString().split('T')[0];
+  document.getElementById('cert-certid').value = autoGenCertId();
+  openModal('cert-modal');
+};
+
+window.autoGenCertId = () => {
+  const id = `VIT-${new Date().getFullYear()}-${String(Math.floor(Math.random()*900000)+100000)}`;
+  const el = document.getElementById('cert-certid'); if (el) el.value = id;
+  return id;
+};
+
+window.editCert = id => {
+  const c = _allCerts.find(x => x.id === id); if (!c) return;
+  document.getElementById('cert-modal-title').textContent = 'Edit Certificate';
+  document.getElementById('cert-edit-id').value = id;
+  const s = (eid,v) => { const el=document.getElementById(eid); if(el) el.value=v||''; };
+  s('cert-name',c.studentName); s('cert-mobile',c.mobile); s('cert-course',c.course);
+  s('cert-batch',c.batch); s('cert-grade',c.grade||'A'); s('cert-pct',c.percentage);
+  s('cert-date',c.issueDate); s('cert-certid',c.certId||c.id);
+  openModal('cert-modal');
+};
+
+window.saveCert = async e => {
+  e.preventDefault();
+  const eid = document.getElementById('cert-edit-id')?.value;
+  const g = id => document.getElementById(id)?.value.trim() || '';
+  const data = {
+    studentName: g('cert-name'), mobile: g('cert-mobile'),
+    course: g('cert-course'), batch: g('cert-batch'),
+    grade: g('cert-grade'), percentage: g('cert-pct'),
+    issueDate: g('cert-date'), certId: g('cert-certid'),
+    status: 'valid',
+  };
+  try {
+    if (eid) { await updateDoc(doc(db,'certificates',eid), data); toast('Certificate updated ✅','ok'); }
+    else { await addDoc(collection(db,'certificates'), { ...data, createdAt: serverTimestamp() }); toast('Certificate issued ✅','ok'); }
+    closeModal('cert-modal'); loadCertsMgmt();
+  } catch (err) { toast('Save nahi hua: '+err.message,'err'); }
+};
+
+window.toggleRevoke = async (id, status) => {
+  const newStatus = status === 'revoked' ? 'valid' : 'revoked';
+  try {
+    await updateDoc(doc(db,'certificates',id), { status: newStatus });
+    toast(newStatus === 'valid' ? 'Restored ✅' : 'Revoked ❌','inf');
+    loadCertsMgmt();
+  } catch { toast('Update nahi hua','err'); }
+};
+
+window.deleteCert = id => {
+  confirmAction('Certificate permanently delete karein?', async () => {
+    try { await deleteDoc(doc(db,'certificates',id)); toast('Deleted','inf'); loadCertsMgmt(); }
+    catch { toast('Delete nahi hua','err'); }
+  });
+};
+
+// ── Results ──
+let _allResults = [];
+async function loadResultsMgmt() {
+  const el = document.getElementById('result-admin-list'); if (!el) return;
+  el.innerHTML = '<div style="display:flex;justify-content:center;padding:3rem"><div class="spin"></div></div>';
+  try {
+    const snap = await getDocs(query(collection(db,'student_results'), orderBy('createdAt','desc')));
+    _allResults = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderAdminResults();
+  } catch (e) { el.innerHTML = `<p style="color:#f87171;text-align:center;padding:2rem">Load failed: ${e.message}</p>`; }
+}
+
+function calcGrade(pct) {
+  if (pct >= 90) return 'A+'; if (pct >= 80) return 'A';
+  if (pct >= 70) return 'B+'; if (pct >= 60) return 'B';
+  if (pct >= 50) return 'C';  if (pct >= 40) return 'D'; return 'F';
+}
+function gradeColor(g) {
+  if (g==='A+'||g==='A') return '#34d399'; if (g==='B+'||g==='B') return '#38bdf8';
+  if (g==='C') return '#fbbf24'; if (g==='D') return '#f97316'; return '#f87171';
+}
+
+window.renderAdminResults = () => {
+  const el = document.getElementById('result-admin-list'); if (!el) return;
+  const q = (document.getElementById('result-admin-search')?.value || '').toLowerCase();
+  const data = _allResults.filter(r =>
+    !q || (r.studentName||'').toLowerCase().includes(q) ||
+    (r.mobile||'').includes(q) || (r.course||'').toLowerCase().includes(q)
+  );
+  if (!data.length) { el.innerHTML = '<p style="color:rgba(255,255,255,.3);text-align:center;padding:2rem">Koi result nahi mila</p>'; return; }
+  el.innerHTML = data.map(r => {
+    const g = r.grade || calcGrade(parseFloat(r.totalPercentage||r.percentage)||0);
+    return `<div class="adm-card adm-card-hover" style="display:flex;align-items:center;gap:1rem">
+      <div style="width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:1.1rem;flex-shrink:0;background:linear-gradient(135deg,var(--sky),#0284c7)">${(r.studentName||'S')[0].toUpperCase()}</div>
+      <div style="flex:1;min-width:0">
+        <div style="color:#fff;font-weight:700">${r.studentName||'—'}</div>
+        <div style="color:rgba(255,255,255,.4);font-size:.8rem">${r.course||'—'}${r.batch?' • '+r.batch:''}</div>
+        <div style="color:rgba(255,255,255,.3);font-size:.75rem">${r.mobile||'—'} • ${r.examDate||''}</div>
+      </div>
+      <div style="text-align:center;flex-shrink:0;margin-right:.5rem">
+        <div style="font-weight:900;font-size:1.5rem;color:${gradeColor(g)}">${g}</div>
+        <div style="color:rgba(255,255,255,.35);font-size:.72rem">${r.totalPercentage||r.percentage||'—'}%</div>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-shrink:0">
+        <button onclick="editResult('${r.id}')" class="btn btn-ghost px-3 py-1.5 text-xs"><i class="fas fa-pen"></i></button>
+        <button onclick="deleteResult('${r.id}')" class="btn btn-red px-3 py-1.5 text-xs"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`;
+  }).join('');
+};
+
+window.openResultForm = () => {
+  document.getElementById('result-modal-title').textContent = 'Add Result';
+  document.getElementById('result-edit-id').value = '';
+  ['rf-name','rf-mobile','rf-course','rf-batch','rf-pct','rf-remarks'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('rf-date').value  = new Date().toISOString().split('T')[0];
+  document.getElementById('rf-grade').value = 'A';
+  renderSubjectRows([{ subject:'', obtained:'', total:'' }]);
+  openModal('result-modal');
+};
+
+window.editResult = id => {
+  const r = _allResults.find(x => x.id === id); if (!r) return;
+  document.getElementById('result-modal-title').textContent = 'Edit Result';
+  document.getElementById('result-edit-id').value = id;
+  const s = (eid,v) => { const el=document.getElementById(eid); if(el) el.value=v||''; };
+  s('rf-name',r.studentName); s('rf-mobile',r.mobile); s('rf-course',r.course);
+  s('rf-batch',r.batch); s('rf-date',r.examDate); s('rf-grade',r.grade||'A');
+  s('rf-pct',r.totalPercentage||r.percentage); s('rf-remarks',r.remarks);
+  renderSubjectRows(r.subjects?.length ? r.subjects : [{ subject:'', obtained:'', total:'' }]);
+  openModal('result-modal');
+};
+
+function renderSubjectRows(subjects) {
+  const c = document.getElementById('rf-subjects'); if (!c) return;
+  c.innerHTML = subjects.map((s, i) => `
+    <div style="display:flex;gap:.5rem;align-items:center" id="sr-${i}">
+      <input class="inp flex-1 text-sm" placeholder="Subject" value="${s.subject||''}" id="sn-${i}"/>
+      <input class="inp text-sm text-center" style="width:65px" placeholder="Got" value="${s.obtained||''}" id="sg-${i}" type="number" min="0"/>
+      <span style="color:rgba(255,255,255,.3)">/</span>
+      <input class="inp text-sm text-center" style="width:65px" placeholder="Max" value="${s.total||''}" id="sm-${i}" type="number" min="0"/>
+      <button type="button" onclick="document.getElementById('sr-${i}').remove()" style="background:none;border:none;cursor:pointer;color:#f87171;flex-shrink:0"><i class="fas fa-times"></i></button>
+    </div>`).join('');
+}
+
+window.addSubjectRow = () => {
+  const c = document.getElementById('rf-subjects'); if (!c) return;
+  const i = c.children.length;
+  const div = document.createElement('div');
+  div.id = `sr-${i}`; div.style.cssText = 'display:flex;gap:.5rem;align-items:center';
+  div.innerHTML = `<input class="inp flex-1 text-sm" placeholder="Subject" id="sn-${i}"/>
+    <input class="inp text-sm text-center" style="width:65px" placeholder="Got" id="sg-${i}" type="number" min="0"/>
+    <span style="color:rgba(255,255,255,.3)">/</span>
+    <input class="inp text-sm text-center" style="width:65px" placeholder="Max" id="sm-${i}" type="number" min="0"/>
+    <button type="button" onclick="this.closest('[id^=sr]').remove()" style="background:none;border:none;cursor:pointer;color:#f87171"><i class="fas fa-times"></i></button>`;
+  c.appendChild(div);
+};
+
+window.saveResult = async e => {
+  e.preventDefault();
+  const eid = document.getElementById('result-edit-id')?.value;
+  const g = id => document.getElementById(id)?.value.trim() || '';
+  const rows = document.getElementById('rf-subjects')?.children || [];
+  const subjects = [...rows].map((_, i) => ({
+    subject:  document.getElementById(`sn-${i}`)?.value.trim() || '',
+    obtained: parseFloat(document.getElementById(`sg-${i}`)?.value) || 0,
+    total:    parseFloat(document.getElementById(`sm-${i}`)?.value) || 100,
+    percentage: Math.round((parseFloat(document.getElementById(`sg-${i}`)?.value)||0) / (parseFloat(document.getElementById(`sm-${i}`)?.value)||100) * 100)
+  })).filter(s => s.subject);
+  const pct = g('rf-pct') || (subjects.length ?
+    Math.round(subjects.reduce((a,s)=>a+s.obtained,0) / subjects.reduce((a,s)=>a+s.total,0) * 100) : '');
+  const data = {
+    studentName: g('rf-name'), mobile: g('rf-mobile'), course: g('rf-course'),
+    batch: g('rf-batch'), examDate: g('rf-date'),
+    totalPercentage: String(pct), percentage: String(pct),
+    grade: g('rf-grade') || calcGrade(parseFloat(pct)||0),
+    remarks: g('rf-remarks'), subjects,
+  };
+  try {
+    if (eid) { await updateDoc(doc(db,'student_results',eid), data); toast('Result updated ✅','ok'); }
+    else     { await addDoc(collection(db,'student_results'), { ...data, createdAt: serverTimestamp() }); toast('Result added ✅','ok'); }
+    closeModal('result-modal'); loadResultsMgmt();
+  } catch (err) { toast('Save nahi hua: '+err.message,'err'); }
+};
+
+window.deleteResult = id => {
+  confirmAction('Result delete karein?', async () => {
+    try { await deleteDoc(doc(db,'student_results',id)); toast('Deleted','inf'); loadResultsMgmt(); }
+    catch { toast('Delete nahi hua','err'); }
+  });
+};
+
+// ── Testimonials ──
+let _allTestis = [];
+async function loadTestiMgmt() {
+  const el = document.getElementById('testi-admin-list'); if (!el) return;
+  el.innerHTML = '<div style="display:flex;justify-content:center;padding:3rem"><div class="spin"></div></div>';
+  try {
+    const snap = await getDocs(query(collection(db,'testimonials'), orderBy('createdAt','desc')));
+    _allTestis = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (!_allTestis.length) { el.innerHTML = '<p style="color:rgba(255,255,255,.3);text-align:center;padding:2rem">Koi testimonial nahi — pehla add karein!</p>'; return; }
+    el.innerHTML = _allTestis.map(t => `
+      <div class="adm-card adm-card-hover" style="display:flex;align-items:center;gap:1rem">
+        <div style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;flex-shrink:0;background:linear-gradient(135deg,#7c3aed,#a78bfa)">${(t.studentName||'S')[0].toUpperCase()}</div>
+        <div style="flex:1;min-width:0">
+          <div style="color:#fff;font-weight:700">${t.studentName||'—'}</div>
+          <div style="color:#f59e0b;font-size:.8rem">${'★'.repeat(Math.round(t.rating||5))} ${t.rating||5}/5</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.78rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.text||''}</div>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-shrink:0">
+          ${t.featured?'<span style="font-size:.7rem;color:#34d399;border:1px solid rgba(52,211,153,.3);padding:.15rem .5rem;border-radius:4px">⭐ Featured</span>':''}
+          <button onclick="editTesti('${t.id}')" class="btn btn-ghost px-3 py-1.5 text-xs"><i class="fas fa-pen"></i></button>
+          <button onclick="deleteTesti('${t.id}')" class="btn btn-red px-3 py-1.5 text-xs"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>`).join('');
+  } catch (e) { el.innerHTML = `<p style="color:#f87171;text-align:center;padding:2rem">Load failed: ${e.message}</p>`; }
+}
+
+window.openTestiForm = () => {
+  document.getElementById('testi-modal-title').textContent = 'Add Testimonial';
+  document.getElementById('testi-edit-id').value = '';
+  ['tf-name','tf-course','tf-text','tf-photo'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('tf-featured').checked = true;
+  setTestiStars(5);
+  openModal('testi-modal');
+};
+
+window.editTesti = id => {
+  const t = _allTestis.find(x => x.id === id); if (!t) return;
+  document.getElementById('testi-modal-title').textContent = 'Edit Testimonial';
+  document.getElementById('testi-edit-id').value = id;
+  const s = (eid,v) => { const el=document.getElementById(eid); if(el) el.value=v||''; };
+  s('tf-name',t.studentName); s('tf-course',t.course||t.batch);
+  s('tf-text',t.text); s('tf-photo',t.photo||t.photoUrl);
+  document.getElementById('tf-featured').checked = !!t.featured;
+  setTestiStars(t.rating || 5);
+  openModal('testi-modal');
+};
+
+window.setTestiStars = val => {
+  document.getElementById('tf-rating').value = val;
+  document.querySelectorAll('#testi-star-picker span').forEach(s => {
+    s.style.color = parseFloat(s.dataset.v) <= val ? '#f59e0b' : 'rgba(255,255,255,.2)';
+  });
+  const lbl = document.getElementById('tf-rating-label');
+  if (lbl) lbl.textContent = `${val} / 5`;
+};
+
+window.saveTesti = async e => {
+  e.preventDefault();
+  const eid = document.getElementById('testi-edit-id')?.value;
+  const g = id => document.getElementById(id)?.value.trim() || '';
+  const data = {
+    studentName: g('tf-name'), course: g('tf-course'), text: g('tf-text'),
+    photo: g('tf-photo'), rating: parseFloat(document.getElementById('tf-rating')?.value) || 5,
+    featured: document.getElementById('tf-featured')?.checked || false,
+  };
+  try {
+    if (eid) { await updateDoc(doc(db,'testimonials',eid), data); toast('Updated ✅','ok'); }
+    else     { await addDoc(collection(db,'testimonials'), { ...data, createdAt: serverTimestamp() }); toast('Added ✅','ok'); }
+    closeModal('testi-modal'); loadTestiMgmt();
+  } catch (err) { toast('Save nahi hua: '+err.message,'err'); }
+};
+
+window.deleteTesti = id => {
+  confirmAction('Testimonial delete karein?', async () => {
+    try { await deleteDoc(doc(db,'testimonials',id)); toast('Deleted','inf'); loadTestiMgmt(); }
+    catch { toast('Delete nahi hua','err'); }
+  });
+};
+
+// ── Top Banner ──
+async function loadBannerMgmt() {
+  try {
+    const snap = await getDoc(doc(db,'site_settings','top_banner'));
+    if (!snap.exists()) return;
+    const d = snap.data();
+    const s = (id,v) => { const el=document.getElementById(id); if(el) el.value=v||''; };
+    s('tb-text',d.text); s('tb-cta-text',d.ctaText);
+    const ca = document.getElementById('tb-cta-action'); if(ca) ca.value=d.ctaAction||'';
+    const ck = (id, v) => { const el=document.getElementById(id); if(el) el.checked=v; };
+    ck('tb-countdown',!!d.showCountdown); ck('tb-dismissible',d.dismissible!==false); ck('tb-scroll-hide',d.scrollHide!==false);
+    const tog = document.getElementById('tb-master-toggle'); if(tog) tog.checked=!!d.active;
+    toggleBannerMaster(!!d.active);
+    const toLocal = dt => { if(!dt) return ''; const d2=dt?.toDate?dt.toDate():new Date(dt); return new Date(d2.getTime()-d2.getTimezoneOffset()*60000).toISOString().slice(0,16); };
+    s('tb-start',toLocal(d.startDate)); s('tb-end',toLocal(d.endDate));
+    if (d.theme) setBannerTheme(d.theme);
+    updateBannerPreview();
+  } catch (e) { toast('Load nahi hua: '+e.message,'err'); }
+}
+
+window.toggleBannerMaster = active => {
+  const lbl = document.getElementById('tb-status-label');
+  const trk = document.getElementById('tb-toggle-track');
+  const knb = document.getElementById('tb-toggle-knob');
+  if (lbl) { lbl.textContent = active ? 'ON' : 'Off'; lbl.style.color = active ? '#34d399' : 'rgba(255,255,255,.35)'; }
+  if (trk) trk.style.background = active ? '#6366f1' : '#374151';
+  if (knb) knb.style.left = active ? '22px' : '2px';
+};
+
+window.setBannerTheme = theme => {
+  if (document.getElementById('tb-theme')) document.getElementById('tb-theme').value = theme;
+  const themeGrads = {
+    indigo:'linear-gradient(90deg,#6366f1,#8b5cf6)',
+    red:'linear-gradient(90deg,#dc2626,#ef4444)',
+    green:'linear-gradient(90deg,#059669,#10b981)',
+    gold:'linear-gradient(90deg,#d97706,#f59e0b)',
+  };
+  document.querySelectorAll('.banner-theme-btn').forEach(b => {
+    const isActive = b.dataset.bt === theme;
+    b.style.outline = isActive ? '3px solid rgba(255,255,255,.8)' : 'none';
+    b.style.outlineOffset = isActive ? '2px' : '0';
+  });
+  const prev = document.getElementById('tb-preview');
+  if (prev) prev.style.background = themeGrads[theme] || themeGrads.indigo;
+};
+
+window.updateBannerPreview = () => {
+  const text = document.getElementById('tb-text')?.value || 'Banner text yahan dikhega';
+  const cta  = document.getElementById('tb-cta-text')?.value;
+  const theme = document.getElementById('tb-theme')?.value || 'indigo';
+  const themeGrads = { indigo:'linear-gradient(90deg,#6366f1,#8b5cf6)', red:'linear-gradient(90deg,#dc2626,#ef4444)', green:'linear-gradient(90deg,#059669,#10b981)', gold:'linear-gradient(90deg,#d97706,#f59e0b)' };
+  const prev = document.getElementById('tb-preview');
+  if (prev) prev.style.background = themeGrads[theme] || themeGrads.indigo;
+  const pt = document.getElementById('tb-prev-text'); if (pt) pt.textContent = text;
+  const pc = document.getElementById('tb-prev-cta');
+  if (pc) { pc.textContent = cta||''; pc.classList.toggle('hidden', !cta); }
+};
+
+window.applyBannerTemplate = type => {
+  const templates = {
+    admission: { text:'🎓 Admission Open hai! New Batch shuru ho raha hai — Seats Limited!', cta:'Apply Now', action:'admission', theme:'indigo' },
+    offer:     { text:'🔥 Special Offer — Is Hafte Kisi Bhi Course Pe 20% Discount!',      cta:'Dekhein',   action:'courses',  theme:'red'    },
+    batch:     { text:'📅 New Morning Batch: 1 July se — Abhi Seat Book Karein!',           cta:'Enroll Now',action:'admission',theme:'gold'   },
+    holiday:   { text:'🏖️ Notice: Kal Institute Band Rahega — Holiday!',                   cta:'',          action:'',         theme:'green'  },
+  };
+  const t = templates[type]; if (!t) return;
+  const s = (id,v) => { const el=document.getElementById(id); if(el) el.value=v; };
+  s('tb-text',t.text); s('tb-cta-text',t.cta);
+  const ca = document.getElementById('tb-cta-action'); if(ca) ca.value=t.action;
+  setBannerTheme(t.theme); updateBannerPreview();
+  toast('Template apply hua ✅','ok');
+};
+
+window.saveTopBanner = async () => {
+  const g = id => document.getElementById(id)?.value.trim() || '';
+  const startVal = document.getElementById('tb-start')?.value;
+  const endVal   = document.getElementById('tb-end')?.value;
+  const data = {
+    text: g('tb-text'), ctaText: g('tb-cta-text'),
+    ctaAction: document.getElementById('tb-cta-action')?.value || '',
+    theme: g('tb-theme') || 'indigo',
+    showCountdown: document.getElementById('tb-countdown')?.checked || false,
+    dismissible:   document.getElementById('tb-dismissible')?.checked !== false,
+    scrollHide:    document.getElementById('tb-scroll-hide')?.checked !== false,
+    active:        document.getElementById('tb-master-toggle')?.checked || false,
+    startDate: startVal ? new Date(startVal) : null,
+    endDate:   endVal   ? new Date(endVal)   : null,
+    updatedAt: serverTimestamp(),
+  };
+  if (!data.text) { toast('Banner text zaroori hai','err'); return; }
+  try {
+    await setDoc(doc(db,'site_settings','top_banner'), data, { merge: true });
+    toast('Banner save ho gaya! ✅','ok');
+  } catch (err) { toast('Save nahi hua: '+err.message,'err'); }
+};
+
+// ── APK / App Downloads ──
+async function loadAppsMgmt() {
+  try {
+    const [ss, ts] = await Promise.all([
+      getDoc(doc(db,'app_settings','student')),
+      getDoc(doc(db,'app_settings','teacher')),
+    ]);
+    if (ss.exists()) {
+      const d = ss.data();
+      const el = document.getElementById('s-apk-path'); if (el) el.value = d.path||'';
+      const ve = document.getElementById('s-apk-ver');  if (ve) ve.value = d.version||'v1.0';
+      const dc = document.getElementById('s-dl-count'); if (dc) dc.textContent = d.downloads||0;
+    }
+    if (ts.exists()) {
+      const d = ts.data();
+      const el = document.getElementById('t-apk-path'); if (el) el.value = d.path||'';
+      const ve = document.getElementById('t-apk-ver');  if (ve) ve.value = d.version||'v1.0';
+      const dc = document.getElementById('t-dl-count'); if (dc) dc.textContent = d.downloads||0;
+    }
+    loadDlLog();
+  } catch (e) { console.error(e); }
+}
+
+async function loadDlLog() {
+  const tbody = document.getElementById('dl-log-tbody'); if (!tbody) return;
+  try {
+    const snap = await getDocs(query(collection(db,'download_logs'), orderBy('timestamp','desc'), limit(20)));
+    const rows = snap.docs.map(d => d.data());
+    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;padding:1.5rem;color:rgba(255,255,255,.3)">Koi download nahi abhi tak</td></tr>'; return; }
+    tbody.innerHTML = rows.map(r => {
+      const date = r.timestamp?.toDate ? r.timestamp.toDate().toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : '-';
+      return `<tr><td>${r.app==='teacher'?'👨‍🏫 Teacher App':'🎓 Student App'}</td><td style="color:rgba(255,255,255,.4)">${date}</td></tr>`;
+    }).join('');
+  } catch { tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;padding:1.5rem;color:rgba(255,255,255,.3)">No logs</td></tr>'; }
+}
+
+window.saveAppLink = async type => {
+  const pathEl = document.getElementById(`${type[0]}-apk-path`);
+  const verEl  = document.getElementById(`${type[0]}-apk-ver`);
+  const path   = pathEl?.value.trim();
+  const version= verEl?.value.trim() || 'v1.0';
+  if (!path) { toast('URL ya path darj karein','err'); return; }
+  try {
+    await setDoc(doc(db,'app_settings',type), { path, version, updatedAt: serverTimestamp() }, { merge: true });
+    toast(`${type==='student'?'Student':'Teacher'} App link saved ✅`,'ok');
+  } catch (err) { toast('Save nahi hua: '+err.message,'err'); }
+};
+
+window.apkSelected = async (el, type) => {
+  const file = el.files?.[0]; if (!file) return;
+  const prefix = type[0];
+  const progressWrap = document.getElementById(`${prefix}-upload-progress`);
+  const nameEl = document.getElementById(`${prefix}-upload-name`);
+  const pctEl  = document.getElementById(`${prefix}-upload-pct`);
+  const barEl  = document.getElementById(`${prefix}-upload-bar`);
+  if (progressWrap) progressWrap.classList.remove('hidden');
+  if (nameEl) nameEl.textContent = file.name;
+
+  const storageRef = ref(storage, `apks/${type}/${Date.now()}_${file.name}`);
+  const task = uploadBytesResumable(storageRef, file);
+  task.on('state_changed',
+    snap => {
+      const pct = Math.round(snap.bytesTransferred / snap.totalBytes * 100);
+      if (pctEl) pctEl.textContent = pct + '%';
+      if (barEl) barEl.style.width = pct + '%';
+    },
+    err => { toast('Upload failed: '+err.message,'err'); if(progressWrap) progressWrap.classList.add('hidden'); },
+    async () => {
+      const dlUrl = await getDownloadURL(task.snapshot.ref);
+      const verEl = document.getElementById(`${prefix}-apk-ver`);
+      await setDoc(doc(db,'app_settings',type), { path: dlUrl, version: verEl?.value||'v1.0', updatedAt: serverTimestamp() }, { merge: true });
+      if (progressWrap) progressWrap.classList.add('hidden');
+      const pathEl = document.getElementById(`${prefix}-apk-path`);
+      if (pathEl) pathEl.value = dlUrl;
+      toast(`${type==='student'?'Student':'Teacher'} APK uploaded ✅`,'ok');
+    }
+  );
+};
+
+// ── Star picker ──
+window.setStars = val => {
+  _cfStarVal = val;
+  document.getElementById('cf-rating').value = val;
+  document.querySelectorAll('.star-pick').forEach(s => {
+    s.classList.toggle('lit', parseFloat(s.dataset.val) <= val);
+  });
+  const lbl = document.getElementById('star-display');
+  if (lbl) lbl.textContent = '★'.repeat(Math.round(val)) + '☆'.repeat(5-Math.round(val));
+};
+
+// ── Blog tag insert ──
+window.insertBlogTag = type => {
+  const ta = document.getElementById('bf-content');
+  if (!ta) return;
+  const sel = ta.value.substring(ta.selectionStart, ta.selectionEnd) || 'text here';
+  const tags = {
+    h2:     `\n[h2]${sel}[/h2]\n`,
+    b:      `[b]${sel}[/b]`,
+    bullet: `\n[bullet]${sel}[/bullet]`,
+    code:   `\n[code]\n${sel}\n[/code]\n`,
+    link:   `[link url=https://example.com]${sel}[/link]`,
+  };
+  const ins = tags[type] || sel;
+  const st  = ta.selectionStart;
+  ta.value  = ta.value.substring(0, st) + ins + ta.value.substring(ta.selectionEnd);
+  ta.focus(); ta.selectionStart = ta.selectionEnd = st + ins.length;
+};
+
+// ── Image preview helpers ──
+window.previewCfImg = () => {
+  const url = document.getElementById('cf-img')?.value.trim();
+  const p   = document.getElementById('cf-img-preview');
+  if (p && url) { p.src = url; p.classList.remove('hidden'); }
+};
+window.handleCfImgFile = el => {
+  const f = el.files[0]; if (!f) return;
+  const p = document.getElementById('cf-img-preview');
+  if (p) { p.src = URL.createObjectURL(f); p.classList.remove('hidden'); }
+  document.getElementById('cf-img').value = '';
+};
+window.previewBfImg = () => {
+  const url = document.getElementById('bf-img')?.value.trim();
+  const p   = document.getElementById('bf-img-preview');
+  if (p && url) { p.src = url; p.classList.remove('hidden'); }
+};
+window.handleBfImgFile = el => {
+  const f = el.files[0]; if (!f) return;
+  const p = document.getElementById('bf-img-preview');
+  if (p) { p.src = URL.createObjectURL(f); p.classList.remove('hidden'); }
+  document.getElementById('bf-img').value = '';
+};
+
+// ── Firebase Storage upload ──
+function uploadFileToStorage(file, path) {
+  return new Promise((resolve, reject) => {
+    const storageRef = ref(storage, path);
+    const task = uploadBytesResumable(storageRef, file);
+    task.on('state_changed', null, reject, async () => {
+      const url = await getDownloadURL(task.snapshot.ref);
+      resolve(url);
+    });
+  });
+}
+
+// ── Sidebar mobile toggle ──
+window.toggleSidebar = () => {
+  document.getElementById('admin-sidebar')?.classList.toggle('open');
+  document.getElementById('sidebar-overlay')?.classList.toggle('open');
+};
+
+// ── Misc ──
+window.togglePwd = (iid, eid) => {
+  const i = document.getElementById(iid), e = document.getElementById(eid);
+  if (!i) return; i.type = i.type==='password' ? 'text' : 'password';
+  if (e) e.className = i.type==='password' ? 'fas fa-eye text-sm' : 'fas fa-eye-slash text-sm';
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') document.querySelectorAll('.modal-wrap.open').forEach(m => m.classList.remove('open'));
+});
+
+// ── Init stars ──
+setStars(4.5);
+</script>
+
+</body>
+</html>
