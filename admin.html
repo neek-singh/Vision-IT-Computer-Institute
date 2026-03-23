@@ -216,6 +216,20 @@ body{background:#0d0f14;color:#f0ede8;font-family:'DM Sans',system-ui,sans-serif
       </form>
     </div>
 
+    <!-- Pending approval state -->
+    <div id="adm-pending" style="display:none;text-align:center;padding:1.5rem 0">
+      <div style="font-size:3rem;margin-bottom:.75rem">⏳</div>
+      <h3 style="color:#fff;font-weight:700;margin-bottom:.5rem">Request Sent!</h3>
+      <p style="color:rgba(255,255,255,.45);font-size:.85rem;line-height:1.6">
+        Account ban gaya. Admin approval ke baad access milega.<br/>
+        <a href="/cdn-cgi/l/email-protection#53253a203a3c3d3a2723213227322323262113343e323a3f7d303c3e" style="color:#818cf8"><span class="__cf_email__" data-cfemail="ea9c8399838584839e9a988b9e8b9a9a9f98aa8d878b8386c4898587">[email&#160;protected]</span></a>
+      </p>
+      <button onclick="document.getElementById('adm-pending').style.display='none';document.getElementById('adm-login-form').style.display='block';"
+        style="margin-top:1.25rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:.6rem 1.5rem;color:rgba(255,255,255,.6);cursor:pointer;font-family:inherit;font-size:.85rem">
+        Login karein
+      </button>
+    </div>
+
     <div class="text-center mt-5">
       <a href="/" style="color:rgba(255,255,255,.2);font-size:.82rem;text-decoration:none">← Back to Website</a>
     </div>
@@ -1140,7 +1154,7 @@ body{background:#0d0f14;color:#f0ede8;font-family:'DM Sans',system-ui,sans-serif
 <!-- ══════════════════════════════════════════
      SCRIPTS
 ══════════════════════════════════════════ -->
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { auth, db, storage } from '/assets/js/firebase-config.js';
 import {
   signInWithEmailAndPassword, createUserWithEmailAndPassword,
@@ -1155,115 +1169,261 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
 
 // ── Admin config ──
-const ADMIN_EMAIL = 'visionitpratappur@gmail.com'; // Single admin email
+const ADMIN_EMAIL = 'visionitpratappur@gmail.com';
+
+// ── State variables ──
+let _admAll = [], _admCurrentId = null, _admNotes = [], _admCurStatus = 'new';
+let _cfStarVal = 4.5;
+
+// ── Star picker ──
+window.setStars = val => {
+  _cfStarVal = val;
+  document.getElementById('cf-rating').value = val;
+  document.querySelectorAll('.star-pick').forEach(s => {
+    s.classList.toggle('lit', parseFloat(s.dataset.val) <= val);
+  });
+  const lbl = document.getElementById('star-display');
+  if (lbl) lbl.textContent = '★'.repeat(Math.round(val)) + '☆'.repeat(5-Math.round(val));
+};
+
+// ── Toast ──
+window.toast = (msg, type='inf') => {
+  const icons = { ok:'✅', err:'❌', inf:'ℹ️' };
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.innerHTML = `<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
+  t.classList.add('show'); clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove('show'), 3500);
+};
+
+// ── Modal helpers ──
+window.openModal  = id => document.getElementById(id)?.classList.add('open');
+window.closeModal = id => document.getElementById(id)?.classList.remove('open');
+document.addEventListener('click', e => {
+  document.querySelectorAll('.modal-wrap').forEach(m => {
+    if (e.target === m) m.classList.remove('open');
+  });
+});
+
+// ── Confirm dialog ──
+function confirmAction(msg, onYes, label='Delete') {
+  const dlg = document.getElementById('confirm-dlg');
+  if (!dlg) { if(confirm(msg)) onYes(); return; }
+  document.getElementById('confirm-msg').textContent = msg;
+  document.getElementById('confirm-yes-btn').textContent = label;
+  dlg.style.display = 'flex';
+  document.getElementById('confirm-yes-btn').onclick = () => { dlg.style.display='none'; onYes(); };
+}
+
+// ── Section switcher ──
+window.showSec = id => {
+  document.querySelectorAll('.adm-sec').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-'+id)?.classList.add('active');
+  document.querySelectorAll('.adm-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('al-'+id)?.classList.add('active');
+  document.getElementById('sidebar-overlay')?.classList.remove('open');
+  document.getElementById('admin-sidebar')?.classList.remove('open');
+  // Direct function calls (all in same module scope)
+  const loaders = {
+    overview:      loadDashboard,
+    queries:       loadAdmissions,
+    courses:       loadCourses,
+    blogs:         loadBlogs,
+    contacts:      loadContacts,
+    gallery:       loadGalleryMgmt,
+    certificates:  loadCertsMgmt,
+    results:       loadResultsMgmt,
+    testimonials:  loadTestiMgmt,
+    banner:        loadBannerMgmt,
+    apps:          loadAppsMgmt,
+    requests:      loadRequestsMgmt,
+  };
+  if (loaders[id]) loaders[id]();
+};
+
+// ── Show admin panel ──
+function showAdminPanel() {
+  document.getElementById('admin-login').style.display = 'none';
+  document.getElementById('admin-shell').style.display = 'flex';
+}
+
+// ── Sidebar toggle ──
+
+
+// ── togglePwd ──
+window.togglePwd = (iid, eid) => {
+  const i=document.getElementById(iid), e=document.getElementById(eid);
+  if(!i) return;
+  i.type = i.type==='password'?'text':'password';
+  if(e) e.className = i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm';
+};
+
+// ── uploadFileToStorage helper ──
+async function uploadFileToStorage(file, path) {
+  const storageRef = ref(storage, path);
+  const snap = await uploadBytesResumable(storageRef, file);
+  return await getDownloadURL(snap.ref);
+}
 
 // ── switchAdminTab (keep for compatibility) ──
 window.switchAdminTab = tab => {};
 
 // ── Check if any admin exists, show appropriate screen ──
+// ── Helper: show/hide login screen sections ──
+function showLoginSection(which) {
+  ['adm-checking','adm-first-setup','adm-login-form','adm-pending'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  const target = document.getElementById(which);
+  if (target) target.style.display = 'block';
+}
+
+// ── Helper: check if user is admin ──
+async function isAdminUser(user) {
+  if (!user) return false;
+  if (user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()) return true;
+  try {
+    const ud = await getDoc(doc(db,'users',user.uid));
+    return ud.exists() && ud.data().role === 'admin';
+  } catch { return false; }
+}
+
+// ── onAuthStateChanged: auto-login if already authenticated ──
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    // No user logged in — check if any admin exists
+    checkAdminExists();
+    return;
+  }
+  // User is logged in — verify admin access
+  const isAdmin = await isAdminUser(user);
+  if (isAdmin) {
+    showAdminPanel();
+    loadDashboard();
+  } else {
+    // Logged in but not admin — sign out and show login
+    await signOut(auth);
+    checkAdminExists();
+  }
+});
+
+// ── Check if any admin account exists ──
 async function checkAdminExists() {
   try {
-    const snap = await getDocs(query(collection(db,'users'), limit(10)));
+    const snap = await getDocs(query(collection(db,'users'), limit(20)));
     let adminExists = false;
     snap.forEach(d => { if (d.data().role === 'admin') adminExists = true; });
-    // Also check ADMIN_EMAIL list
-    if (!adminExists) {
-      // Check if primary admin has ever logged in
-      // Show first-time setup
-      document.getElementById('adm-checking').style.display  = 'none';
-      document.getElementById('adm-first-setup').style.display = 'block';
+    if (adminExists) {
+      showLoginSection('adm-login-form');
     } else {
-      document.getElementById('adm-checking').style.display = 'none';
-      document.getElementById('adm-login-form').style.display = 'block';
+      showLoginSection('adm-first-setup');
     }
   } catch (e) {
-    // On error (e.g. first load), show login (admin may exist from email list)
-    document.getElementById('adm-checking').style.display = 'none';
-    document.getElementById('adm-login-form').style.display = 'block';
+    // Firestore error — show login as fallback (admin may exist)
+    showLoginSection('adm-login-form');
   }
 }
 
-// Run check on page load
-checkAdminExists();
-
-// ── First-time setup ──
+// ── First-time setup form ──
 document.getElementById('first-setup-form')?.addEventListener('submit', async e => {
   e.preventDefault();
-  const btn   = document.getElementById('fs-btn');
-  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Creating...';
-  const name  = document.getElementById('fs-name').value.trim();
-  const email = document.getElementById('fs-email').value.trim();
-  const pass  = document.getElementById('fs-pass').value;
+  const btn = document.getElementById('fs-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Creating...';
+
+  const name  = document.getElementById('fs-name')?.value.trim();
+  const email = document.getElementById('fs-email')?.value.trim();
+  const pass  = document.getElementById('fs-pass')?.value;
+
+  if (!name || !email || !pass) {
+    toast('Sab fields zaroori hain','err');
+    btn.disabled=false; btn.innerHTML='<i class="fas fa-rocket mr-1"></i> Create Admin Account';
+    return;
+  }
   if (pass.length < 6) {
     toast('Password min 6 characters ka hona chahiye','err');
     btn.disabled=false; btn.innerHTML='<i class="fas fa-rocket mr-1"></i> Create Admin Account';
     return;
   }
+
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
     await updateProfile(cred.user, { displayName: name });
     await setDoc(doc(db,'users',cred.user.uid), {
-      displayName: name, email, role: 'admin',
+      displayName: name,
+      email,
+      role: 'admin',
       createdAt: serverTimestamp()
     });
+    toast('Admin account ban gaya! 🎉','ok');
     showAdminPanel();
-    toast('Admin account ban gaya aur access mil gaya! 🎉','ok');
     loadDashboard();
   } catch (err) {
-    const msg = err.code==='auth/email-already-in-use'
-      ? 'Yeh email pehle se registered hai — Login karein'
-      : err.message;
-    toast('Setup failed: '+msg,'err');
-    btn.disabled=false; btn.innerHTML='<i class="fas fa-rocket mr-1"></i> Create Admin Account';
+    let msg = err.message;
+    if (err.code === 'auth/email-already-in-use') {
+      msg = 'Yeh email pehle se registered hai — Login karein';
+      showLoginSection('adm-login-form');
+    } else if (err.code === 'auth/invalid-email') {
+      msg = 'Valid email address darj karein';
+    } else if (err.code === 'auth/weak-password') {
+      msg = 'Password kam se kam 6 characters ka hona chahiye';
+    }
+    toast('Error: ' + msg, 'err');
+    btn.disabled=false;
+    btn.innerHTML='<i class="fas fa-rocket mr-1"></i> Create Admin Account';
   }
 });
 
-// ── Login ──
-document.getElementById('login-form').addEventListener('submit', async e => {
+// ── Login form ──
+document.getElementById('login-form')?.addEventListener('submit', async e => {
   e.preventDefault();
   const btn = document.getElementById('login-btn');
-  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Logging in...';
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Logging in...';
+
+  const email = document.getElementById('adm-email')?.value.trim();
+  const pass  = document.getElementById('adm-pass')?.value;
+
   try {
-    const cred = await signInWithEmailAndPassword(auth,
-      document.getElementById('adm-email').value.trim(),
-      document.getElementById('adm-pass').value
-    );
-    // Check admin: email match OR Firestore role=admin
-    const isEmailAdmin = cred.user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
-    let isRoleAdmin = false;
-    if (!isEmailAdmin) {
-      try {
-        const ud = await getDoc(doc(db,'users',cred.user.uid));
-        isRoleAdmin = ud.exists() && ud.data().role === 'admin';
-      } catch {}
-    }
-    if (!isEmailAdmin && !isRoleAdmin) {
+    const cred = await signInWithEmailAndPassword(auth, email, pass);
+    const isAdmin = await isAdminUser(cred.user);
+    if (!isAdmin) {
       await signOut(auth);
-      toast('Access denied — admin rights nahi hain.','err');
-      btn.disabled=false; btn.innerHTML='<i class="fas fa-lock mr-1"></i> Login';
+      toast('Access denied — aapke paas admin rights nahi hain','err');
+      btn.disabled=false;
+      btn.innerHTML='<i class="fas fa-lock mr-1"></i> Login';
       return;
     }
-    showAdminPanel();
     toast('Login successful ✅','ok');
+    showAdminPanel();
     loadDashboard();
   } catch (err) {
-    const msg = (err.code==='auth/invalid-credential'||err.code==='auth/wrong-password')
-      ? 'Email ya password galat hai'
-      : err.message;
-    toast('Login failed: '+msg,'err');
-    btn.disabled=false; btn.innerHTML='<i class="fas fa-lock mr-1"></i> Login';
+    let msg = err.message;
+    if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
+      msg = 'Email ya password galat hai';
+    } else if (err.code === 'auth/user-not-found') {
+      msg = 'Yeh email registered nahi hai';
+    } else if (err.code === 'auth/too-many-requests') {
+      msg = 'Bahut zyada attempts — thodi der baad try karein';
+    }
+    toast('Login failed: ' + msg, 'err');
+    btn.disabled=false;
+    btn.innerHTML='<i class="fas fa-lock mr-1"></i> Login';
   }
 });
 
+// ── Logout ──
 window.adminLogout = async () => {
-  await signOut(auth);
-  document.getElementById('admin-shell').style.display  = 'none';
-  document.getElementById('admin-login').style.display  = 'flex';
-  // Show login form directly (admin exists since we were logged in)
-  document.getElementById('adm-checking').style.display   = 'none';
-  document.getElementById('adm-first-setup').style.display= 'none';
-  document.getElementById('adm-login-form').style.display = 'block';
-  toast('Logout ho gaye', 'inf');
+  try {
+    await signOut(auth);
+    document.getElementById('admin-shell').style.display = 'none';
+    document.getElementById('admin-login').style.display = 'flex';
+    showLoginSection('adm-login-form');
+    toast('Logout ho gaye','inf');
+  } catch (err) {
+    toast('Logout error: '+err.message,'err');
+  }
 };
 
 // ── Dashboard ──
@@ -2251,16 +2411,7 @@ window.apkSelected = async (el, type) => {
   );
 };
 
-// ── Star picker ──
-window.setStars = val => {
-  _cfStarVal = val;
-  document.getElementById('cf-rating').value = val;
-  document.querySelectorAll('.star-pick').forEach(s => {
-    s.classList.toggle('lit', parseFloat(s.dataset.val) <= val);
-  });
-  const lbl = document.getElementById('star-display');
-  if (lbl) lbl.textContent = '★'.repeat(Math.round(val)) + '☆'.repeat(5-Math.round(val));
-};
+
 
 // ── Blog tag insert ──
 window.insertBlogTag = type => {
@@ -2304,17 +2455,6 @@ window.handleBfImgFile = el => {
   document.getElementById('bf-img').value = '';
 };
 
-// ── Firebase Storage upload ──
-function uploadFileToStorage(file, path) {
-  return new Promise((resolve, reject) => {
-    const storageRef = ref(storage, path);
-    const task = uploadBytesResumable(storageRef, file);
-    task.on('state_changed', null, reject, async () => {
-      const url = await getDownloadURL(task.snapshot.ref);
-      resolve(url);
-    });
-  });
-}
 
 // ── Sidebar mobile toggle ──
 window.toggleSidebar = () => {
@@ -2404,16 +2544,21 @@ async function loadRequestBadge() {
 }
 </script>
 <script>
-/* ── Global modal helpers ── */
+/* ── Global modal helpers — always available ── */
 window.openModal = function(id) { var el=document.getElementById(id); if(el) el.classList.add('open'); };
 window.closeModal = function(id) { var el=document.getElementById(id); if(el) el.classList.remove('open'); };
-window.togglePwd = function(a,b){ var i=document.getElementById(a),e=document.getElementById(b); if(!i)return; i.type=i.type==='password'?'text':'password'; if(e)e.className=i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm'; };
+window.togglePwd = function(a,b){
+  var i=document.getElementById(a), e=document.getElementById(b);
+  if(!i) return;
+  i.type = i.type==='password' ? 'text' : 'password';
+  if(e) e.className = i.type==='password' ? 'fas fa-eye text-sm' : 'fas fa-eye-slash text-sm';
+};
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.modal-wrap').forEach(function(m) {
     m.addEventListener('click', function(e) { if(e.target===m) m.classList.remove('open'); });
   });
   document.addEventListener('keydown', function(e) {
-    if(e.key==='Escape') document.querySelectorAll('.modal-wrap.open').forEach(function(m){m.classList.remove('open');});
+    if(e.key==='Escape') document.querySelectorAll('.modal-wrap.open').forEach(function(m){ m.classList.remove('open'); });
   });
 });
 </script>
