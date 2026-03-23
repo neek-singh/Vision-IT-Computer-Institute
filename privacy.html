@@ -69,7 +69,7 @@
       <h2>7. Data Retention</h2>
       <p>We retain your data for as long as necessary to provide our services. Certificate and result data is kept permanently for verification purposes.</p>
       <h2>8. Contact Us</h2>
-      <p>For privacy-related queries, email us at: <a href="mailto:visionitpratappur@gmail.com" style="color:var(--sky)">visionitpratappur@gmail.com</a> or visit us at Kadampara Chowk, Pratappur, Surajpur, CG 497223.</p>
+      <p>For privacy-related queries, email us at: <a href="/cdn-cgi/l/email-protection#6a1c0319030504031e1a180b1e0b1a1a1f182a0d070b030644090507" style="color:var(--sky)"><span class="__cf_email__" data-cfemail="e89e819b818786819c989a899c8998989d9aa88f85898184c68b8785">[email&#160;protected]</span></a> or visit us at Kadampara Chowk, Pratappur, Surajpur, CG 497223.</p>
     </div>
   </div>
 </main>
@@ -80,18 +80,28 @@
     <div class="th3 text-sm">© 2026 Vision IT Computer Institute</div>
   </div>
 </footer>
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { initTheme } from '/assets/js/theme.js';
 import { initNav, initTopBanner } from '/assets/js/nav.js';
 import { loadBannerSettings } from '/assets/js/db-helpers.js';
 initTheme(); initNav(); initTopBanner(loadBannerSettings);
 </script>
+</script>
 <script>
-/* ── Global modal helpers ── */
+/* ── Global helpers — always available ── */
 window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};
 window.closeModal=function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');};
 window.togglePwd=function(a,b){var i=document.getElementById(a),e=document.getElementById(b);if(!i)return;i.type=i.type==='password'?'text':'password';if(e)e.className=i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm';};
 document.addEventListener('DOMContentLoaded',function(){
+  /* Mobile nav — backup if module fails */
+  var hb=document.getElementById('nav-hamburger');
+  var mm=document.getElementById('mob-menu');
+  var ov=document.getElementById('mob-overlay');
+  if(hb&&mm&&ov){
+    hb.addEventListener('click',function(){mm.classList.toggle('open');ov.classList.toggle('open');});
+    ov.addEventListener('click',function(){mm.classList.remove('open');ov.classList.remove('open');});
+  }
+  /* Modal backdrop */
   document.querySelectorAll('.modal-wrap').forEach(function(m){
     m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});
   });
