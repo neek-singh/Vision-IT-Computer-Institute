@@ -3,6 +3,14 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/login",
+      "destination": "/login.html"
+    },
+    {
+      "source": "/signup",
+      "destination": "/login.html?tab=signup"
+    },
+    {
       "source": "/sitemap.xml",
       "destination": "/sitemap.xml"
     },

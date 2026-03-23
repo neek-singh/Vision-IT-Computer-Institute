@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/png" href="/bg-Logo.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<title>Login | Vision IT Computer Institute</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="/assets/css/style.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>(function(){var t=localStorage.getItem('vit-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: var(--bg2);
+}
+.auth-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.1);
+}
+.auth-divider {
+  display: flex; align-items: center; gap: 1rem;
+  margin: 1.25rem 0;
+  color: var(--ink3); font-size: .82rem;
+}
+.auth-divider::before,.auth-divider::after {
+  content:''; flex:1; height:1px; background:var(--border);
+}
+.google-btn {
+  display: flex; align-items: center; justify-content: center;
+  gap: .75rem; width: 100%; padding: .75rem 1rem;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  background: var(--bg); color: var(--ink); font-weight: 600;
+  font-size: .9rem; cursor: pointer; transition: var(--transition);
+  font-family: inherit;
+}
+.google-btn:hover { border-color: var(--sky); background: var(--bg2); }
+.pwd-strength { height: 4px; border-radius: 2px; margin-top: .35rem; transition: all .3s; }
+</style>
+</head>
+<body>
+<div id="toast"></div>
+
+<div class="auth-page">
+  <div class="auth-card">
+
+    <!-- Logo + Back -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem">
+      <a href="/" style="display:flex;align-items:center;gap:.65rem;text-decoration:none">
+        <img src="/bg-Logo.png" alt="Vision IT" style="width:38px;height:38px;border-radius:10px;object-fit:contain;background:#fff" width="38" height="38"/>
+        <div>
+          <div style="font-family:'DM Serif Display',serif;font-size:.95rem;color:var(--ink);line-height:1">Vision IT</div>
+          <div style="font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:600">Computer Institute</div>
+        </div>
+      </a>
+      <button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:1rem;padding:.25rem"><i class="fas fa-moon"></i></button>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:.5rem;margin-bottom:1.75rem;background:var(--bg2);border-radius:12px;padding:.3rem" id="auth-tabs">
+      <button id="tab-login" onclick="switchTab('login')"
+        style="flex:1;padding:.6rem;border-radius:9px;border:none;cursor:pointer;font-family:inherit;font-size:.88rem;font-weight:600;transition:all .2s;background:var(--sky);color:#fff">
+        Login
+      </button>
+      <button id="tab-signup" onclick="switchTab('signup')"
+        style="flex:1;padding:.6rem;border-radius:9px;border:none;cursor:pointer;font-family:inherit;font-size:.88rem;font-weight:600;transition:all .2s;background:transparent;color:var(--ink3)">
+        Sign Up
+      </button>
+    </div>
+
+    <!-- ── LOGIN FORM ── -->
+    <div id="login-section">
+      <h1 style="font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;color:var(--ink);margin-bottom:.3rem">
+        Welcome <span style="color:var(--sky);font-style:italic">back</span>
+      </h1>
+      <p style="color:var(--ink3);font-size:.85rem;margin-bottom:1.5rem;font-weight:300">Apne Vision IT account mein login karein</p>
+
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="lbl">Email *</label>
+          <input type="email" id="l-email" class="inp" placeholder="your@email.com" required autocomplete="email"/>
+        </div>
+        <div>
+          <label class="lbl">Password *</label>
+          <div style="position:relative">
+            <input type="password" id="l-pass" class="inp" style="padding-right:2.75rem" placeholder="Password" required autocomplete="current-password"/>
+            <button type="button" onclick="togglePwd('l-pass','eye-l')" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink3)">
+              <i id="eye-l" class="fas fa-eye text-sm"></i>
+            </button>
+          </div>
+        </div>
+        <div style="text-align:right;margin-top:-.5rem">
+          <button type="button" onclick="switchTab('forgot')" style="background:none;border:none;cursor:pointer;color:var(--sky);font-size:.82rem;font-family:inherit">Forgot password?</button>
+        </div>
+        <button type="submit" id="login-btn" class="btn btn-sky w-full py-3 text-sm justify-center" style="width:100%">
+          <i class="fas fa-sign-in-alt mr-2"></i>Login
+        </button>
+      </form>
+
+      <div class="auth-divider">ya</div>
+
+      <button onclick="handleGoogle()" class="google-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google"/>
+        Continue with Google
+      </button>
+
+      <p style="text-align:center;margin-top:1.25rem;font-size:.85rem;color:var(--ink3)">
+        Account nahi hai?
+        <button onclick="switchTab('signup')" style="background:none;border:none;cursor:pointer;color:var(--sky);font-weight:600;font-family:inherit">Sign Up karein</button>
+      </p>
+    </div>
+
+    <!-- ── SIGNUP FORM ── -->
+    <div id="signup-section" style="display:none">
+      <h1 style="font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;color:var(--ink);margin-bottom:.3rem">
+        Join <span style="color:var(--sky);font-style:italic">Vision IT</span>
+      </h1>
+      <p style="color:var(--ink3);font-size:.85rem;margin-bottom:1.5rem;font-weight:300">Naya account banayein — bilkul free</p>
+
+      <form id="signup-form" class="space-y-4">
+        <div>
+          <label class="lbl">Full Name *</label>
+          <input type="text" id="s-name" class="inp" placeholder="Apna poora naam" required autocomplete="name"/>
+        </div>
+        <div>
+          <label class="lbl">Email *</label>
+          <input type="email" id="s-email" class="inp" placeholder="your@email.com" required autocomplete="email"/>
+        </div>
+        <div>
+          <label class="lbl">Mobile <span style="color:var(--ink3);font-weight:300">(optional)</span></label>
+          <input type="tel" id="s-mobile" class="inp" placeholder="10-digit mobile number" autocomplete="tel" maxlength="10"/>
+        </div>
+        <div>
+          <label class="lbl">Password *</label>
+          <div style="position:relative">
+            <input type="password" id="s-pass" class="inp" style="padding-right:2.75rem" placeholder="Min 6 characters" required autocomplete="new-password" oninput="checkPwdStrength(this.value)"/>
+            <button type="button" onclick="togglePwd('s-pass','eye-s')" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink3)">
+              <i id="eye-s" class="fas fa-eye text-sm"></i>
+            </button>
+          </div>
+          <div id="pwd-strength-bar" class="pwd-strength" style="background:var(--border);width:0%"></div>
+          <div id="pwd-strength-lbl" style="font-size:.75rem;color:var(--ink3);margin-top:.2rem;height:.9rem"></div>
+        </div>
+        <button type="submit" id="signup-btn" class="btn btn-sky w-full py-3 text-sm justify-center" style="width:100%">
+          <i class="fas fa-user-plus mr-2"></i>Create Account
+        </button>
+      </form>
+
+      <div class="auth-divider">ya</div>
+
+      <button onclick="handleGoogle()" class="google-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google"/>
+        Continue with Google
+      </button>
+
+      <p style="text-align:center;margin-top:1.25rem;font-size:.85rem;color:var(--ink3)">
+        Already account hai?
+        <button onclick="switchTab('login')" style="background:none;border:none;cursor:pointer;color:var(--sky);font-weight:600;font-family:inherit">Login karein</button>
+      </p>
+    </div>
+
+    <!-- ── FORGOT PASSWORD ── -->
+    <div id="forgot-section" style="display:none">
+      <button onclick="switchTab('login')" style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:.85rem;font-family:inherit;display:flex;align-items:center;gap:.4rem;margin-bottom:1.25rem;padding:0">
+        <i class="fas fa-arrow-left text-xs"></i> Back to Login
+      </button>
+      <h1 style="font-family:'DM Serif Display',serif;font-size:1.5rem;font-weight:400;color:var(--ink);margin-bottom:.3rem">Reset <span style="color:var(--sky);font-style:italic">Password</span></h1>
+      <p style="color:var(--ink3);font-size:.85rem;margin-bottom:1.5rem;font-weight:300">Registered email pe reset link bhejenge</p>
+
+      <div id="forgot-idle">
+        <form id="forgot-form" class="space-y-4">
+          <div>
+            <label class="lbl">Registered Email *</label>
+            <input type="email" id="f-email" class="inp" placeholder="your@email.com" required autocomplete="email"/>
+          </div>
+          <button type="submit" id="forgot-btn" class="btn btn-sky w-full py-3 text-sm justify-center" style="width:100%">
+            <i class="fas fa-paper-plane mr-2"></i>Send Reset Link
+          </button>
+        </form>
+      </div>
+
+      <div id="forgot-done" style="display:none;text-align:center;padding:1.5rem 0">
+        <div style="font-size:3rem;margin-bottom:.75rem">✅</div>
+        <h3 style="color:var(--ink);font-weight:700;margin-bottom:.5rem">Email Bhej Diya!</h3>
+        <p style="color:var(--ink3);font-size:.85rem;line-height:1.6">Apna inbox check karein — reset link mila hoga. Spam folder bhi check karein.</p>
+        <button onclick="switchTab('login')" class="btn btn-ghost px-6 py-2.5 text-sm" style="margin-top:1.25rem">Back to Login</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+import { initTheme } from '/assets/js/theme.js';
+initTheme();
+
+import { auth } from '/assets/js/firebase-config.js';
+import { loginUser, signupUser, loginWithGoogle, resetPassword, togglePwd } from '/assets/js/auth.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+// ── Redirect logic ──
+const params = new URLSearchParams(window.location.search);
+const redirectTo = params.get('redirect') || '/';
+
+// If already logged in, redirect immediately
+onAuthStateChanged(auth, user => {
+  if (user) {
+    window.location.href = redirectTo;
+  }
+});
+
+// ── Toast ──
+window.toast = (msg, type='inf') => {
+  const icons = { ok:'✅', err:'❌', inf:'ℹ️' };
+  const t = document.getElementById('toast');
+  t.innerHTML = `<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
+  t.classList.add('show'); clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove('show'), 4000);
+};
+
+// ── Toggle tabs ──
+window.switchTab = (tab) => {
+  ['login','signup','forgot'].forEach(s => {
+    document.getElementById(s+'-section').style.display = s === tab ? 'block' : 'none';
+  });
+  const lt = document.getElementById('tab-login');
+  const st = document.getElementById('tab-signup');
+  if (lt) { lt.style.background = tab==='login' ? 'var(--sky)' : 'transparent'; lt.style.color = tab==='login' ? '#fff' : 'var(--ink3)'; }
+  if (st) { st.style.background = tab==='signup'? 'var(--sky)' : 'transparent'; st.style.color = tab==='signup'? '#fff' : 'var(--ink3)'; }
+  // Hide tabs row when on forgot
+  document.getElementById('auth-tabs').style.display = tab === 'forgot' ? 'none' : 'flex';
+};
+
+// ── Password strength ──
+window.checkPwdStrength = (val) => {
+  const bar = document.getElementById('pwd-strength-bar');
+  const lbl = document.getElementById('pwd-strength-lbl');
+  if (!bar || !lbl) return;
+  let score = 0;
+  if (val.length >= 6) score++;
+  if (val.length >= 10) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+  const colors = ['','#ef4444','#f97316','#eab308','#22c55e','#16a34a'];
+  const labels = ['','Very Weak','Weak','Fair','Strong','Very Strong'];
+  bar.style.width = (score * 20) + '%';
+  bar.style.background = colors[score] || '#ef4444';
+  lbl.textContent = labels[score] || '';
+  lbl.style.color = colors[score] || '#ef4444';
+};
+
+// ── Login ──
+document.getElementById('login-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Logging in...';
+  try {
+    await loginUser(document.getElementById('l-email').value.trim(), document.getElementById('l-pass').value);
+    toast('Login ho gaye! ✅', 'ok');
+    setTimeout(() => window.location.href = redirectTo, 500);
+  } catch (err) {
+    let msg = err.message;
+    if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') msg = 'Email ya password galat hai';
+    else if (err.code === 'auth/user-not-found') msg = 'Yeh email registered nahi hai';
+    else if (err.code === 'auth/too-many-requests') msg = 'Bahut zyada attempts — thodi der baad try karein';
+    toast(msg, 'err');
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Login';
+  }
+});
+
+// ── Signup ──
+document.getElementById('signup-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('signup-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating...';
+  try {
+    await signupUser(
+      document.getElementById('s-name').value.trim(),
+      document.getElementById('s-email').value.trim(),
+      document.getElementById('s-pass').value,
+      document.getElementById('s-mobile').value.trim()
+    );
+    toast('Account ban gaya! 🎉', 'ok');
+    setTimeout(() => window.location.href = redirectTo, 500);
+  } catch (err) {
+    let msg = err.message;
+    if (err.code === 'auth/email-already-in-use') msg = 'Yeh email pehle se registered hai — Login karein';
+    else if (err.code === 'auth/weak-password') msg = 'Password kam se kam 6 characters ka hona chahiye';
+    else if (err.code === 'auth/invalid-email') msg = 'Valid email address darj karein';
+    toast(msg, 'err');
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i>Create Account';
+  }
+});
+
+// ── Google ──
+window.handleGoogle = async () => {
+  try {
+    await loginWithGoogle();
+    toast('Google se login ho gaye! ✅', 'ok');
+    setTimeout(() => window.location.href = redirectTo, 500);
+  } catch (err) {
+    if (err.code !== 'auth/popup-closed-by-user') toast('Google login failed: ' + err.message, 'err');
+  }
+};
+
+// ── Forgot Password ──
+document.getElementById('forgot-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('forgot-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+  try {
+    await resetPassword(document.getElementById('f-email').value.trim());
+    document.getElementById('forgot-idle').style.display = 'none';
+    document.getElementById('forgot-done').style.display = 'block';
+  } catch (err) {
+    let msg = err.message;
+    if (err.code === 'auth/user-not-found') msg = 'Yeh email registered nahi hai';
+    toast(msg, 'err');
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Send Reset Link';
+  }
+});
+
+// ── togglePwd (imported from auth.js) ──
+window.togglePwd = togglePwd;
+
+// ── Check URL param for initial tab ──
+const tab = params.get('tab');
+if (tab === 'signup') switchTab('signup');
+</script>
+<script>
+window.openModal = function(id) { var el=document.getElementById(id); if(el) el.classList.add('open'); };
+window.closeModal = function(id) { var el=document.getElementById(id); if(el) el.classList.remove('open'); };
+</script>
+</body>
+</html>

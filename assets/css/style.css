@@ -260,21 +260,19 @@ select.inp        { cursor: pointer; }
 }
 
 /* ════ MODAL ════ */
-/* Fixed-position overlay — modal-box floats exactly in center via transform */
 .modal-wrap {
   display: none;
-  position: fixed;
+  position: fixed;       /* stays on screen — never scrolls with page */
   inset: 0;
   z-index: 1200;
-  background: rgba(0,0,0,.52);
+  background: rgba(0,0,0,.55);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  /* padding for mobile scroll when content is tall */
-  padding: 1rem;
-  overflow-y: auto;
-  /* Use flex with min-height trick so modal centers AND scrolls when needed */
-  align-items: flex-start;
+  /* Center child both axes */
+  align-items: center;
   justify-content: center;
+  padding: 1rem;
+  /* NO overflow-y here — that's what causes scroll-with-page bug */
 }
 .modal-wrap.open {
   display: flex;
@@ -286,10 +284,11 @@ select.inp        { cursor: pointer; }
   padding: 2rem;
   width: 100%;
   max-width: 480px;
-  /* Vertical centering: auto margins in a flex column */
-  margin: auto;
+  /* Tall modals scroll INSIDE the box, not the overlay */
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
   position: relative;
-  box-shadow: 0 24px 80px rgba(0,0,0,.25);
+  box-shadow: 0 24px 80px rgba(0,0,0,.3);
   animation: modalIn .22s cubic-bezier(.34,1.56,.64,1) both;
   /* Prevent collapsing */
   flex-shrink: 0;

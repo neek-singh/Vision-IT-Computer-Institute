@@ -176,7 +176,7 @@
         <a href="/admission" class="nav-link active" style="color:var(--sky);font-weight:600">Admission</a>
       </div>
       <div class="hidden md:flex items-center gap-3">
-        <button id="nav-login-btn" onclick="openModal('auth-modal')" class="btn btn-ghost py-1.5 px-4 text-sm">Login</button>
+        <a id="nav-login-btn" href="/login" class="btn btn-ghost py-1.5 px-4 text-sm">Login</a>
         <div id="nav-user-wrap" class="hidden items-center gap-2">
           <div id="nav-avatar-wrap" onclick="openModal('profile-modal')" class="cursor-pointer">
             <div id="nav-avatar-img" class="w-8 h-8 rounded-full overflow-hidden hidden"><img id="nav-avatar-photo" src="" alt="Profile" class="w-full h-full object-cover"/></div>
@@ -201,7 +201,7 @@
       <a href="/contact"   class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">📬 Contact</a>
       <a href="/admission" class="nav-link active block px-3 py-2.5 rounded-lg font-semibold" style="color:var(--sky)">📝 Admission Apply</a>
       <div style="height:1px;background:var(--border);margin:.75rem 0"></div>
-      <button id="mob-login-btn" onclick="openModal('auth-modal')" class="btn btn-sky w-full py-2.5 text-sm justify-center">Login / Register</button>
+      <a id="mob-login-btn" href="/login" class="btn btn-sky w-full py-2.5 text-sm justify-center">Login / Register</a>
       <div id="mob-user-row" class="hidden items-center gap-3 px-3 py-2">
         <div id="mob-avatar-txt" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm" style="background:var(--ink);color:#fff">U</div>
         <div class="flex-1"><div id="mob-uname" class="th font-semibold text-sm">User</div></div>
@@ -554,39 +554,6 @@
   </div>
 </footer>
 
-<!-- ═══ AUTH MODAL ═══ -->
-<div class="modal-wrap" id="auth-modal" role="dialog" aria-modal="true">
-  <div class="modal-box max-w-md">
-    <button onclick="closeModal('auth-modal')" class="absolute top-4 right-4 th3 text-xl" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>
-    <div class="text-center mb-6">
-      <img src="/bg-Logo.png" alt="Vision IT" class="w-12 h-12 mx-auto mb-3 rounded-xl object-contain bg-white" width="48" height="48"/>
-      <h3 class="th font-black text-xl">Login</h3>
-    </div>
-    <div id="login-div">
-      <form onsubmit="handleLogin(event)" class="space-y-4">
-        <div><label class="lbl">Email *</label><input type="email" id="l-email" class="inp" placeholder="your@email.com" required autocomplete="email"/></div>
-        <div>
-          <label class="lbl">Password *</label>
-          <div class="relative">
-            <input type="password" id="l-pass" class="inp pr-11" placeholder="Password" required autocomplete="current-password"/>
-            <button type="button" onclick="togglePwd('l-pass','eye-l')" class="absolute right-3 top-1/2 -translate-y-1/2 th3" style="background:none;border:none;cursor:pointer;"><i id="eye-l" class="fas fa-eye text-sm"></i></button>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center">Login</button>
-      </form>
-      <p class="text-center th2 text-sm mt-4">Account nahi hai? <button onclick="switchForm('signup')" class="font-semibold" style="color:var(--sky);background:none;border:none;cursor:pointer;">Sign Up</button></p>
-    </div>
-    <div id="signup-div" class="hidden">
-      <form onsubmit="handleSignup(event)" class="space-y-4">
-        <div><label class="lbl">Full Name *</label><input type="text" id="s-name" class="inp" placeholder="Apna poora naam" required autocomplete="name"/></div>
-        <div><label class="lbl">Email *</label><input type="email" id="s-email" class="inp" placeholder="Email" required autocomplete="email"/></div>
-        <div><label class="lbl">Password *</label><input type="password" id="s-pass" class="inp" placeholder="Min 6 characters" required autocomplete="new-password"/></div>
-        <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center">Create Account</button>
-      </form>
-      <p class="text-center th2 text-sm mt-4">Already account hai? <button onclick="switchForm('login')" class="font-semibold" style="color:var(--sky);background:none;border:none;cursor:pointer;">Login</button></p>
-    </div>
-  </div>
-</div>
 
 <!-- ═══ SCRIPTS ═══ -->
 <script type="module">
