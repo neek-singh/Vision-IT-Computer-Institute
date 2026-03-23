@@ -449,7 +449,7 @@
         <address class="space-y-2 text-sm not-italic">
           <div class="th2">Kadampara Chowk, Pratappur<br/>Surajpur, CG – 497223</div>
           <a href="tel:+918103170595" class="block th2 hover:text-sky-400 no-underline"><i class="fas fa-phone mr-2" style="color:var(--sky)"></i>+91 81031 70595</a>
-          <a href="/cdn-cgi/l/email-protection#53253a203a3c3d3a2723213227322323262113343e323a3f7d303c3e" class="block th2 hover:text-sky-400 no-underline" style="font-size:.8rem"><i class="fas fa-envelope mr-2" style="color:var(--sky)"></i><span class="__cf_email__" data-cfemail="40362933292f2e293430322134213030353200272d21292c6e232f2d">[email&#160;protected]</span></a>
+          <a href="mailto:visionitpratappur@gmail.com" class="block th2 hover:text-sky-400 no-underline" style="font-size:.8rem"><i class="fas fa-envelope mr-2" style="color:var(--sky)"></i>visionitpratappur@gmail.com</a>
           <div class="th2"><i class="fas fa-clock mr-2" style="color:var(--sky)"></i>Mon–Sat 8AM–6PM</div>
         </address>
       </div>
@@ -594,7 +594,7 @@
 <!-- ══════════════════════════════════════════════
      SCRIPTS
 ══════════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+<script type="module">
 import { initTheme }        from '/assets/js/theme.js';
 import { initNav, initTopBanner } from '/assets/js/nav.js';
 import { loadBannerSettings, sanitizeForHtml, checkRateLimit, isValidMobile } from '/assets/js/db-helpers.js';
@@ -998,3 +998,37 @@ document.getElementById('mob-overlay')?.addEventListener('click', () => {
 
 window.togglePwd = (inputId, iconId) => {
   c
+window.togglePwd = function(iid, eid) {
+  var i = document.getElementById(iid), e = document.getElementById(eid);
+  if (!i) return;
+  i.type = i.type === "password" ? "text" : "password";
+  if (e) e.className = i.type === "password" ? "fas fa-eye text-sm" : "fas fa-eye-slash text-sm";
+};
+</script>
+<script>
+/* ── Global modal helpers — always available ── */
+window.openModal = function(id) {
+  var el = document.getElementById(id);
+  if (el) { el.classList.add("open"); }
+};
+window.closeModal = function(id) {
+  var el = document.getElementById(id);
+  if (el) { el.classList.remove("open"); }
+};
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".modal-wrap").forEach(function(m) {
+    m.addEventListener("click", function(e) {
+      if (e.target === m) m.classList.remove("open");
+    });
+  });
+});
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    document.querySelectorAll(".modal-wrap.open").forEach(function(m) {
+      m.classList.remove("open");
+    });
+  }
+});
+</script>
+</body>
+</html>

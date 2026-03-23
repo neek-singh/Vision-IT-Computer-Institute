@@ -197,5 +197,30 @@ document.getElementById('nav-hamburger')?.addEventListener('click',()=>{document
 document.getElementById('mob-overlay')?.addEventListener('click',()=>{document.getElementById('mob-menu')?.classList.remove('open');document.getElementById('mob-overlay')?.classList.remove('open');});
 window.toggleFaq=el=>{const item=el.closest('.faq-item');const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');};
 </script>
+<script>
+/* ── Global modal helpers — always available ── */
+window.openModal = function(id) {
+  var el = document.getElementById(id);
+  if (el) { el.classList.add('open'); }
+};
+window.closeModal = function(id) {
+  var el = document.getElementById(id);
+  if (el) { el.classList.remove('open'); }
+};
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.modal-wrap').forEach(function(m) {
+    m.addEventListener('click', function(e) {
+      if (e.target === m) m.classList.remove('open');
+    });
+  });
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-wrap.open').forEach(function(m) {
+      m.classList.remove('open');
+    });
+  }
+});
+</script>
 </body>
 </html>

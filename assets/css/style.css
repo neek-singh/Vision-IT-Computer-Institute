@@ -263,26 +263,33 @@ select.inp        { cursor: pointer; }
 .modal-wrap {
   display: none;
   position: fixed; inset: 0; z-index: 1200;
-  align-items: center; justify-content: center;
-  background: rgba(0,0,0,.45);
+  /* Grid centering — most reliable method */
+  place-items: center;
+  background: rgba(0,0,0,.5);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 1rem;
   overflow-y: auto;
 }
-.modal-wrap.open { display: flex; }
+.modal-wrap.open { display: grid; }
 .modal-box {
   background: var(--modal-bg);
   border: 1px solid var(--border);
   border-radius: 20px; padding: 2rem;
   width: 100%; max-width: 480px;
-  max-height: calc(100vh - 2rem);
+  max-height: calc(100svh - 2rem);
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 24px 80px rgba(0,0,0,.2);
-  animation: modalIn .25s cubic-bezier(.34,1.56,.64,1);
-  margin: auto;
+  box-shadow: 0 24px 80px rgba(0,0,0,.25);
+  animation: modalIn .22s cubic-bezier(.34,1.56,.64,1) both;
+  /* Ensure it stays centered even when taller than viewport */
+  align-self: center;
+  justify-self: center;
 }
-@keyframes modalIn { from { opacity:0; transform:scale(.95) translateY(8px); } to { opacity:1; transform:none; } }
+@keyframes modalIn {
+  from { opacity:0; transform:scale(.94) translateY(10px); }
+  to   { opacity:1; transform:none; }
+}
 
 /* ════ TOAST ════ */
 #toast {
