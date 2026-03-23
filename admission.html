@@ -643,6 +643,12 @@ window.switchForm = f => {
   ['login-div','signup-div'].forEach(d => document.getElementById(d)?.classList.add('hidden'));
   document.getElementById(f+'-div')?.classList.remove('hidden');
 };
+window.switchAuthForm = f => {
+  ['login-div','signup-div'].forEach(d => document.getElementById(d)?.classList.add('hidden'));
+  document.getElementById(f+'-div')?.classList.remove('hidden');
+  const t = document.getElementById('auth-modal-title');
+  if (t) t.textContent = f === 'signup' ? 'Sign Up' : 'Login';
+};
 window.handleLogin = async e => {
   e.preventDefault();
   try { await loginUser(document.getElementById('l-email').value, document.getElementById('l-pass').value); closeModal('auth-modal'); toast('Login ho gaye! ✅','ok'); }

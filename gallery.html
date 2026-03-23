@@ -467,19 +467,31 @@
     <button onclick="closeModal('auth-modal')" class="absolute top-4 right-4 th3 text-xl" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>
     <div class="text-center mb-6">
       <img src="/bg-Logo.png" alt="Vision IT" class="w-12 h-12 mx-auto mb-3 rounded-xl object-contain bg-white" width="48" height="48"/>
-      <h3 class="th font-black text-xl">Login</h3>
+      <h3 class="th font-black text-xl" id="auth-title">Login</h3>
     </div>
-    <form onsubmit="handleLogin(event)" class="space-y-4">
-      <div><label class="lbl">Email *</label><input type="email" id="l-email" class="inp" placeholder="your@email.com" required autocomplete="email"/></div>
-      <div>
-        <label class="lbl">Password *</label>
-        <div class="relative">
-          <input type="password" id="l-pass" class="inp pr-11" placeholder="Password" required autocomplete="current-password"/>
-          <button type="button" onclick="togglePwd('l-pass','eye-l')" class="absolute right-3 top-1/2 -translate-y-1/2 th3" style="background:none;border:none;cursor:pointer;"><i id="eye-l" class="fas fa-eye text-sm"></i></button>
+    <div id="login-div">
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div><label class="lbl">Email *</label><input type="email" id="l-email" class="inp" placeholder="your@email.com" required autocomplete="email"/></div>
+        <div>
+          <label class="lbl">Password *</label>
+          <div class="relative">
+            <input type="password" id="l-pass" class="inp pr-11" placeholder="Password" required autocomplete="current-password"/>
+            <button type="button" onclick="togglePwd('l-pass','eye-l')" class="absolute right-3 top-1/2 -translate-y-1/2 th3" style="background:none;border:none;cursor:pointer;"><i id="eye-l" class="fas fa-eye text-sm"></i></button>
+          </div>
         </div>
-      </div>
-      <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center">Login</button>
-    </form>
+        <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center">Login</button>
+      </form>
+      <p class="text-center th2 text-sm mt-4">Account nahi hai? <button onclick="switchAuthForm('signup')" class="font-semibold" style="color:var(--sky);background:none;border:none;cursor:pointer;">Sign Up</button></p>
+    </div>
+    <div id="signup-div" class="hidden">
+      <form onsubmit="handleSignup(event)" class="space-y-4">
+        <div><label class="lbl">Full Name *</label><input type="text" id="s-name" class="inp" placeholder="Apna poora naam" required autocomplete="name"/></div>
+        <div><label class="lbl">Email *</label><input type="email" id="s-email" class="inp" placeholder="your@email.com" required autocomplete="email"/></div>
+        <div><label class="lbl">Password *</label><input type="password" id="s-pass" class="inp" placeholder="Min 6 characters" required autocomplete="new-password"/></div>
+        <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center">Create Account</button>
+      </form>
+      <p class="text-center th2 text-sm mt-4">Already account hai? <button onclick="switchAuthForm('login')" class="font-semibold" style="color:var(--sky);background:none;border:none;cursor:pointer;">Login</button></p>
+    </div>
   </div>
 </div>
 
@@ -489,7 +501,7 @@ import { initTheme }        from '/assets/js/theme.js';
 import { initNav, initTopBanner } from '/assets/js/nav.js';
 import { loadBannerSettings, sanitizeForHtml } from '/assets/js/db-helpers.js';
 import { auth, db }         from '/assets/js/firebase-config.js';
-import { loginUser, logoutUser as fbLogout } from '/assets/js/auth.js';
+import { loginUser, signupUser, logoutUser as fbLogout } from '/assets/js/auth.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 

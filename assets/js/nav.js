@@ -206,35 +206,49 @@ export async function initTopBanner(loadBannerSettings) {
   const bannerCd  = document.getElementById('top-banner-cd');
   if (!banner) return;
 
+  // Helper: update navbar top + CSS variable for sticky elements
+  function updateNavTop() {
+    const bh = (banner.style.display !== 'none') ? (banner.offsetHeight || 0) : 0;
+    const navbar = document.getElementById('navbar');
+    if (navbar) navbar.style.top = bh + 'px';
+    document.documentElement.style.setProperty('--nav-top', (56 + bh) + 'px');
+  }
+
   if (sessionStorage.getItem('top-banner-dismissed') === '1') {
     banner.style.display = 'none';
+    updateNavTop();
     return;
   }
 
   const data = await loadBannerSettings();
   if (!data || !data.active || !data.text) {
     banner.style.display = 'none';
+    updateNavTop();
     return;
   }
 
   // Date check
   const now = Date.now();
-  if (data.startDate?.toMillis && now < data.startDate.toMillis()) { banner.style.display = 'none'; return; }
-  if (data.endDate?.toMillis   && now > data.endDate.toMillis())   { banner.style.display = 'none'; return; }
+  if (data.startDate?.toMillis && now < data.startDate.toMillis()) { banner.style.display = 'none'; updateNavTop(); return; }
+  if (data.endDate?.toMillis   && now > data.endDate.toMillis())   { banner.style.display = 'none'; updateNavTop(); return; }
 
   if (bannerTxt) bannerTxt.textContent = data.text;
 
   // CTA button
   if (bannerCta && data.ctaText) {
     bannerCta.textContent = data.ctaText;
+    bannerCta.style.display = 'inline-flex';
     bannerCta.onclick = () => {
       const action = data.ctaAction || '';
-      if      (action === 'admission') window.location.href = '/admission.html';
-      else if (action === 'contact')   window.location.href = '/contact.html';
-      else if (action === 'courses')   window.location.href = '/courses.html';
+      if      (action === 'admission') window.location.href = '/admission';
+      else if (action === 'contact')   window.location.href = '/contact';
+      else if (action === 'courses')   window.location.href = '/courses';
+      else if (action === 'whatsapp')  window.open('https://wa.me/918103170595','_blank');
       else if (action.startsWith('http')) window.open(action, '_blank');
-      else window.location.href = '/admission.html';
+      else window.location.href = '/admission';
     };
+  } else if (bannerCta) {
+    bannerCta.style.display = 'none';
   }
 
   // Theme
@@ -263,11 +277,14 @@ export async function initTopBanner(loadBannerSettings) {
   }
 
   banner.style.display = 'flex';
+  // Wait for render then update positions
+  requestAnimationFrame(() => { requestAnimationFrame(updateNavTop); });
 
   // Dismiss
   document.getElementById('top-banner-close')?.addEventListener('click', () => {
     banner.style.display = 'none';
     sessionStorage.setItem('top-banner-dismissed', '1');
+    updateNavTop();
   });
 }
 

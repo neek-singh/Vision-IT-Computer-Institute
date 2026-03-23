@@ -134,7 +134,7 @@
 
 /* Sticky filter bar */
 .filter-bar-sticky {
-  position: sticky; top: 56px; z-index: 100;
+  position: sticky; top: var(--nav-top, 56px); z-index: 100;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
   padding: .85rem 0;
@@ -449,7 +449,7 @@
         <address class="space-y-2 text-sm not-italic">
           <div class="th2">Kadampara Chowk, Pratappur<br/>Surajpur, CG – 497223</div>
           <a href="tel:+918103170595" class="block th2 hover:text-sky-400 no-underline"><i class="fas fa-phone mr-2" style="color:var(--sky)"></i>+91 81031 70595</a>
-          <a href="mailto:visionitpratappur@gmail.com" class="block th2 hover:text-sky-400 no-underline" style="font-size:.8rem"><i class="fas fa-envelope mr-2" style="color:var(--sky)"></i>visionitpratappur@gmail.com</a>
+          <a href="/cdn-cgi/l/email-protection#53253a203a3c3d3a2723213227322323262113343e323a3f7d303c3e" class="block th2 hover:text-sky-400 no-underline" style="font-size:.8rem"><i class="fas fa-envelope mr-2" style="color:var(--sky)"></i><span class="__cf_email__" data-cfemail="40362933292f2e293430322134213030353200272d21292c6e232f2d">[email&#160;protected]</span></a>
           <div class="th2"><i class="fas fa-clock mr-2" style="color:var(--sky)"></i>Mon–Sat 8AM–6PM</div>
         </address>
       </div>
@@ -594,7 +594,7 @@
 <!-- ══════════════════════════════════════════════
      SCRIPTS
 ══════════════════════════════════════════════ -->
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { initTheme }        from '/assets/js/theme.js';
 import { initNav, initTopBanner } from '/assets/js/nav.js';
 import { loadBannerSettings, sanitizeForHtml, checkRateLimit, isValidMobile } from '/assets/js/db-helpers.js';
@@ -997,8 +997,4 @@ document.getElementById('mob-overlay')?.addEventListener('click', () => {
 });
 
 window.togglePwd = (inputId, iconId) => {
-  const inp = document.getElementById(inputId);
-  const icon = document.getElementById(iconId);
-  if (!inp) return;
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  if (icon) icon.className = inp.type === 'password' ? 'fas fa-eye text-sm' : 'fas fa-
+  c

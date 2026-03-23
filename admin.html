@@ -163,32 +163,92 @@ body{background:#0d0f14;color:#f0ede8;font-family:'DM Sans',system-ui,sans-serif
      LOGIN SCREEN
 ══════════════════════════════════════════ -->
 <div id="admin-login">
-  <div style="background:#1a1b24;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:2.5rem;width:100%;max-width:400px;box-shadow:0 32px 80px rgba(0,0,0,.5)">
-    <div class="text-center mb-8">
+  <div style="background:#1a1b24;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 32px 80px rgba(0,0,0,.5)">
+    <div class="text-center mb-7">
       <img src="/bg-Logo.png" alt="Vision IT Logo" class="w-16 h-16 rounded-2xl object-contain mx-auto mb-4" style="background:#fff" width="64" height="64"/>
-      <h2 style="color:#fff;font-weight:900;font-size:1.5rem">Admin Portal</h2>
+      <h2 style="color:#fff;font-weight:900;font-size:1.5rem" id="adm-login-title">Admin Portal</h2>
       <p style="color:rgba(255,255,255,.4);font-size:.85rem;margin-top:.25rem">Vision IT Computer Institute</p>
     </div>
-    <form id="login-form" class="space-y-4">
-      <div>
-        <label class="lbl">Admin Email</label>
-        <input type="email" id="adm-email" class="inp" placeholder="admin@visionit.com" required autocomplete="email"/>
-      </div>
-      <div>
-        <label class="lbl">Password</label>
-        <div class="relative">
-          <input type="password" id="adm-pass" class="inp pr-11" placeholder="Password" required autocomplete="current-password"/>
-          <button type="button" onclick="togglePwd('adm-pass','eye-adm')" class="absolute right-3 top-1/2 -translate-y-1/2" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)">
-            <i id="eye-adm" class="fas fa-eye text-sm"></i>
-          </button>
-        </div>
-      </div>
-      <button type="submit" id="login-btn" class="btn btn-sky w-full py-3 text-sm justify-center">
-        <i class="fas fa-lock mr-1"></i> Access Admin Panel
+
+    <!-- Tab buttons -->
+    <div style="display:flex;gap:.5rem;margin-bottom:1.5rem;background:rgba(255,255,255,.05);border-radius:10px;padding:.3rem">
+      <button id="tab-login-btn" onclick="switchAdminTab('login')"
+        style="flex:1;padding:.5rem;border-radius:7px;border:none;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600;background:#6366f1;color:#fff;transition:all .2s">
+        Login
       </button>
-    </form>
+      <button id="tab-signup-btn" onclick="switchAdminTab('signup')"
+        style="flex:1;padding:.5rem;border-radius:7px;border:none;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600;background:transparent;color:rgba(255,255,255,.4);transition:all .2s">
+        Sign Up
+      </button>
+    </div>
+
+    <!-- Login Form -->
+    <div id="adm-login-form">
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="lbl">Email</label>
+          <input type="email" id="adm-email" class="inp" placeholder="your@email.com" required autocomplete="email"/>
+        </div>
+        <div>
+          <label class="lbl">Password</label>
+          <div class="relative">
+            <input type="password" id="adm-pass" class="inp pr-11" placeholder="Password" required autocomplete="current-password"/>
+            <button type="button" onclick="togglePwd('adm-pass','eye-adm')" class="absolute right-3 top-1/2 -translate-y-1/2" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)">
+              <i id="eye-adm" class="fas fa-eye text-sm"></i>
+            </button>
+          </div>
+        </div>
+        <button type="submit" id="login-btn" class="btn btn-sky w-full py-3 text-sm justify-center">
+          <i class="fas fa-lock mr-1"></i> Access Admin Panel
+        </button>
+      </form>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="adm-signup-form" style="display:none">
+      <div style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);border-radius:10px;padding:.85rem;margin-bottom:1.25rem;font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.6">
+        ℹ️ Account banayein. Agar aapka email admin list mein hai toh seedha access milega. Nahi toh <strong style="color:#818cf8">admin role request</strong> send hogi.
+      </div>
+      <form id="signup-form" class="space-y-4">
+        <div>
+          <label class="lbl">Full Name *</label>
+          <input type="text" id="adm-sname" class="inp" placeholder="Apna poora naam" required autocomplete="name"/>
+        </div>
+        <div>
+          <label class="lbl">Email *</label>
+          <input type="email" id="adm-semail" class="inp" placeholder="your@email.com" required autocomplete="email"/>
+        </div>
+        <div>
+          <label class="lbl">Password *</label>
+          <div class="relative">
+            <input type="password" id="adm-spass" class="inp pr-11" placeholder="Min 6 characters" required autocomplete="new-password"/>
+            <button type="button" onclick="togglePwd('adm-spass','eye-s')" class="absolute right-3 top-1/2 -translate-y-1/2" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4)">
+              <i id="eye-s" class="fas fa-eye text-sm"></i>
+            </button>
+          </div>
+        </div>
+        <div>
+          <label class="lbl">Admin Key <span style="color:rgba(255,255,255,.3);font-weight:400">(agar available hai)</span></label>
+          <input type="password" id="adm-key" class="inp" placeholder="Optional admin key"/>
+        </div>
+        <button type="submit" id="signup-btn" class="btn btn-sky w-full py-3 text-sm justify-center">
+          <i class="fas fa-user-plus mr-1"></i> Create Account
+        </button>
+      </form>
+    </div>
+
+    <!-- Success/Pending state -->
+    <div id="adm-pending" style="display:none;text-align:center;padding:1.5rem 0">
+      <div style="font-size:3rem;margin-bottom:.75rem">⏳</div>
+      <h3 style="color:#fff;font-weight:700;margin-bottom:.5rem">Request Sent!</h3>
+      <p style="color:rgba(255,255,255,.45);font-size:.85rem;line-height:1.6">Account ban gaya. Admin approval ke baad access milega. Current admin se contact karein:<br/><a href="mailto:visionitpratappur@gmail.com" style="color:#818cf8">visionitpratappur@gmail.com</a></p>
+      <button onclick="switchAdminTab('login')" style="margin-top:1.25rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:.6rem 1.5rem;color:rgba(255,255,255,.6);cursor:pointer;font-family:inherit;font-size:.85rem">
+        Login karein
+      </button>
+    </div>
+
     <div class="text-center mt-5">
-      <a href="/" style="color:rgba(255,255,255,.3);font-size:.85rem;text-decoration:none">← Back to Website</a>
+      <a href="/" style="color:rgba(255,255,255,.25);font-size:.82rem;text-decoration:none">← Back to Website</a>
     </div>
   </div>
 </div>
@@ -230,6 +290,7 @@ body{background:#0d0f14;color:#f0ede8;font-family:'DM Sans',system-ui,sans-serif
       <p style="font-size:.62rem;font-weight:700;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:.85rem .35rem .25rem;text-transform:uppercase">Settings</p>
       <a class="adm-link"        id="al-banner"      onclick="showSec('banner')">     <i class="fas fa-bullhorn"></i>Top Banner</a>
       <a class="adm-link"        id="al-apps"        onclick="showSec('apps')">       <i class="fab fa-android"></i>App Downloads</a>
+      <a class="adm-link"        id="al-requests"    onclick="showSec('requests')">   <i class="fas fa-user-clock"></i>Admin Requests <span id="req-badge" style="display:none;background:#ef4444;color:#fff;font-size:.65rem;font-weight:700;padding:.1rem .4rem;border-radius:10px;margin-left:auto"></span></a>
     </nav>
 
     <div style="padding:.5rem;border-top:1px solid rgba(255,255,255,.06)">
@@ -720,6 +781,20 @@ body{background:#0d0f14;color:#f0ede8;font-family:'DM Sans',system-ui,sans-serif
       </div>
     </section>
 
+    <!-- ADMIN REQUESTS SECTION -->
+    <section class="adm-sec" id="sec-requests">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h1 style="color:#fff;font-weight:900;font-size:1.5rem;margin-bottom:.2rem">Admin Role Requests</h1>
+          <p style="color:rgba(255,255,255,.35);font-size:.85rem">New users jinhone admin access request kiya hai</p>
+        </div>
+        <button onclick="loadRequestsMgmt()" class="btn btn-ghost px-3 py-2 text-sm"><i class="fas fa-sync-alt"></i></button>
+      </div>
+      <div id="requests-list" class="space-y-3">
+        <div class="flex justify-center py-12"><div class="spin"></div></div>
+      </div>
+    </section>
+
   </div><!-- /#admin-main -->
 </div><!-- /#admin-shell -->
 
@@ -1099,7 +1174,8 @@ body{background:#0d0f14;color:#f0ede8;font-family:'DM Sans',system-ui,sans-serif
 <script type="module">
 import { auth, db, storage } from '/assets/js/firebase-config.js';
 import {
-  signInWithEmailAndPassword, signOut, onAuthStateChanged
+  signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  updateProfile, signOut, onAuthStateChanged
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import {
   collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc,
@@ -1109,8 +1185,23 @@ import {
   ref, uploadBytesResumable, getDownloadURL
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
 
-// ── Admin email list ──
+// ── Admin emails (instant access) + secret key ──
 const ADMIN_EMAILS = ['visionitpratappur@gmail.com'];
+const ADMIN_KEY    = 'VIT@Admin2026';
+
+// ── Tab switcher ──
+window.switchAdminTab = tab => {
+  const lf = document.getElementById('adm-login-form');
+  const sf = document.getElementById('adm-signup-form');
+  const pd = document.getElementById('adm-pending');
+  if (lf) lf.style.display  = tab === 'login'  ? 'block' : 'none';
+  if (sf) sf.style.display  = tab === 'signup' ? 'block' : 'none';
+  if (pd) pd.style.display  = 'none';
+  const lb = document.getElementById('tab-login-btn');
+  const sb = document.getElementById('tab-signup-btn');
+  if (lb) { lb.style.background = tab==='login' ? '#6366f1':'transparent'; lb.style.color = tab==='login' ? '#fff':'rgba(255,255,255,.4)'; }
+  if (sb) { sb.style.background = tab==='signup'? '#6366f1':'transparent'; sb.style.color = tab==='signup'? '#fff':'rgba(255,255,255,.4)'; }
+};
 
 // ── State ──
 let _admAll = [], _admCurrentId = null, _admNotes = [], _admCurStatus = 'new';
@@ -1164,32 +1255,73 @@ window.showSec = id => {
     testimonials: loadTestiMgmt,
     banner:    loadBannerMgmt,
     apps:      loadAppsMgmt,
+    requests:  loadRequestsMgmt,
   };
   loaders[id]?.();
 };
 
-// ── Auth ──
+// ── Login ──
 document.getElementById('login-form').addEventListener('submit', async e => {
   e.preventDefault();
   const btn = document.getElementById('login-btn');
   btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Logging in...';
   try {
     const cred = await signInWithEmailAndPassword(auth,
-      document.getElementById('adm-email').value,
+      document.getElementById('adm-email').value.trim(),
       document.getElementById('adm-pass').value
     );
-    if (!ADMIN_EMAILS.includes(cred.user.email?.toLowerCase())) {
+    const isEmailAdmin = ADMIN_EMAILS.includes(cred.user.email?.toLowerCase());
+    let isRoleAdmin = false;
+    if (!isEmailAdmin) {
+      try { const ud = await getDoc(doc(db,'users',cred.user.uid)); isRoleAdmin = ud.exists() && ud.data().role === 'admin'; } catch {}
+    }
+    if (!isEmailAdmin && !isRoleAdmin) {
       await signOut(auth);
-      toast('Access denied — admin account nahi hai', 'err');
-      btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock mr-1"></i>Access Admin Panel';
+      toast('Access denied — admin rights nahi hain. Admin se contact karein.', 'err');
+      btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock mr-1"></i> Access Admin Panel';
       return;
     }
     showAdminPanel();
     toast('Admin login successful ✅', 'ok');
     loadDashboard();
   } catch (err) {
-    toast('Login failed: ' + err.message, 'err');
-    btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock mr-1"></i>Access Admin Panel';
+    const msg = err.code === 'auth/invalid-credential' ? 'Email ya password galat hai' : err.message;
+    toast('Login failed: ' + msg, 'err');
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock mr-1"></i> Access Admin Panel';
+  }
+});
+
+// ── Signup ──
+document.getElementById('signup-form')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('signup-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Creating...';
+  const name  = document.getElementById('adm-sname')?.value.trim();
+  const email = document.getElementById('adm-semail')?.value.trim();
+  const pass  = document.getElementById('adm-spass')?.value;
+  const key   = document.getElementById('adm-key')?.value.trim();
+  if (!pass || pass.length < 6) { toast('Password min 6 characters ka hona chahiye','err'); btn.disabled=false; btn.innerHTML='<i class="fas fa-user-plus mr-1"></i> Create Account'; return; }
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, { displayName: name });
+    const isEmailAdmin = ADMIN_EMAILS.includes(email.toLowerCase());
+    const isKeyAdmin   = key === ADMIN_KEY;
+    const role         = (isEmailAdmin || isKeyAdmin) ? 'admin' : 'pending_admin';
+    await setDoc(doc(db,'users',cred.user.uid), { displayName:name, email, role, adminRequest:!isEmailAdmin&&!isKeyAdmin, createdAt:serverTimestamp() }, { merge:true });
+    if (role === 'admin') {
+      showAdminPanel(); toast('Admin account ban gaya! ✅', 'ok'); loadDashboard();
+    } else {
+      await signOut(auth);
+      await addDoc(collection(db,'admin_requests'), { name, email, uid:cred.user.uid, timestamp:serverTimestamp() });
+      const sf = document.getElementById('adm-signup-form');
+      const pd = document.getElementById('adm-pending');
+      if (sf) sf.style.display = 'none';
+      if (pd) pd.style.display = 'block';
+    }
+  } catch (err) {
+    const msg = err.code === 'auth/email-already-in-use' ? 'Yeh email pehle se registered hai — Login karein' : err.message;
+    toast('Signup failed: ' + msg, 'err');
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-user-plus mr-1"></i> Create Account';
   }
 });
 
@@ -1198,10 +1330,15 @@ function showAdminPanel() {
   document.getElementById('admin-shell').style.display  = 'flex';
 }
 
-onAuthStateChanged(auth, user => {
-  if (user && ADMIN_EMAILS.includes(user.email?.toLowerCase())) {
-    showAdminPanel();
-  }
+onAuthStateChanged(auth, async user => {
+  if (!user) return;
+  const isEmailAdmin = ADMIN_EMAILS.includes(user.email?.toLowerCase());
+  if (isEmailAdmin) { showAdminPanel(); return; }
+  // Check Firestore role
+  try {
+    const ud = await getDoc(doc(db,'users',user.uid));
+    if (ud.exists() && ud.data().role === 'admin') showAdminPanel();
+  } catch {}
 });
 
 window.adminLogout = async () => {
@@ -1233,6 +1370,8 @@ async function loadDashboard() {
     s('d-blogs',    bs.size);
     s('d-contacts', cts.size);
   } catch (e) { console.error(e); }
+
+  loadRequestBadge();
 
   // Recent inquiries
   try {
@@ -2278,6 +2417,73 @@ document.addEventListener('keydown', e => {
 
 // ── Init stars ──
 setStars(4.5);
+
+// ── Admin Requests Management ──
+async function loadRequestsMgmt() {
+  const el = document.getElementById('requests-list'); if (!el) return;
+  el.innerHTML = '<div style="display:flex;justify-content:center;padding:3rem"><div class="spin"></div></div>';
+  try {
+    const snap = await getDocs(query(collection(db,'admin_requests'), orderBy('timestamp','desc')));
+    const reqs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    // Update badge
+    const badge = document.getElementById('req-badge');
+    if (badge) { if (reqs.length) { badge.textContent = reqs.length; badge.style.display='inline'; } else badge.style.display='none'; }
+
+    if (!reqs.length) {
+      el.innerHTML = '<div class="adm-card" style="text-align:center;padding:2.5rem"><div style="font-size:2.5rem;margin-bottom:.75rem">✅</div><p style="color:rgba(255,255,255,.4)">Koi pending request nahi</p></div>';
+      return;
+    }
+
+    el.innerHTML = reqs.map(r => {
+      const date = r.timestamp?.toDate ? r.timestamp.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+      return `<div class="adm-card adm-card-hover" style="display:flex;align-items:center;gap:1rem">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:1.1rem;flex-shrink:0">${(r.name||'U')[0].toUpperCase()}</div>
+        <div style="flex:1;min-width:0">
+          <div style="color:#fff;font-weight:700">${r.name||'—'}</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.82rem">${r.email||'—'}</div>
+          <div style="color:rgba(255,255,255,.3);font-size:.75rem">${date}</div>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-shrink:0">
+          <button onclick="approveAdminRequest('${r.id}','${r.uid}','${r.email}')" class="btn btn-green px-3 py-1.5 text-xs"><i class="fas fa-check mr-1"></i>Approve</button>
+          <button onclick="rejectAdminRequest('${r.id}','${r.uid}')" class="btn btn-red px-3 py-1.5 text-xs"><i class="fas fa-times"></i></button>
+        </div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    el.innerHTML = `<p style="color:#f87171;text-align:center;padding:2rem">Load failed: ${e.message}</p>`;
+  }
+}
+
+window.approveAdminRequest = async (reqId, uid, email) => {
+  if (!uid) { toast('UID missing — Firestore mein user dhundha nahi ja saka','err'); return; }
+  try {
+    await updateDoc(doc(db,'users',uid), { role:'admin', adminRequest:false, approvedAt:serverTimestamp() });
+    await deleteDoc(doc(db,'admin_requests',reqId));
+    toast(`${email} ko admin role de diya ✅`,'ok');
+    loadRequestsMgmt();
+  } catch (err) { toast('Approve nahi hua: '+err.message,'err'); }
+};
+
+window.rejectAdminRequest = async (reqId, uid) => {
+  confirmAction('Is request ko reject karein?', async () => {
+    try {
+      if (uid) await updateDoc(doc(db,'users',uid), { role:'student', adminRequest:false });
+      await deleteDoc(doc(db,'admin_requests',reqId));
+      toast('Request reject ho gayi','inf');
+      loadRequestsMgmt();
+    } catch { toast('Reject nahi hua','err'); }
+  }, 'Reject');
+};
+
+// Load request badge on dashboard load
+async function loadRequestBadge() {
+  try {
+    const snap = await getDocs(collection(db,'admin_requests'));
+    const badge = document.getElementById('req-badge');
+    if (badge && snap.size > 0) { badge.textContent = snap.size; badge.style.display = 'inline'; }
+  } catch {}
+}
 </script>
 
 </body>
