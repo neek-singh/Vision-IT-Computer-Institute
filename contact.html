@@ -118,9 +118,7 @@
 .success-pop{animation:successPop .5s cubic-bezier(.34,1.56,.64,1) both;}
 </style>
 </head>
-
 <body class="pgIn">
-
 <!-- ═══ TOP BANNER ═══ -->
 <div id="top-banner" style="display:none;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;padding:.5rem 1rem;background:var(--sky);position:fixed;top:0;left:0;right:0;z-index:1001;">
   <span id="top-banner-text">🎉 Vision IT mein Admission Open hai!</span>
@@ -247,7 +245,7 @@
         <div class="th3 text-xs mt-1">24hr Response</div>
       </a>
 
-      <a href="https://maps.app.goo.gl/QPqMS4D5qzyf5p4p6" target="_blank" rel="noopener"
+      <a href="https://maps.app.goo.gl/G2BiVAE6voSBWWs36" target="_blank" rel="noopener"
          class="card-flat contact-quick-card rounded-2xl p-5 text-center no-underline" style="border:1px solid rgba(245,158,11,.2)">
         <div class="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center" style="background:rgba(245,158,11,.1)">
           <i class="fas fa-location-dot text-lg" style="color:var(--gold)"></i>
@@ -274,19 +272,22 @@
 
           <form id="contact-form" onsubmit="submitContactForm(event)" class="space-y-4" novalidate>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div>
+              <div class="relative">
                 <label class="lbl" for="c-name">Aapka Naam *</label>
-                <input id="c-name" type="text" class="inp" placeholder="Full name" required autocomplete="name"/>
+                <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 th3 text-sm mt-3"></i>
+                <input id="c-name" type="text" class="inp pl-10" placeholder="Full name" required autocomplete="name"/>
               </div>
-              <div>
+              <div class="relative">
                 <label class="lbl" for="c-contact">Mobile / Email *</label>
-                <input id="c-contact" type="text" class="inp" placeholder="+91 XXXXX XXXXX" required autocomplete="tel"/>
+                <i class="fas fa-at absolute left-3.5 top-1/2 -translate-y-1/2 th3 text-sm mt-3"></i>
+                <input id="c-contact" type="text" class="inp pl-10" placeholder="+91 XXXXX XXXXX" required autocomplete="tel"/>
               </div>
             </div>
 
-            <div>
+            <div class="relative">
               <label class="lbl" for="c-subject">Subject</label>
-              <input id="c-subject" type="text" class="inp" placeholder="Kya jaanna chahte hain?"/>
+              <i class="fas fa-lightbulb absolute left-3.5 top-1/2 -translate-y-1/2 th3 text-sm mt-3"></i>
+              <input id="c-subject" type="text" class="inp pl-10" placeholder="Kya jaanna chahte hain?"/>
             </div>
 
             <div>
@@ -307,6 +308,11 @@
             <div>
               <label class="lbl" for="c-message">Message *</label>
               <textarea id="c-message" class="inp" rows="4" placeholder="Aapka sawaal ya message..." required></textarea>
+            </div>
+
+            <!-- Honeypot field for spam protection -->
+            <div style="position:absolute; left:-5000px;" aria-hidden="true">
+              <input type="text" id="c-honeypot" name="honeypot" tabindex="-1" value="">
             </div>
 
             <button type="submit" id="contact-submit-btn" class="btn btn-sky w-full py-3 justify-center font-black text-base">
@@ -455,16 +461,16 @@
           <h3 class="th font-black text-lg">📍 Location Map</h3>
           <p class="th2 text-sm mt-0.5">Kadampara Chowk, Pratappur, Dist. Surajpur, CG 497223</p>
         </div>
-        <a href="https://maps.app.goo.gl/QPqMS4D5qzyf5p4p6" target="_blank" rel="noopener" class="btn btn-sky px-5 py-2 text-sm">
+        <a href="https://maps.app.goo.gl/G2BiVAE6voSBWWs36" target="_blank" rel="noopener" class="btn btn-sky px-5 py-2 text-sm">
           <i class="fas fa-directions mr-1"></i>Get Directions
         </a>
       </div>
       <div style="height:320px">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.6!2d82.5543!3d23.2665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sKadampara%20Chowk%2C%20Pratappur%2C%20Surajpur!5e0!3m2!1sen!2sin!4v1"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.600049197924!2d82.5517249741695!3d23.26650000620241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398f7b7b1b5b5b5b%3A0x5b5b5b5b5b5b5b5b!2sVision%20IT%20Computer%20Institute!5e1!3m2!1sen!2sin"
           width="100%" height="100%" style="border:0" allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          title="Vision IT Computer Institute Location — Kadampara Chowk, Pratappur, Surajpur CG">
+          title="Vision IT Computer Institute Location on Google Maps (Satellite View)">
         </iframe>
       </div>
     </div>
@@ -602,6 +608,14 @@ initTheme();
 initNav();
 initTopBanner(loadBannerSettings);
 
+// ── FAQ Toggle ──
+window.toggleFaq = el => {
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('#contact-faq .faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+};
+
 // ── Auth ──
 let CU = null;
 onAuthStateChanged(auth, user => {
@@ -622,19 +636,7 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-document.querySelectorAll('.modal-wrap').forEach(m => m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); }));
 window.logoutUser = async () => { await fbLogout(); toast('Logout ho gaye','inf'); };
-window.switchAuthForm = f => {
-  ['login-div','signup-div'].forEach(d => document.getElementById(d)?.classList.add('hidden'));
-  document.getElementById(f+'-div')?.classList.remove('hidden');
-  const t = document.getElementById('auth-title');
-  if (t) t.textContent = f === 'signup' ? 'Sign Up' : 'Login';
-};
-window.handleLogin = async e => {
-  e.preventDefault();
-  try { await loginUser(document.getElementById('l-email').value, document.getElementById('l-pass').value); closeModal('auth-modal'); toast('Login ho gaye! ✅','ok'); }
-  catch(err) { toast('Login failed: '+err.message,'err'); }
-};
 
 // ── Toast ──
 window.toast = (msg, type='inf') => {
@@ -645,9 +647,25 @@ window.toast = (msg, type='inf') => {
   t._tid=setTimeout(()=>t.classList.remove('show'),3500);
 };
 
+// ── Helper for contact validation ──
+function isValidContact(contact) {
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+  const isMobile = /^[6-9]\d{9}$/.test(contact.replace(/\D/g, ''));
+  return isEmail || isMobile;
+}
+
 // ── Contact form submit ──
 window.submitContactForm = async e => {
   e.preventDefault();
+
+  // Honeypot check for spam
+  if (document.getElementById('c-honeypot')?.value) {
+    console.log('Honeypot field filled, likely spam. Silently succeeding.');
+    document.getElementById('contact-form-wrap')?.classList.add('hidden');
+    document.getElementById('contact-success')?.classList.remove('hidden');
+    return;
+  }
+
   if (!checkRateLimit('contact', 30000)) return;
 
   const name    = document.getElementById('c-name')?.value.trim();
@@ -658,6 +676,7 @@ window.submitContactForm = async e => {
 
   if (!name)    { toast('Naam zaroori hai','err'); document.getElementById('c-name')?.focus(); return; }
   if (!contact) { toast('Mobile ya email zaroori hai','err'); document.getElementById('c-contact')?.focus(); return; }
+  if (!isValidContact(contact)) { toast('Valid mobile ya email dalein','err'); document.getElementById('c-contact')?.focus(); return; }
   if (!message) { toast('Message zaroori hai','err'); document.getElementById('c-message')?.focus(); return; }
 
   const btn = document.getElementById('contact-submit-btn');
@@ -699,83 +718,6 @@ if (urlInterest) {
     [...sel.options].forEach(o => { if(o.value === urlInterest) o.selected = true; });
   }
 }
-</script>
-
-<script>
-// ── Inline: nav, mobile, theme, FAQ ──
-window.toggleNavDropdown = id => {
-  ['more-dropdown'].forEach(d => { if(d!==id) document.getElementById(d)?.classList.add('hidden'); });
-  document.getElementById(id)?.classList.toggle('hidden');
-};
-window.closeNavDropdowns = () => document.getElementById('more-dropdown')?.classList.add('hidden');
-</script>
-<script>
-(function() {
-  function initMobNav() {
-    var hb = document.getElementById('nav-hamburger');
-    var mm = document.getElementById('mob-menu');
-    var ov = document.getElementById('mob-overlay');
-    if (!hb || !mm || !ov) return;
-    var newHb = hb.cloneNode(true);
-    hb.parentNode.replaceChild(newHb, hb);
-    var newOv = ov.cloneNode(true);
-    ov.parentNode.replaceChild(newOv, ov);
-    document.getElementById('nav-hamburger').addEventListener('click', function() {
-      document.getElementById('mob-menu').classList.toggle('open');
-      document.getElementById('mob-overlay').classList.toggle('open');
-    });
-    document.getElementById('mob-overlay').addEventListener('click', function() {
-      document.getElementById('mob-menu').classList.remove('open');
-      document.getElementById('mob-overlay').classList.remove('open');
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMobNav);
-  } else {
-    initMobNav();
-  }
-})();
-</script>
-<script>
-/* ── Global helpers ── */
-window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};
-window.closeModal=function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');};
-window.togglePwd=function(a,b){var i=document.getElementById(a),e=document.getElementById(b);if(!i)return;i.type=i.type==='password'?'text':'password';if(e)e.className=i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm';};
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.modal-wrap').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-wrap.open').forEach(function(m){m.classList.remove('open');});});
-});
-</script>
-<script>
-(function(){
-  function initMobNav(){
-    var hb=document.getElementById('nav-hamburger');
-    var mm=document.getElementById('mob-menu');
-    var ov=document.getElementById('mob-overlay');
-    if(!hb||!mm||!ov) return;
-    var h2=hb.cloneNode(true); hb.parentNode.replaceChild(h2,hb);
-    var o2=ov.cloneNode(true); ov.parentNode.replaceChild(o2,ov);
-    document.getElementById('nav-hamburger').addEventListener('click',function(){
-      document.getElementById('mob-menu').classList.toggle('open');
-      document.getElementById('mob-overlay').classList.toggle('open');
-    });
-    document.getElementById('mob-overlay').addEventListener('click',function(){
-      document.getElementById('mob-menu').classList.remove('open');
-      document.getElementById('mob-overlay').classList.remove('open');
-    });
-  }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initMobNav);}
-  else{initMobNav();}
-})();
-</script>
-<script>
-window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};
-window.closeModal=function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');};
-window.togglePwd=function(a,b){var i=document.getElementById(a),e=document.getElementById(b);if(!i)return;i.type=i.type==='password'?'text':'password';if(e)e.className=i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm';};
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.modal-wrap').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-wrap.open').forEach(function(m){m.classList.remove('open');});});
-});
 </script>
 </body>
 </html>
