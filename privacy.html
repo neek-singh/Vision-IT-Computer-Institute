@@ -87,13 +87,32 @@ import { loadBannerSettings } from '/assets/js/db-helpers.js';
 initTheme(); initNav(); initTopBanner(loadBannerSettings);
 </script>
 <script>
-/* ── Global helpers ── */
+(function(){
+  function initMobNav(){
+    var hb=document.getElementById('nav-hamburger');
+    var mm=document.getElementById('mob-menu');
+    var ov=document.getElementById('mob-overlay');
+    if(!hb||!mm||!ov) return;
+    var h2=hb.cloneNode(true); hb.parentNode.replaceChild(h2,hb);
+    var o2=ov.cloneNode(true); ov.parentNode.replaceChild(o2,ov);
+    document.getElementById('nav-hamburger').addEventListener('click',function(){
+      document.getElementById('mob-menu').classList.toggle('open');
+      document.getElementById('mob-overlay').classList.toggle('open');
+    });
+    document.getElementById('mob-overlay').addEventListener('click',function(){
+      document.getElementById('mob-menu').classList.remove('open');
+      document.getElementById('mob-overlay').classList.remove('open');
+    });
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initMobNav);}
+  else{initMobNav();}
+})();
+</script>
+<script>
 window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};
 window.closeModal=function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');};
 window.togglePwd=function(a,b){var i=document.getElementById(a),e=document.getElementById(b);if(!i)return;i.type=i.type==='password'?'text':'password';if(e)e.className=i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm';};
 document.addEventListener('DOMContentLoaded',function(){
-  var hb=document.getElementById('nav-hamburger'),mm=document.getElementById('mob-menu'),ov=document.getElementById('mob-overlay');
-  if(hb&&mm&&ov){hb.addEventListener('click',function(){mm.classList.toggle('open');ov.classList.toggle('open');});ov.addEventListener('click',function(){mm.classList.remove('open');ov.classList.remove('open');});}
   document.querySelectorAll('.modal-wrap').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-wrap.open').forEach(function(m){m.classList.remove('open');});});
 });

@@ -917,14 +917,8 @@ window.toggleNavDropdown = id => {
 window.closeNavDropdowns = () => document.getElementById('more-dropdown')?.classList.add('hidden');
 document.addEventListener('click', e=>{if(!e.target.closest('#nav-more-wrap'))closeNavDropdowns();});
 
-document.getElementById('nav-hamburger')?.addEventListener('click',()=>{
-  document.getElementById('mob-menu')?.classList.toggle('open');
-  document.getElementById('mob-overlay')?.classList.toggle('open');
-});
-document.getElementById('mob-overlay')?.addEventListener('click',()=>{
-  document.getElementById('mob-menu')?.classList.remove('open');
-  document.getElementById('mob-overlay')?.classList.remove('open');
-});
+
+
 window.togglePwd=(iid,eid)=>{const i=document.getElementById(iid),e=document.getElementById(eid);if(!i)return;i.type=i.type==='password'?'text':'password';if(e)e.className=i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm';};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-wrap.open').forEach(m=>m.classList.remove('open'));});
 </script>
@@ -953,6 +947,35 @@ document.addEventListener('keydown', function(e) {
     });
   }
 });
+</script>
+<script>
+(function() {
+  function initMobNav() {
+    var hb = document.getElementById('nav-hamburger');
+    var mm = document.getElementById('mob-menu');
+    var ov = document.getElementById('mob-overlay');
+    if (!hb || !mm || !ov) return;
+    // Remove old listeners by cloning
+    var newHb = hb.cloneNode(true);
+    hb.parentNode.replaceChild(newHb, hb);
+    var newOv = ov.cloneNode(true);
+    ov.parentNode.replaceChild(newOv, ov);
+    // Add fresh listeners
+    document.getElementById('nav-hamburger').addEventListener('click', function() {
+      document.getElementById('mob-menu').classList.toggle('open');
+      document.getElementById('mob-overlay').classList.toggle('open');
+    });
+    document.getElementById('mob-overlay').addEventListener('click', function() {
+      document.getElementById('mob-menu').classList.remove('open');
+      document.getElementById('mob-overlay').classList.remove('open');
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobNav);
+  } else {
+    initMobNav();
+  }
+})();
 </script>
 </body>
 </html>
