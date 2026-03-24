@@ -39,8 +39,8 @@
 <meta name="language"    content="Hindi, English"/>
 <meta name="geo.region"     content="IN-CT"/>
 <meta name="geo.placename"  content="Pratappur, Surajpur, Chhattisgarh"/>
-<meta name="geo.position"   content="23.2665;82.5543"/>
-<meta name="ICBM"           content="23.2665, 82.5543"/>
+<meta name="geo.position"   content="23.485031;83.210263"/>
+<meta name="ICBM"           content="23.485031, 83.210263"/>
 <meta name="theme-color"    content="#2d6a9f"/>
 <meta name="mobile-web-app-capable"           content="yes"/>
 <meta name="apple-mobile-web-app-capable"     content="yes"/>
@@ -83,13 +83,13 @@
   "foundingDate":"2019",
   "address":{
     "@type":"PostalAddress",
-    "streetAddress":"Kadampara Chowk",
+    "streetAddress":"Pratappur - Ambikapur Rd",
     "addressLocality":"Pratappur",
     "addressRegion":"Chhattisgarh",
     "postalCode":"497223",
     "addressCountry":"IN"
   },
-  "geo":{"@type":"GeoCoordinates","latitude":23.2665,"longitude":82.5543},
+  "geo":{"@type":"GeoCoordinates","latitude":23.4850311,"longitude":83.2102628},
   "openingHoursSpecification":[{
     "@type":"OpeningHoursSpecification",
     "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
@@ -775,7 +775,7 @@
       <div>
         <h4 class="th font-bold mb-5 text-sm uppercase tracking-wider flex items-center gap-2">Get in Touch<div class="h-px flex-grow ml-2 rounded-full" style="background:rgba(var(--sky-rgb),.25)"></div></h4>
         <address class="space-y-2 text-sm th2 font-medium not-italic">
-          <div class="flex items-start gap-3 p-2 -ml-2 rounded-lg"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-location-dot" style="color:var(--sky)"></i></div><div class="mt-1 leading-relaxed">Kadampara Chowk,<br/>Pratappur, Dist – Surajpur,<br/>Chhattisgarh – 497223</div></div>
+          <a href="https://maps.app.goo.gl/s99N7q6Hq9b49R2n6" target="_blank" rel="noopener" class="flex items-start gap-3 p-2 -ml-2 rounded-lg no-underline th2 hover:bg-white/5"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-location-dot" style="color:var(--sky)"></i></div><div class="mt-1 leading-relaxed">Pratappur - Ambikapur Rd,<br/>Pratappur, Dist – Surajpur,<br/>Chhattisgarh – 497223</div></a>
           <a href="tel:+918103170595" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:text-sky-400 transition-colors no-underline"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-phone" style="color:var(--sky)"></i></div><span>+91 81031 70595</span></a>
           <a href="mailto:visionitpratappur@gmail.com" class="flex items-center gap-3 p-2 -ml-2 rounded-lg hover:text-sky-400 transition-colors no-underline"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-envelope" style="color:var(--sky)"></i></div><span>visionitpratappur@gmail.com</span></a>
           <div class="flex items-center gap-3 p-2 -ml-2 rounded-lg"><div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(var(--sky-rgb),.1)"><i class="fas fa-clock" style="color:var(--sky)"></i></div><span>Mon–Sat 8AM–6PM</span></div>
@@ -783,7 +783,7 @@
       </div>
     </div>
     <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style="border-top:1px solid var(--border)">
-      <div class="th3 text-sm">© 2026 Vision IT Computer Institute, Pratappur. All rights reserved.</div>
+      <div class="th3 text-sm">© <span id="copyright-year">2024</span> Vision IT Computer Institute, Pratappur. All rights reserved.</div>
       <div class="flex gap-4 text-sm">
         <a href="/privacy" class="th3 hover:text-sky-400 transition-colors no-underline">Privacy Policy</a>
         <a href="/terms"   class="th3 hover:text-sky-400 transition-colors no-underline">Terms &amp; Conditions</a>
@@ -1344,6 +1344,10 @@ window.closeMob = () => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.querySelectorAll('.modal-wrap.open').forEach(m=>m.classList.remove('open'));
 });
+</script>
+<script>
+  // Dynamically update copyright year
+  document.getElementById('copyright-year').textContent = new Date().getFullYear();
 </script>
 <script>
 (function(){
