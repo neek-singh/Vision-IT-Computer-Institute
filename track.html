@@ -159,10 +159,6 @@ window.toast = (msg, type='inf') => {
   t._tid=setTimeout(()=>t.classList.remove('show'),3500);
 };
 
-function show(id){['step-search','step-results','step-loading','step-notfound'].forEach(s=>{
-  document.getElementById(s).style.display = s===id ? 'block':'none';
-});}
-
 window.resetTrack = () => {
   show('step-search');
   document.getElementById('track-mobile').value='';

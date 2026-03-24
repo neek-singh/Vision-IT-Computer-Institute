@@ -112,12 +112,6 @@ function hide(...ids){ids.forEach(id=>document.getElementById(id)?.classList.add
 function gradeColor(g){if(g==='A+'||g==='A')return'#34d399';if(g==='B+'||g==='B')return'#38bdf8';if(g==='C')return'#fbbf24';return'#f87171';}
 function calcGrade(p){if(p>=90)return'A+';if(p>=80)return'A';if(p>=70)return'B+';if(p>=60)return'B';if(p>=50)return'C';if(p>=40)return'D';return'F';}
 
-document.getElementById('login-form')?.addEventListener('submit', async e => {
-  e.preventDefault();
-  try { await loginUser(document.getElementById('l-email').value, document.getElementById('l-pass').value); document.getElementById('auth-modal').classList.remove('open'); }
-  catch(err) { alert('Login failed: '+err.message); }
-});
-
 onAuthStateChanged(auth, async user => {
   hide('results-login-prompt','results-loading','results-empty','results-content');
   if (!user) { show('results-login-prompt'); return; }

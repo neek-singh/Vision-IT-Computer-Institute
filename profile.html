@@ -194,9 +194,6 @@ function fillProfile(user) {
   }
 }
 
-window.saveProfile = async () => {
-  const name = document.getElementById('edit-name').value.trim();
-  if (!name) { toast('Naam darj karein','err'); return; }
   try {
     await updateDisplayName(name);
     document.getElementById('p-name').textContent = name;
@@ -207,9 +204,6 @@ window.saveProfile = async () => {
   } catch(err) { toast('Error: '+err.message,'err'); }
 };
 
-window.handlePhotoChange = async (input) => {
-  const file = input.files?.[0];
-  if (!file) return;
   if (file.size > 2*1024*1024) { toast('Photo 2MB se bada nahi hona chahiye','err'); return; }
   toast('Photo upload ho rahi hai...','inf');
   try {
@@ -224,10 +218,6 @@ window.handlePhotoChange = async (input) => {
   } catch(err) { toast('Upload failed: '+err.message,'err'); }
 };
 
-window.doLogout = async () => {
-  await logoutUser();
-  window.location.href = '/';
-};
 </script>
 <script>
 window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};

@@ -964,8 +964,6 @@ onAuthStateChanged(auth, user => {
 });
 
 // ── Modal helpers ──
-window.openModal  = id => document.getElementById(id)?.classList.add('open');
-window.closeModal = id => document.getElementById(id)?.classList.remove('open');
 document.querySelectorAll('.modal-wrap').forEach(m =>
   m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); })
 );

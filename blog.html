@@ -555,12 +555,6 @@ window.loadBlogs = async (isInitial = false) => {
 };
 loadBlogs();
 
-function getDate(b) {
-  return b.createdAt?.toDate
-    ? b.createdAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})
-    : (b.dateStr || 'Recent');
-}
-
 function getBlogCardHTML(b) {
   const img  = b.image || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&q=80';
   const date = getDate(b);
@@ -643,9 +637,6 @@ function renderBlogs() {
   // Hide loader if it's there
   const loader = grid.querySelector('.spin-el');
   if (loader) loader.parentElement.remove();
-}
-
-// ── Open blog post modal ──
 window.openBlogPost = async id => {
   const b = _blogsMap[id];
   if (!b) return;
@@ -698,7 +689,6 @@ window.openBlogPost = async id => {
   loadComments(id);
 };
 
-// ── Like ──
 window.toggleLike = async id => {
   if (!CU) { closeModal('blog-modal'); window.location.href='/login?redirect='+encodeURIComponent(window.location.pathname); return; }
   const likeRef = doc(db, `blogs/${id}/likes`, CU.uid);
@@ -730,7 +720,6 @@ window.toggleLike = async id => {
   } catch { toast('Error. Retry karein.','err'); }
 };
 
-// ── Comments ──
 async function loadComments(blogId) {
   const list = document.getElementById('comments-list');
   if (!list) return;
@@ -772,9 +761,6 @@ async function loadComments(blogId) {
   }
 }
 
-window.submitComment = async () => {
-  if (!CU) { window.location.href='/login?redirect='+encodeURIComponent(window.location.pathname); return; }
-  if (!activeBlogId) return;
   const textEl = document.getElementById('comment-text');
   const text = textEl?.value.trim();
   if (!text) { toast('Comment likhen','err'); return; }
@@ -793,16 +779,6 @@ window.submitComment = async () => {
   } catch { toast('Comment nahi gaya. Retry.','err'); }
 };
 
-window.deleteComment = async (blogId, cmtId) => {
-  if (!confirm('Comment delete karein?')) return;
-  try {
-    await deleteDoc(doc(db, `blogs/${blogId}/comments`, cmtId));
-    try { await updateDoc(doc(db,'blogs',blogId), { comments: increment(-1) }); } catch {}
-    toast('Comment delete hua','inf');
-    loadComments(blogId);
-  } catch { toast('Delete nahi hua','err'); }
-};
-
 function updCommentForm() {
   const nlc = document.getElementById('not-logged-comment');
   const lcf = document.getElementById('logged-comment-form');
@@ -811,7 +787,6 @@ function updCommentForm() {
   else     { nlc.classList.remove('hidden'); lcf.classList.add('hidden'); }
 }
 
-// ── Blog filter / search ──
 window.setBlogFilter = (el, cat) => {
   document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
   el?.classList.add('active');
@@ -823,9 +798,6 @@ window.setBlogFilter = (el, cat) => {
   loadBlogs(true);
 };
 
-window.filterBlogSearch = () => {
-  const q = (document.getElementById('blog-search')?.value || '').toLowerCase().trim();
-  if (!q) { renderBlogs(); return; }
   const grid = document.getElementById('blog-grid');
   const feat = document.getElementById('blog-featured');
   feat?.classList.add('hidden');
@@ -842,9 +814,6 @@ window.filterBlogSearch = () => {
   noRes?.classList.add('hidden');
   grid.innerHTML = filtered.map(getBlogCardHTML).join('');
 };
-
-window.resetBlogFilters = () => {
-  curBlogCat = 'all';
   document.getElementById('blog-search').value = '';
   document.querySelectorAll('.cat-pill').forEach((b,i) => b.classList.toggle('active', i===0));
   lastVisibleDoc = null;
@@ -882,9 +851,6 @@ function parseBlogContent(raw) {
   return out;
 }
 
-function buildCodeBlock(code) {
-  const idx = _codeIdx++;
-  const lang = detectLang(code);
   const labels = { py:'Python', js:'JavaScript', c:'C/C++', html:'HTML', sql:'SQL' };
   return `<div class="blog-code-wrap" id="cw-${idx}">
     <div class="code-header">
@@ -898,9 +864,6 @@ function buildCodeBlock(code) {
     <textarea id="cbraw-${idx}" style="display:none">${code.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</textarea>
   </div>`;
 }
-
-function detectLang(code) {
-  if (/def |import |elif |print\(/i.test(code)) return 'py';
   if (/function |const |let |var |console\./i.test(code)) return 'js';
   if (/#include|printf|scanf|int main/i.test(code)) return 'c';
   if (/<[a-z][\w-]*|<!DOCTYPE/i.test(code)) return 'html';
@@ -908,9 +871,6 @@ function detectLang(code) {
   return 'js';
 }
 
-function highlight(code, lang) {
-  let h = code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const kws = {
     py: 'def|class|import|from|return|if|elif|else|for|while|in|not|and|or|True|False|None|print|len|range|with|as|try|except|pass|break|continue',
     js: 'function|const|let|var|return|if|else|for|while|class|import|from|export|default|new|this|typeof|await|async|true|false|null|undefined|console',
     c:  'int|float|double|char|void|return|if|else|for|while|include|define|printf|scanf|main|struct|const|break|continue|switch|case|NULL',
@@ -925,9 +885,6 @@ function highlight(code, lang) {
   h = h.replace(kwRe,'<span class="tok-kw">$1</span>');
   return h;
 }
-
-window.copyCode = idx => {
-  const raw = document.getElementById('cbraw-'+idx);
   if (!raw) return;
   const text = raw.value.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
   navigator.clipboard?.writeText(text).catch(()=>{});

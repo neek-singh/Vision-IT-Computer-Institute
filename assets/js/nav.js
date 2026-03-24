@@ -69,6 +69,34 @@ export function initDropdowns() {
   });
 }
 
+// ── Global Modal Helpers (centralized) ──
+export function openModal(id) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('open'); }
+}
+window.openModal = openModal;
+
+export function closeModal(id) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.remove('open'); }
+}
+window.closeModal = closeModal;
+
+// Close modals on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-wrap.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// Close modals on backdrop click
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.modal-wrap').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+  });
+});
+
+// ── Nav dropdowns ──
 export function toggleNavDropdown(id) {
   const dropdowns = ['more-dropdown', 'portal-dropdown'];
   dropdowns.forEach(d => {
@@ -84,6 +112,7 @@ export function closeNavDropdowns() {
   });
 }
 window.closeNavDropdowns = closeNavDropdowns;
+window.toggleNavDropdown = toggleNavDropdown; // Make it global
 
 // ── Scroll: hide/show navbar + scroll progress ──
 export function initScrollBehavior() {
