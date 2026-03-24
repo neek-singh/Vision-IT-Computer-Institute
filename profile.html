@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/png" href="/bg-Logo.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<title>My Profile | Vision IT Computer Institute</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="/assets/css/style.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>(function(){var t=localStorage.getItem('vit-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+.profile-page{min-height:100vh;background:var(--bg2);padding-top:5rem;padding-bottom:3rem;}
+.profile-card{background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:2.5rem;width:100%;max-width:480px;margin:0 auto;box-shadow:0 20px 60px rgba(0,0,0,.08);}
+.profile-ring{border:3px solid rgba(var(--sky-rgb),.35);transition:border-color .2s;}
+.profile-ring:hover{border-color:var(--sky);}
+.info-row{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;}
+</style>
+</head>
+<body class="pgIn">
+<div id="toast"></div>
+<div id="mob-overlay"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="/" class="flex items-center gap-2.5 no-underline" id="logo-btn">
+        <img src="/bg-Logo.png" alt="Vision IT" class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32"/>
+        <div><div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1">Vision IT</div><div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:600">Computer Institute</div></div>
+      </a>
+      <div class="hidden md:flex items-center gap-5">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/courses" class="nav-link">Courses</a>
+        <a href="/results" class="nav-link">Results</a>
+        <a href="/certificate" class="nav-link">Certificate</a>
+        <button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:1rem;"><i class="fas fa-moon"></i></button>
+      </div>
+      <div class="md:hidden flex items-center gap-2">
+        <button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:1rem;"><i class="fas fa-moon"></i></button>
+        <button id="nav-hamburger" style="color:var(--ink3);background:none;border:none;cursor:pointer;padding:.4rem;"><i class="fas fa-bars text-lg"></i></button>
+      </div>
+    </div>
+  </div>
+  <div id="mob-menu"><div class="px-4 py-4 space-y-1">
+    <a href="/" class="nav-link block px-3 py-2.5 rounded-lg">🏠 Home</a>
+    <a href="/courses" class="nav-link block px-3 py-2.5 rounded-lg">📚 Courses</a>
+    <a href="/results" class="nav-link block px-3 py-2.5 rounded-lg">📊 Results</a>
+    <a href="/certificate" class="nav-link block px-3 py-2.5 rounded-lg">🎓 Certificate</a>
+  </div></div>
+</nav>
+
+<!-- Not logged in -->
+<div id="not-logged-in" style="display:none" class="profile-page">
+  <div class="profile-card text-center">
+    <div style="font-size:4rem;margin-bottom:1rem">🔒</div>
+    <h2 class="th font-black text-xl mb-2">Login Required</h2>
+    <p class="th2 mb-5" style="font-weight:300">Profile dekhne ke liye login karein</p>
+    <a href="/login?redirect=/profile" class="btn btn-sky px-7 py-3" style="display:inline-flex"><i class="fas fa-sign-in-alt mr-2"></i>Login</a>
+  </div>
+</div>
+
+<!-- Loading -->
+<div id="loading-state" class="profile-page">
+  <div class="profile-card text-center py-12">
+    <div class="spin-el mx-auto"></div>
+  </div>
+</div>
+
+<!-- Profile content -->
+<main id="profile-main" style="display:none" class="profile-page">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <nav class="flex items-center gap-2 mb-6 text-sm th3 max-w-lg mx-auto">
+      <a href="/" class="hover:text-sky-400 no-underline th3">Home</a>
+      <i class="fas fa-chevron-right text-[10px]"></i>
+      <span style="color:var(--sky)">My Profile</span>
+    </nav>
+
+    <div class="profile-card">
+      <!-- Avatar -->
+      <div class="text-center mb-6">
+        <div class="relative inline-block mb-4">
+          <div class="profile-ring w-24 h-24 rounded-full overflow-hidden mx-auto cursor-pointer" onclick="document.getElementById('photo-input').click()" title="Change photo">
+            <div id="avatar-img-wrap" class="hidden w-full h-full">
+              <img id="avatar-img" src="" alt="Profile" class="w-full h-full object-cover"/>
+            </div>
+            <div id="avatar-txt" class="w-full h-full flex items-center justify-center font-black text-3xl text-white" style="background:linear-gradient(135deg,var(--sky),#0284c7)">U</div>
+          </div>
+          <button onclick="document.getElementById('photo-input').click()" class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full btn btn-sky flex items-center justify-center text-xs"><i class="fas fa-camera"></i></button>
+        </div>
+        <input type="file" id="photo-input" accept="image/*" class="hidden" onchange="handlePhotoChange(this)"/>
+        <h1 class="th font-black text-xl" id="p-name">—</h1>
+        <p class="th2 text-sm" id="p-email">—</p>
+      </div>
+
+      <!-- Info -->
+      <div class="space-y-3 mb-5">
+        <div class="info-row"><div class="th3 text-xs font-semibold mb-0.5 uppercase tracking-wider">Display Name</div><div class="th font-semibold" id="p-displayname">—</div></div>
+        <div class="info-row"><div class="th3 text-xs font-semibold mb-0.5 uppercase tracking-wider">Email</div><div class="th" id="p-email2">—</div></div>
+        <div class="info-row"><div class="th3 text-xs font-semibold mb-0.5 uppercase tracking-wider">User ID</div><div class="th3 text-xs font-mono" id="p-uid">—</div></div>
+      </div>
+
+      <!-- Edit name form -->
+      <div id="edit-form" style="display:none;margin-bottom:1rem">
+        <div class="glass rounded-2xl p-4 space-y-3">
+          <h3 class="th font-bold text-sm">Edit Profile</h3>
+          <div><label class="lbl">Display Name</label><input type="text" id="edit-name" class="inp" placeholder="Apna naam"/></div>
+          <div class="flex gap-2">
+            <button onclick="saveProfile()" class="btn btn-sky flex-1 py-2.5 text-sm justify-center">Save</button>
+            <button onclick="document.getElementById('edit-form').style.display='none'" class="btn btn-ghost flex-1 py-2.5 text-sm justify-center">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="space-y-2">
+        <button onclick="document.getElementById('edit-form').style.display='block';document.getElementById('edit-name').focus()" class="btn btn-ghost w-full py-2.5 text-sm justify-center" style="width:100%">
+          <i class="fas fa-pen mr-2"></i>Edit Profile
+        </button>
+        <a href="/results" class="btn btn-ghost w-full py-2.5 text-sm justify-center" style="width:100%;display:flex">
+          <i class="fas fa-chart-bar mr-2"></i>My Results
+        </a>
+        <a href="/certificate" class="btn btn-ghost w-full py-2.5 text-sm justify-center" style="width:100%;display:flex">
+          <i class="fas fa-certificate mr-2"></i>My Certificates
+        </a>
+        <button onclick="doLogout()" class="btn w-full py-2.5 text-sm justify-center" style="width:100%;background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2)">
+          <i class="fas fa-sign-out-alt mr-2"></i>Logout
+        </button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="py-8" style="background:var(--bg);border-top:1px solid var(--border)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2 no-underline"><img src="/bg-Logo.png" alt="Vision IT" class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32"/><div class="th font-black text-sm">Vision IT Computer Institute</div></a>
+    <div class="flex gap-4 text-sm"><a href="/courses" class="th2 hover:text-sky-400 no-underline">Courses</a><a href="/results" class="th2 hover:text-sky-400 no-underline">Results</a><a href="/contact" class="th2 hover:text-sky-400 no-underline">Contact</a></div>
+    <div class="th3 text-sm">© 2026 Vision IT Computer Institute</div>
+  </div>
+</footer>
+
+<script type="module">
+import { initTheme } from '/assets/js/theme.js';
+import { initNav }   from '/assets/js/nav.js';
+import { auth }      from '/assets/js/firebase-config.js';
+import { logoutUser, updateDisplayName, uploadProfilePhoto } from '/assets/js/auth.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+initTheme(); initNav();
+
+window.toast = (msg, type='inf') => {
+  const icons={ok:'✅',err:'❌',inf:'ℹ️'};
+  const t=document.getElementById('toast');
+  t.innerHTML=`<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
+  t.classList.add('show'); clearTimeout(t._tid);
+  t._tid=setTimeout(()=>t.classList.remove('show'),3500);
+};
+
+onAuthStateChanged(auth, user => {
+  document.getElementById('loading-state').style.display = 'none';
+  if (!user) {
+    document.getElementById('not-logged-in').style.display = 'block';
+    return;
+  }
+  document.getElementById('profile-main').style.display = 'block';
+  fillProfile(user);
+});
+
+function fillProfile(user) {
+  const name = user.displayName || user.email?.split('@')[0] || 'User';
+  document.getElementById('p-name').textContent = name;
+  document.getElementById('p-email').textContent = user.email || '—';
+  document.getElementById('p-displayname').textContent = name;
+  document.getElementById('p-email2').textContent = user.email || '—';
+  document.getElementById('p-uid').textContent = user.uid;
+  document.getElementById('avatar-txt').textContent = name[0].toUpperCase();
+  document.getElementById('edit-name').value = name;
+
+  if (user.photoURL) {
+    const wrap = document.getElementById('avatar-img-wrap');
+    const img  = document.getElementById('avatar-img');
+    const txt  = document.getElementById('avatar-txt');
+    img.src = user.photoURL;
+    wrap.classList.remove('hidden');
+    txt.style.display = 'none';
+  }
+}
+
+window.saveProfile = async () => {
+  const name = document.getElementById('edit-name').value.trim();
+  if (!name) { toast('Naam darj karein','err'); return; }
+  try {
+    await updateDisplayName(name);
+    document.getElementById('p-name').textContent = name;
+    document.getElementById('p-displayname').textContent = name;
+    document.getElementById('avatar-txt').textContent = name[0].toUpperCase();
+    document.getElementById('edit-form').style.display = 'none';
+    toast('Profile update ho gaya ✅','ok');
+  } catch(err) { toast('Error: '+err.message,'err'); }
+};
+
+window.handlePhotoChange = async (input) => {
+  const file = input.files?.[0];
+  if (!file) return;
+  if (file.size > 2*1024*1024) { toast('Photo 2MB se bada nahi hona chahiye','err'); return; }
+  toast('Photo upload ho rahi hai...','inf');
+  try {
+    const url = await uploadProfilePhoto(file);
+    const wrap = document.getElementById('avatar-img-wrap');
+    const img  = document.getElementById('avatar-img');
+    const txt  = document.getElementById('avatar-txt');
+    img.src = url;
+    wrap.classList.remove('hidden');
+    txt.style.display = 'none';
+    toast('Photo update ho gayi ✅','ok');
+  } catch(err) { toast('Upload failed: '+err.message,'err'); }
+};
+
+window.doLogout = async () => {
+  await logoutUser();
+  window.location.href = '/';
+};
+</script>
+<script>
+window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};
+window.closeModal=function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');};
+document.addEventListener('DOMContentLoaded',function(){
+  var hb=document.getElementById('nav-hamburger'),mm=document.getElementById('mob-menu'),ov=document.getElementById('mob-overlay');
+  if(hb&&mm&&ov){hb.addEventListener('click',function(){mm.classList.toggle('open');ov.classList.toggle('open');});ov.addEventListener('click',function(){mm.classList.remove('open');ov.classList.remove('open');});}
+});
+</script>
+</body>
+</html>

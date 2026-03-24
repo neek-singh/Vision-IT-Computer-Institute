@@ -200,7 +200,7 @@
             <a href="/results"     class="nav-drop-item">📊 My Results</a>
             <a href="/certificate" class="nav-drop-item">🎓 Certificate</a>
             <div style="height:1px;background:var(--border);margin:.3rem 0"></div>
-            <button onclick="openModal('tracker-modal');closeNavDropdowns()" class="nav-drop-item w-full text-left" style="background:none;border:none;font-family:inherit;cursor:pointer">🔍 Track Inquiry</button>
+            <button onclick="window.location.href='/track';closeNavDropdowns()" class="nav-drop-item w-full text-left" style="background:none;border:none;font-family:inherit;cursor:pointer">🔍 Track Inquiry</button>
           </div>
         </div>
         <div class="relative" id="nav-portal-wrap">
@@ -222,11 +222,11 @@
       <div class="hidden md:flex items-center gap-3">
         <a id="nav-login-btn" href="/login" class="btn btn-ghost py-1.5 px-4 text-sm">Login</a>
         <div id="nav-user-wrap" class="hidden items-center gap-2">
-          <div id="nav-avatar-wrap" onclick="openModal('profile-modal')" class="cursor-pointer" title="View Profile">
+          <div id="nav-avatar-wrap" onclick="window.location.href='/profile'" class="cursor-pointer" title="View Profile">
             <div id="nav-avatar-img" class="w-8 h-8 rounded-full overflow-hidden hidden"><img id="nav-avatar-photo" src="" alt="Profile" class="w-full h-full object-cover"/></div>
             <div id="nav-avatar-txt" class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style="background:var(--ink);color:#fff">U</div>
           </div>
-          <span class="text-sm font-medium cursor-pointer" id="nav-uname" style="color:var(--ink)" onclick="openModal('profile-modal')">User</span>
+          <span class="text-sm font-medium cursor-pointer" id="nav-uname" style="color:var(--ink)" onclick="window.location.href='/profile'">User</span>
           <button onclick="logoutUser()" style="color:var(--ink3);background:none;border:none;cursor:pointer;font-size:.8rem;" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
         </div>
       </div>
@@ -511,48 +511,7 @@
 <!-- ══════════════════════════════════════════════
      ADMISSION QUICK MODAL
 ══════════════════════════════════════════════ -->
-<div class="modal-wrap" id="adm-modal" role="dialog" aria-modal="true">
-  <div class="modal-box max-w-md">
-    <button onclick="closeModal('adm-modal')" class="absolute top-4 right-4 th3 text-xl" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>
-    <div class="text-center mb-6">
-      <div class="w-14 h-14 rounded-2xl btn-gold flex items-center justify-center text-2xl mx-auto mb-3" style="background:var(--gold)">📝</div>
-      <h3 class="th font-black text-xl">Admission Inquiry</h3>
-      <p class="th2 text-sm mt-1" style="font-weight:300">Details bharein — 24 ghante mein call karenge</p>
-    </div>
-    <form onsubmit="submitAdmissionQuick(event)" class="space-y-4">
-      <div class="grid sm:grid-cols-2 gap-3">
-        <div><label class="lbl">Student Name *</label><input type="text" id="a-name" class="inp" placeholder="Full name" required autocomplete="name"/></div>
-        <div><label class="lbl">Mobile *</label><input type="tel" id="a-mobile" class="inp" placeholder="10-digit" required maxlength="10" autocomplete="tel"/></div>
-      </div>
-      <div>
-        <label class="lbl">Select Course *</label>
-        <select id="a-course" class="inp" required>
-          <option value="">-- Choose Course --</option>
-          <option value="Summer Special Batch 2026" style="font-weight:700">☀️ Summer Special Batch 2026</option>
-          <option value="Basic Computer Course">💻 Basic Computer Course</option>
-          <option value="Advanced Computer Course">⚡ Advanced Computer Course</option>
-          <option value="Tally & Accounting">📊 Tally &amp; Accounting</option>
-          <option value="Programming Course">👨‍💻 Programming Course</option>
-          <option value="Web Design Course">🎨 Web Design Course</option>
-          <option value="DTP Course">🖼️ DTP Course</option>
-        </select>
-      </div>
-      <div>
-        <label class="lbl">Preferred Batch</label>
-        <select id="a-batch" class="inp">
-          <option value="">Select batch time</option>
-          <option>Morning 9:00 AM</option>
-          <option>Afternoon 2:00 PM</option>
-          <option>Evening 5:00 PM</option>
-        </select>
-      </div>
-      <div><label class="lbl">Message (optional)</label><textarea id="a-msg" class="inp" rows="2" placeholder="Koi sawaal ya baat..."></textarea></div>
-      <button type="submit" id="adm-submit-btn" class="btn btn-sky w-full py-3 text-sm justify-center">
-        <i class="fas fa-paper-plane mr-1"></i>Submit Inquiry
-      </button>
-    </form>
-  </div>
-</div>
+
 
 <!-- ══════════════════════════════════════════════
      AUTH MODAL (minimal)
@@ -904,23 +863,8 @@ window.viewCurriculum = id => {
 
 // ── Apply admission ──
 window.applyAdmission = course => {
-  const sel = document.getElementById('a-course');
-  if (sel) {
-    // Reset & rebuild options
-    sel.innerHTML = '<option value="">-- Choose Course --</option>';
-    const extras = ['Summer Special Batch 2026','Basic Computer Course','Advanced Computer Course','Tally & Accounting','Programming Course','Web Design Course','DTP Course'];
-    const names = allCourses.length ? allCourses.map(c=>c.name) : extras;
-    names.forEach(n => { const o=document.createElement('option'); o.value=n; o.textContent=n; sel.appendChild(o); });
-    if (course && course !== 'General') sel.value = course;
-  }
-  if (CU) {
-    const nameInp = document.getElementById('a-name');
-    if (nameInp && CU.displayName) nameInp.value = CU.displayName;
-    openModal('adm-modal');
-  } else {
-    window._pendingCourse = course;
-    window.location.href='/login?redirect='+encodeURIComponent(window.location.pathname);
-  }
+  const param = course && course !== 'General' ? '?course=' + encodeURIComponent(course) : '';
+  window.location.href = '/admission' + param;
 };
 
 // ── Submit quick admission ──
@@ -997,28 +941,16 @@ document.getElementById('mob-overlay')?.addEventListener('click', () => {
 });
 
 </script>
-</script>
 <script>
-/* ── Global helpers — always available ── */
+/* ── Global helpers ── */
 window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};
 window.closeModal=function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');};
 window.togglePwd=function(a,b){var i=document.getElementById(a),e=document.getElementById(b);if(!i)return;i.type=i.type==='password'?'text':'password';if(e)e.className=i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm';};
 document.addEventListener('DOMContentLoaded',function(){
-  /* Mobile nav — backup if module fails */
-  var hb=document.getElementById('nav-hamburger');
-  var mm=document.getElementById('mob-menu');
-  var ov=document.getElementById('mob-overlay');
-  if(hb&&mm&&ov){
-    hb.addEventListener('click',function(){mm.classList.toggle('open');ov.classList.toggle('open');});
-    ov.addEventListener('click',function(){mm.classList.remove('open');ov.classList.remove('open');});
-  }
-  /* Modal backdrop */
-  document.querySelectorAll('.modal-wrap').forEach(function(m){
-    m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});
-  });
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape')document.querySelectorAll('.modal-wrap.open').forEach(function(m){m.classList.remove('open');});
-  });
+  var hb=document.getElementById('nav-hamburger'),mm=document.getElementById('mob-menu'),ov=document.getElementById('mob-overlay');
+  if(hb&&mm&&ov){hb.addEventListener('click',function(){mm.classList.toggle('open');ov.classList.toggle('open');});ov.addEventListener('click',function(){mm.classList.remove('open');ov.classList.remove('open');});}
+  document.querySelectorAll('.modal-wrap').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-wrap.open').forEach(function(m){m.classList.remove('open');});});
 });
 </script>
 </body>

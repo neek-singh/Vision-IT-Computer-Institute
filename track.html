@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="hi-IN" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/png" href="/bg-Logo.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<title>Track Inquiry | Vision IT Computer Institute</title>
+<meta name="description" content="Apni admission inquiry ka status track karein — mobile number se instant check."/>
+<meta name="robots" content="noindex,follow"/>
+<link rel="canonical" href="https://visionitinstitute.vercel.app/track"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="/assets/css/style.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>(function(){var t=localStorage.getItem('vit-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+.track-page{min-height:100vh;background:var(--bg2);padding-top:5rem;padding-bottom:3rem;}
+.track-card{background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:2.5rem;width:100%;max-width:520px;margin:0 auto;box-shadow:0 20px 60px rgba(0,0,0,.08);}
+.step-dot{width:1.25rem;height:1.25rem;border-radius:50%;flex-shrink:0;margin-top:.2rem;}
+.step-dot.done{background:var(--sky);}
+.step-dot.active{background:transparent;border:2px solid var(--sky);}
+.step-dot.pending{background:var(--border);}
+.tracker-step-row{position:relative;padding-left:2.25rem;padding-bottom:1.75rem;}
+.tracker-step-row::before{content:'';position:absolute;left:.575rem;top:1.5rem;bottom:0;width:2px;background:var(--border);}
+.tracker-step-row:last-child::before{display:none;}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(var(--sky-rgb),.4);}50%{box-shadow:0 0 0 6px rgba(var(--sky-rgb),0);}}
+.step-active-pulse{animation:pulseGlow 2s ease-in-out infinite;}
+</style>
+</head>
+<body class="pgIn">
+<div id="toast"></div>
+<div id="mob-overlay"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="/" class="flex items-center gap-2.5 no-underline" id="logo-btn">
+        <img src="/bg-Logo.png" alt="Vision IT" class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32"/>
+        <div><div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1">Vision IT</div><div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:600">Computer Institute</div></div>
+      </a>
+      <div class="hidden md:flex items-center gap-5">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/courses" class="nav-link">Courses</a>
+        <a href="/admission" class="nav-link">Admission</a>
+        <a href="/contact" class="nav-link">Contact</a>
+        <button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:1rem;"><i class="fas fa-moon"></i></button>
+      </div>
+      <div class="md:hidden flex items-center gap-2">
+        <button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:1rem;"><i class="fas fa-moon"></i></button>
+        <button id="nav-hamburger" style="color:var(--ink3);background:none;border:none;cursor:pointer;padding:.4rem;"><i class="fas fa-bars text-lg"></i></button>
+      </div>
+    </div>
+  </div>
+  <div id="mob-menu"><div class="px-4 py-4 space-y-1">
+    <a href="/" class="nav-link block px-3 py-2.5 rounded-lg">🏠 Home</a>
+    <a href="/courses" class="nav-link block px-3 py-2.5 rounded-lg">📚 Courses</a>
+    <a href="/admission" class="nav-link block px-3 py-2.5 rounded-lg">📝 Admission</a>
+    <a href="/contact" class="nav-link block px-3 py-2.5 rounded-lg">📬 Contact</a>
+  </div></div>
+</nav>
+
+<!-- MAIN -->
+<main class="track-page">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 mb-6 text-sm th3 max-w-xl mx-auto">
+      <a href="/" class="hover:text-sky-400 no-underline th3">Home</a>
+      <i class="fas fa-chevron-right text-[10px]"></i>
+      <span style="color:var(--sky)">Track Inquiry</span>
+    </nav>
+
+    <div class="track-card">
+      <div class="text-center mb-7">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4" style="background:rgba(var(--sky-rgb),.1)">🔍</div>
+        <h1 style="font-family:'DM Serif Display',serif;font-size:1.75rem;font-weight:400;color:var(--ink);margin-bottom:.35rem">Track <span style="color:var(--sky);font-style:italic">Inquiry</span></h1>
+        <p class="th2 text-sm" style="font-weight:300">Apni admission inquiry ka current status dekhen</p>
+      </div>
+
+      <!-- Step 1: Search form -->
+      <div id="step-search">
+        <form id="track-form" class="space-y-4">
+          <div>
+            <label class="lbl">Registered Mobile Number *</label>
+            <input type="tel" id="track-mobile" class="inp" placeholder="10-digit mobile number" maxlength="10" pattern="[6-9][0-9]{9}" required autocomplete="tel"/>
+            <p class="th3 text-xs mt-1">Wahi number dalein jo admission form mein fill kiya tha</p>
+          </div>
+          <button type="submit" id="track-btn" class="btn btn-sky w-full py-3 text-sm justify-center" style="width:100%">
+            <i class="fas fa-search mr-2"></i>Track Status
+          </button>
+        </form>
+      </div>
+
+      <!-- Step 2: Results -->
+      <div id="step-results" style="display:none">
+        <div id="track-results-content"></div>
+        <button onclick="resetTrack()" class="btn btn-ghost w-full py-2.5 text-sm justify-center" style="width:100%;margin-top:1rem">
+          <i class="fas fa-arrow-left mr-1"></i> Search Again
+        </button>
+      </div>
+
+      <!-- Loading -->
+      <div id="step-loading" style="display:none;text-align:center;padding:2.5rem 0">
+        <div class="spin-el" style="margin:0 auto .75rem"></div>
+        <p class="th2 text-sm">Inquiry dhundh rahe hain...</p>
+      </div>
+
+      <!-- Not found -->
+      <div id="step-notfound" style="display:none;text-align:center;padding:2rem 0">
+        <div style="font-size:3rem;margin-bottom:.75rem">😔</div>
+        <h3 class="th font-bold text-lg mb-2">Inquiry Nahi Mili</h3>
+        <p class="th2 text-sm mb-4" style="font-weight:300">Is mobile number pe koi inquiry nahi mili. Number check karein ya naya inquiry submit karein.</p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <button onclick="resetTrack()" class="btn btn-ghost px-5 py-2.5 text-sm">Try Again</button>
+          <a href="/admission" class="btn btn-sky px-5 py-2.5 text-sm">New Inquiry</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info box -->
+    <div class="max-w-xl mx-auto mt-5 glass rounded-2xl p-5">
+      <h3 class="th font-bold text-sm mb-3"><i class="fas fa-info-circle mr-2" style="color:var(--sky)"></i>Kaise kaam karta hai?</h3>
+      <div class="space-y-2 th2 text-sm" style="font-weight:300">
+        <div class="flex items-start gap-2"><i class="fas fa-check text-emerald-500 text-xs mt-1 flex-shrink-0"></i><span>Apna registered mobile number dalein</span></div>
+        <div class="flex items-start gap-2"><i class="fas fa-check text-emerald-500 text-xs mt-1 flex-shrink-0"></i><span>Apni inquiry ka current status aur progress dekhein</span></div>
+        <div class="flex items-start gap-2"><i class="fas fa-check text-emerald-500 text-xs mt-1 flex-shrink-0"></i><span>Team ke notes aur next steps bhi dikhenge</span></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="py-8" style="background:var(--bg);border-top:1px solid var(--border)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2 no-underline"><img src="/bg-Logo.png" alt="Vision IT" class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32"/><div class="th font-black text-sm">Vision IT Computer Institute</div></a>
+    <div class="flex gap-4 text-sm"><a href="/courses" class="th2 hover:text-sky-400 no-underline">Courses</a><a href="/admission" class="th2 hover:text-sky-400 no-underline">Admission</a><a href="/contact" class="th2 hover:text-sky-400 no-underline">Contact</a></div>
+    <div class="th3 text-sm">© 2026 Vision IT Computer Institute</div>
+  </div>
+</footer>
+
+<script type="module">
+import { initTheme } from '/assets/js/theme.js';
+import { initNav } from '/assets/js/nav.js';
+import { db } from '/assets/js/firebase-config.js';
+import { collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+initTheme(); initNav();
+
+window.toast = (msg, type='inf') => {
+  const icons={ok:'✅',err:'❌',inf:'ℹ️'};
+  const t=document.getElementById('toast');
+  t.innerHTML=`<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
+  t.classList.add('show'); clearTimeout(t._tid);
+  t._tid=setTimeout(()=>t.classList.remove('show'),3500);
+};
+
+function show(id){['step-search','step-results','step-loading','step-notfound'].forEach(s=>{
+  document.getElementById(s).style.display = s===id ? 'block':'none';
+});}
+
+window.resetTrack = () => {
+  show('step-search');
+  document.getElementById('track-mobile').value='';
+};
+
+const STATUS_STEPS=[
+  {icon:'📝',label:'Inquiry Submitted',  sub:'Application successfully receive hui'},
+  {icon:'📞',label:'Call Back',           sub:'Team aapse contact karegi'},
+  {icon:'💬',label:'Counselling',         sub:'Course details aur fee discuss'},
+  {icon:'✅',label:'Admission Confirmed', sub:'Seat book ho gayi!'},
+  {icon:'🎓',label:'Batch Allotment',     sub:'Batch aur schedule milega'},
+];
+const STATUS_MAP={
+  new:{activeStep:0,pct:10},called:{activeStep:1,pct:30},
+  followup:{activeStep:1,pct:35},counselled:{activeStep:2,pct:60},
+  admitted:{activeStep:3,pct:90},notinterested:{activeStep:-1,pct:10},
+};
+const STATUS_LABELS={
+  new:         {color:'#818cf8',bg:'rgba(99,102,241,.12)',  label:'🆕 Inquiry Received'},
+  called:      {color:'#fbbf24',bg:'rgba(245,158,11,.12)',  label:'📞 Team Ne Call Kiya'},
+  followup:    {color:'#c084fc',bg:'rgba(168,85,247,.12)',  label:'🔁 Follow-Up Scheduled'},
+  counselled:  {color:'#38bdf8',bg:'rgba(14,165,233,.12)',  label:'💬 Counselling Done'},
+  admitted:    {color:'#34d399',bg:'rgba(16,185,129,.12)',  label:'✅ Admission Confirmed!'},
+  notinterested:{color:'#f87171',bg:'rgba(239,68,68,.12)', label:'❌ Not Proceeded'},
+};
+
+document.getElementById('track-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const raw = document.getElementById('track-mobile').value.trim().replace(/\D/g,'');
+  if (!raw || raw.length < 10) { toast('Valid 10-digit mobile darj karein','err'); return; }
+
+  show('step-loading');
+
+  try {
+    const snap = await getDocs(query(collection(db,'admission_queries'), orderBy('timestamp','desc')));
+    let found = [];
+    snap.forEach(d => {
+      const data = d.data();
+      if ((data.mobile||'').replace(/\D/g,'') === raw) found.push({id:d.id,...data});
+    });
+
+    if (!found.length) { show('step-notfound'); return; }
+
+    const html = found.map((q, qi) => {
+      const status = q.trackerStatus || 'new';
+      const isRej  = status === 'notinterested';
+      const sm     = STATUS_MAP[status] || STATUS_MAP.new;
+      const sl     = STATUS_LABELS[status] || STATUS_LABELS.new;
+      const pct    = sm.pct;
+      const active = sm.activeStep;
+      const date   = q.timestamp?.toDate ? q.timestamp.toDate().toLocaleString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+
+      const stepsHTML = STATUS_STEPS.map((step, i) => {
+        let state = 'pending';
+        if (!isRej) { if (i < active) state='done'; else if (i===active) state='active'; if (i===0) state='done'; }
+        const dotStyle = state==='done' ? 'background:var(--sky);border:none;box-shadow:0 0 10px rgba(var(--sky-rgb),.3)' :
+                         state==='active' ? 'background:transparent;border:2px solid var(--sky)' :
+                         'background:var(--border);border:none';
+        const lblColor = state==='done'||state==='active' ? 'color:var(--ink);font-weight:700' : 'color:var(--ink3)';
+        const pulse    = state==='active' ? 'class="step-active-pulse"' : '';
+        return `<div class="tracker-step-row" style="position:relative;padding-left:2.25rem;padding-bottom:1.75rem">
+          <div ${pulse} style="position:absolute;left:0;top:.2rem;width:1.25rem;height:1.25rem;border-radius:50%;flex-shrink:0;${dotStyle};display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff">
+            ${state==='done'?'✓':step.icon}
+          </div>
+          ${i<STATUS_STEPS.length-1?`<div style="position:absolute;left:.575rem;top:1.5rem;bottom:0;width:2px;background:var(--border)"></div>`:''}
+          <div style="padding-top:.05rem">
+            <div style="${lblColor};font-size:.9rem">${step.label}</div>
+            <div class="th3 text-xs">${step.sub}</div>
+            ${i===0?`<div class="th3 text-xs mt-0.5">${date}</div>`:''}
+          </div>
+        </div>`;
+      }).join('');
+
+      return `<div class="${qi>0?'border-t pt-5 mt-5':''}" style="${qi>0?'border-color:var(--border)':''}">
+        <div class="glass rounded-2xl p-4 mb-4">
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center font-black text-white" style="background:linear-gradient(135deg,var(--sky),#0284c7)">${(q.studentName||'S')[0].toUpperCase()}</div>
+              <div>
+                <div class="th font-bold">${q.studentName||'—'}</div>
+                <div class="th2 text-xs">${q.course||'General'}${q.batch?` · ${q.batch}`:''}</div>
+              </div>
+            </div>
+            <span class="text-xs font-bold px-3 py-1.5 rounded-full" style="background:${sl.bg};color:${sl.color}">${sl.label}</span>
+          </div>
+          ${q.followupDate?`<div class="flex items-center gap-2 mt-2 p-2 rounded-lg" style="background:rgba(245,158,11,.08)"><i class="fas fa-calendar-alt text-xs" style="color:#f59e0b"></i><span class="text-xs font-semibold" style="color:#f59e0b">Next Follow-Up: ${q.followupDate}</span></div>`:''}
+          <div class="mt-3"><div class="flex justify-between text-xs mb-1"><span class="th3 font-semibold">Progress</span><span style="color:var(--sky);font-weight:700">${pct}%</span></div><div class="h-2 rounded-full" style="background:var(--border)"><div class="h-2 rounded-full" style="background:linear-gradient(90deg,var(--sky),#0284c7);width:${pct}%;transition:width 1s"></div></div></div>
+        </div>
+        ${stepsHTML}
+        ${q.notes?.length?`<div class="glass rounded-xl p-3 mt-2"><div class="th2 text-xs font-semibold mb-2"><i class="fas fa-history mr-1" style="color:var(--sky)"></i>Team Notes (${q.notes.length})</div><div class="space-y-1 max-h-28 overflow-y-auto">${[...q.notes].reverse().map(n=>`<div class="flex items-start gap-2"><div class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:var(--sky)"></div><div class="th2 text-xs">${n.text}<span class="th3 ml-1">· ${n.at||''}</span></div></div>`).join('')}</div></div>`:'' }
+      </div>`;
+    }).join('');
+
+    document.getElementById('track-results-content').innerHTML = 
+      `${found.length>1?`<div class="glass rounded-xl px-4 py-2 mb-4 flex items-center gap-2"><i class="fas fa-info-circle text-xs" style="color:var(--sky)"></i><span class="th2 text-xs">${found.length} inquiries is number pe mili hain</span></div>`:''}${html}`;
+    show('step-results');
+
+  } catch(err) {
+    show('step-search');
+    toast('Error: '+err.message,'err');
+  }
+});
+
+// Auto-fill from URL param
+const mobile = new URLSearchParams(window.location.search).get('mobile');
+if (mobile) {
+  document.getElementById('track-mobile').value = mobile;
+  document.getElementById('track-form').requestSubmit();
+}
+</script>
+<script>
+window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};
+window.closeModal=function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');};
+document.addEventListener('DOMContentLoaded',function(){
+  var hb=document.getElementById('nav-hamburger'),mm=document.getElementById('mob-menu'),ov=document.getElementById('mob-overlay');
+  if(hb&&mm&&ov){hb.addEventListener('click',function(){mm.classList.toggle('open');ov.classList.toggle('open');});ov.addEventListener('click',function(){mm.classList.remove('open');ov.classList.remove('open');});}
+});
+</script>
+</body>
+</html>

@@ -3,6 +3,14 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/profile",
+      "destination": "/profile.html"
+    },
+    {
+      "source": "/track",
+      "destination": "/track.html"
+    },
+    {
       "source": "/login",
       "destination": "/login.html"
     },
