@@ -240,6 +240,7 @@ export async function initTopBanner(loadBannerSettings) {
     const bh = (banner.style.display !== 'none') ? (banner.offsetHeight || 0) : 0;
     const navbar = document.getElementById('navbar');
     if (navbar) navbar.style.top = bh + 'px';
+    document.documentElement.style.setProperty('--banner-height', bh + 'px');
     document.documentElement.style.setProperty('--nav-top', (56 + bh) + 'px');
   }
 

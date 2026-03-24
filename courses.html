@@ -134,7 +134,11 @@
 
 /* Sticky filter bar */
 .filter-bar-sticky {
-  position: sticky; top: var(--nav-top, 56px); z-index: 100;
+  position: sticky;
+  /* Stick below the top banner. It will appear when the main navbar scrolls away. */
+  top: var(--banner-height, 0px);
+  /* Lower z-index than navbar (999) so it sticks *behind* it */
+  z-index: 998;
   background: var(--nav-bg);
   border-bottom: 1px solid var(--border);
   padding: .85rem 0;
