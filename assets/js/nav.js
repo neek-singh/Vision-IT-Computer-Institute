@@ -118,6 +118,7 @@ window.toggleNavDropdown = toggleNavDropdown; // Make it global
 export function initScrollBehavior() {
   const navbar  = document.getElementById('navbar');
   const progBar = document.getElementById('scroll-prog');
+  const filterBar = document.querySelector('.filter-bar-sticky'); // For courses page
   let lastY     = 0;
   let ticking   = false;
 
@@ -126,11 +127,15 @@ export function initScrollBehavior() {
       requestAnimationFrame(() => {
         const y = window.scrollY;
 
-        // Hide/show
+        // Hide/show navbar and adjust filter bar if it exists
         if (y > lastY && y > 80) {
           navbar?.classList.add('hidden-nav');
+          // On courses page, move filter bar to top
+          if (filterBar) filterBar.style.top = `var(--banner-height, 0px)`;
         } else {
           navbar?.classList.remove('hidden-nav');
+          // On courses page, move filter bar below navbar
+          if (filterBar) filterBar.style.top = `var(--nav-top, 56px)`;
         }
         navbar?.classList.toggle('scrolled', y > 10);
         lastY = y;

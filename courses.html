@@ -135,15 +135,14 @@
 /* Sticky filter bar */
 .filter-bar-sticky {
   position: sticky;
-  /* Stick below the top banner. It will appear when the main navbar scrolls away. */
-  top: var(--banner-height, 0px);
-  /* Lower z-index than navbar (999) so it sticks *behind* it */
-  z-index: 998;
+  top: var(--nav-top, 56px); /* This is updated by nav.js on scroll */
+  z-index: 100;
   background: var(--nav-bg);
   border-bottom: 1px solid var(--border);
   padding: .85rem 0;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  transition: top .3s ease-in-out;
 }
 
 /* Feature highlight cards */
