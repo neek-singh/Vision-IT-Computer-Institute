@@ -282,6 +282,11 @@
       <button onclick="resetBlogFilters()" class="btn btn-sky px-6 py-2.5 text-sm">All Posts Dekhein</button>
     </div>
 
+    <!-- Load More Button -->
+    <div id="load-more-wrap" class="text-center mt-10 hidden">
+      <button id="load-more-btn" onclick="loadBlogs()" class="btn btn-ghost px-8 py-3 text-sm">Load More Posts</button>
+    </div>
+
   </div>
 </main>
 
@@ -412,7 +417,7 @@ initTopBanner(loadBannerSettings);
 
 // ── State ──
 let CU = null;
-let allBlogs = [], curBlogCat = 'all', activeBlogId = null;
+let allBlogs = [], curBlogCat = 'all', activeBlogId = null, lastVisibleDoc = null, isLoadingBlogs = false;
 const _blogsMap = {};
 
 onAuthStateChanged(auth, user => {
@@ -520,15 +525,34 @@ const DB = [
 ];
 
 // ── Load & render blogs ──
-async function loadBlogs() {
+window.loadBlogs = async (isInitial = false) => {
+  if (isLoadingBlogs) return;
+  isLoadingBlogs = true;
+
+  const grid = document.getElementById('blog-grid');
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  if (loadMoreBtn) loadMoreBtn.innerHTML = '<div class="spin-el mx-auto"></div>';
+
   try {
-    const snap = await getDocs(query(collection(db,'blogs'), orderBy('createdAt','desc')));
+    let q = query(collection(db,'blogs'), orderBy('createdAt','desc'), limit(6));
+    if (!isInitial && lastVisibleDoc) {
+      q = query(collection(db,'blogs'), orderBy('createdAt','desc'), startAfter(lastVisibleDoc), limit(6));
+    }
+
+    const snap = await getDocs(q);
     const fs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    allBlogs = fs.length > 0 ? fs : DB;
-  } catch { allBlogs = DB; }
-  allBlogs.forEach(b => { _blogsMap[b.id] = b; });
-  renderBlogs();
-}
+    
+    if (isInitial) allBlogs = [];
+    allBlogs.push(...fs);
+    allBlogs.forEach(b => { _blogsMap[b.id] = b; });
+    lastVisibleDoc = snap.docs[snap.docs.length - 1];
+
+    renderBlogs();
+
+    document.getElementById('load-more-wrap')?.classList.toggle('hidden', snap.empty || snap.docs.length < 6);
+  } catch (e) { console.error("Error loading blogs:", e); grid.innerHTML = '<p class="text-red-500 text-center col-span-3">Error loading posts.</p>'; }
+  finally { isLoadingBlogs = false; if (loadMoreBtn) loadMoreBtn.innerHTML = 'Load More Posts'; }
+};
 loadBlogs();
 
 function getDate(b) {
@@ -567,7 +591,7 @@ function renderBlogs() {
   const grid   = document.getElementById('blog-grid');
   const feat   = document.getElementById('blog-featured');
   const noRes  = document.getElementById('blog-no-results');
-  if (!grid) return;
+  if (!grid || !feat || !noRes) return;
 
   let blogs = [...allBlogs];
   if (curBlogCat !== 'all') blogs = blogs.filter(b => b.category === curBlogCat);
@@ -577,8 +601,9 @@ function renderBlogs() {
   }
   noRes?.classList.add('hidden');
 
-  // Featured post (first post, all category only)
-  if (feat && curBlogCat === 'all' && blogs.length > 0) {
+  // Featured post (only on initial load of 'all' category)
+  const isInitialAll = curBlogCat === 'all' && blogs.length > 0 && !document.querySelector('.blog-card');
+  if (isInitialAll) {
     const fb  = blogs[0];
     const img = fb.image || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&q=80';
     const date= getDate(fb);
@@ -608,12 +633,16 @@ function renderBlogs() {
       </div>
     </article>`;
     blogs = blogs.slice(1);
+    grid.innerHTML = blogs.map(getBlogCardHTML).join('');
   } else {
     feat?.classList.add('hidden');
+    grid.innerHTML = allBlogs.length ? allBlogs.map(getBlogCardHTML).join('') :
+      '<div class="col-span-3 text-center py-10 th2">Is category mein aur posts nahi hain</div>';
   }
 
-  grid.innerHTML = blogs.length ? blogs.map(getBlogCardHTML).join('') :
-    '<div class="col-span-3 text-center py-10 th2">Is category mein aur posts nahi hain</div>';
+  // Hide loader if it's there
+  const loader = grid.querySelector('.spin-el');
+  if (loader) loader.parentElement.remove();
 }
 
 // ── Open blog post modal ──
@@ -786,9 +815,12 @@ function updCommentForm() {
 window.setBlogFilter = (el, cat) => {
   document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
   el?.classList.add('active');
+  document.getElementById('blog-grid').innerHTML = '<div class="flex justify-center col-span-3 py-20"><div class="spin-el"></div></div>';
+  document.getElementById('load-more-wrap')?.classList.add('hidden');
   curBlogCat = cat;
+  lastVisibleDoc = null;
   document.getElementById('blog-search').value = '';
-  renderBlogs();
+  loadBlogs(true);
 };
 
 window.filterBlogSearch = () => {
@@ -815,7 +847,8 @@ window.resetBlogFilters = () => {
   curBlogCat = 'all';
   document.getElementById('blog-search').value = '';
   document.querySelectorAll('.cat-pill').forEach((b,i) => b.classList.toggle('active', i===0));
-  renderBlogs();
+  lastVisibleDoc = null;
+  loadBlogs(true);
 };
 
 // ── Blog content parser (custom tags → HTML) ──

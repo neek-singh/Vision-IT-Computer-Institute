@@ -156,7 +156,7 @@
     <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
          style="border-top:1px solid var(--border)">
       <div class="th3 text-sm">
-        © 2026 Vision IT Computer Institute, Pratappur. All rights reserved.
+        © <span id="copyright-year">2024</span> Vision IT Computer Institute, Pratappur. All rights reserved.
       </div>
       <div class="flex gap-4 text-sm">
         <a href="/privacy" class="th3 hover:text-sky-400 transition-colors no-underline">Privacy Policy</a>
@@ -164,5 +164,41 @@
       </div>
     </div>
   </div>
+
+  <!-- SEO: Structured Data for Local Business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Vision IT Computer Institute",
+    "alternateName": "Vision IT",
+    "url": "https://your-domain.com/",
+    "logo": "https://your-domain.com/bg-Logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-81031-70595",
+      "contactType": "customer service"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kadampara Chowk",
+      "addressLocality": "Pratappur",
+      "addressRegion": "CG",
+      "postalCode": "497223",
+      "addressCountry": "IN"
+    },
+    "email": "visionitpratappur@gmail.com",
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61586946313742",
+      "https://instagram.com/visionitinstitute",
+      "https://youtube.com"
+    ]
+  }
+  </script>
+
+  <script>
+    // Dynamically update copyright year
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+  </script>
 </footer>
 <!-- [END] FOOTER -->

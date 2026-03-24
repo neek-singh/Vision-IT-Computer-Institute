@@ -10,6 +10,13 @@ import { getAuth }                 from 'https://www.gstatic.com/firebasejs/10.1
 import { getFirestore }            from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 import { getStorage }              from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
 
+/**
+ * ----------------------------------------------------------------
+ * SECURITY WARNING: It is crucial to restrict your API key in the
+ * Google Cloud Console by adding HTTP referrer restrictions (your
+ * website's domain) to prevent unauthorized use and quota abuse.
+ * ----------------------------------------------------------------
+ */
 const firebaseConfig = {
   apiKey:            "AIzaSyBUD2Terkfa9LqF_KIwxnI6HMyXIddLk4w",
   authDomain:        "vision-website-4633b.firebaseapp.com",
