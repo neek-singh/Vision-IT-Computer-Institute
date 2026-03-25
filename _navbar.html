@@ -104,12 +104,7 @@
           </div>
         </div>
 
-        <!-- Theme toggle -->
-        <button data-theme-toggle aria-label="Toggle dark mode"
-                style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;transition:color .2s;"
-                class="hover:text-sky-500">
-          <i class="fas fa-moon"></i>
-        </button>
+
 
         <a href="/admission" class="nav-link" data-nav="admission"
            style="color:var(--sky);font-weight:600">Admission</a>
@@ -117,8 +112,14 @@
 
       <!-- Desktop right: login/user -->
       <div class="hidden md:flex items-center gap-3">
+        <!-- Theme toggle -->
+        <button data-theme-toggle aria-label="Toggle dark mode"
+                style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;transition:color .2s;"
+                class="hover:text-sky-500 mr-1">
+          <i class="fas fa-moon"></i>
+        </button>
         <button id="nav-login-btn" onclick="openModal('auth-modal')"
-                class="btn btn-ghost py-1.5 px-4 text-sm">Login</button>
+                class="btn btn-sky py-1.5 px-4 text-sm">Get Started</button>
         <div id="nav-user-wrap" class="hidden items-center gap-2">
           <div id="nav-avatar-wrap" onclick="openModal('profile-modal')"
                class="cursor-pointer relative" title="View Profile">
@@ -204,10 +205,7 @@
 
       <div style="height:1px;background:var(--border);margin:.75rem 0"></div>
 
-      <button id="mob-login-btn" onclick="openModal('auth-modal');closeMob()"
-              class="btn btn-sky w-full py-2.5 text-sm justify-center">
-        Login / Register
-      </button>
+      <a id="mob-login-btn" href="/login" class="btn btn-sky w-full py-2.5 text-sm justify-center">Get Started</a>
 
       <div id="mob-user-row" class="hidden items-center gap-3 px-3 py-2">
         <div id="mob-avatar-txt"

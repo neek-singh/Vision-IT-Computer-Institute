@@ -203,96 +203,214 @@
 
 <body class="pgIn">
   <!-- ═══ TOP BANNER ═══ -->
+<div id="scroll-prog-wrap"><div id="scroll-prog"></div></div>
+
 <header id="main-header">
-  <div id="top-banner"
-    style="display:none;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;padding:.5rem 1rem;background:var(--sky);position:relative;z-index:1001;">
+  <div id="top-banner">
     <span id="top-banner-text">🎉 Vision IT mein Admission Open hai!</span>
+    <span id="top-banner-cd" style="display:none">
+      <span class="banner-cd-unit" id="bcd-d">--</span><span class="banner-cd-sep">d</span>
+      <span class="banner-cd-unit" id="bcd-h">--</span><span class="banner-cd-sep">:</span>
+      <span class="banner-cd-unit" id="bcd-m">--</span><span class="banner-cd-sep">:</span>
+      <span class="banner-cd-unit" id="bcd-s">--</span>
+    </span>
     <button id="top-banner-cta">Apply Now</button>
     <button id="top-banner-close" title="Close">×</button>
   </div>
 
-  <!-- ═══ NAVBAR ═══ -->
   <nav id="navbar">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="flex items-center justify-between h-14">
-        <a href="/" class="flex items-center gap-2.5 no-underline" id="logo-btn">
-          <img src="/bg-Logo.png" alt="Vision IT Logo" class="w-8 h-8 rounded-lg object-contain bg-white" width="32"
-            height="32" loading="eager" />
-          <div>
-            <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1">Vision IT
-            </div>
-            <div
-              style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:600">
-              Computer Institute</div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+
+      <!-- Logo (long-press → admin) -->
+      <a href="/" class="flex items-center gap-2.5 cursor-pointer select-none no-underline"
+         id="logo-btn" aria-label="Vision IT Home">
+        <img src="/bg-Logo.png" alt="Vision IT Logo"
+             class="w-8 h-8 rounded-lg object-contain bg-white"
+             width="32" height="32" loading="eager"/>
+        <div>
+          <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1">
+            Vision IT
           </div>
-        </a>
-        <div class="hidden md:flex items-center gap-6">
-          <a href="/" class="nav-link">Home</a>
-          <a href="/about" class="nav-link">About</a>
-          <a href="/contact" class="nav-link active">Contact</a>
-          <div class="relative" id="nav-more-wrap">
-            <button class="nav-link flex items-center gap-1" onclick="toggleNavDropdown('more-dropdown')"
-              style="background:none;border:none;cursor:pointer;font-family:inherit">
-              More <i class="fas fa-chevron-down" style="font-size:.6rem;opacity:.6"></i>
+          <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:600">
+            Computer Institute
+          </div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="/"            class="nav-link" data-nav="home">Home</a>
+        <a href="/about"       class="nav-link" data-nav="about">About</a>
+        <a href="/contact"     class="nav-link active" data-nav="contact">Contact</a>
+
+        <!-- More dropdown -->
+        <div class="relative" id="nav-more-wrap">
+          <button class="nav-link flex items-center gap-1"
+                  onclick="toggleNavDropdown('more-dropdown')"
+                  style="background:none;border:none;cursor:pointer;font-family:inherit"
+                  aria-haspopup="true" aria-expanded="false">
+            More <i class="fas fa-chevron-down" style="font-size:.6rem;opacity:.6"></i>
+          </button>
+          <div id="more-dropdown" class="nav-dropdown hidden absolute top-full left-0 mt-2 w-48 p-1.5 z-50"
+               role="menu">
+            <a href="/gallery"     class="nav-drop-item" data-nav="gallery">🖼️ Gallery</a>
+            <a href="/results"     class="nav-drop-item" data-nav="results">📊 My Results</a>
+            <a href="/certificate" class="nav-drop-item" data-nav="certificate">🎓 Certificate</a>
+            <div style="height:1px;background:var(--border);margin:.3rem 0"></div>
+            <button onclick="openModal('tracker-modal');closeNavDropdowns()"
+                    class="nav-drop-item w-full text-left"
+                    style="background:none;border:none;font-family:inherit;cursor:pointer">
+              🔍 Track Inquiry
             </button>
-            <div id="more-dropdown" class="nav-dropdown hidden absolute top-full left-0 mt-2 w-48 p-1.5 z-50">
-              <a href="/gallery" class="nav-drop-item">🖼️ Gallery</a>
-              <a href="/results" class="nav-drop-item">📊 My Results</a>
-              <a href="/certificate" class="nav-drop-item">🎓 Certificate</a>
-            </div>
-          </div>
-          <button data-theme-toggle aria-label="Toggle dark mode"
-            style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i
-              class="fas fa-moon"></i></button>
-          <a href="/admission" class="nav-link" style="color:var(--sky);font-weight:600">Admission</a>
-        </div>
-        <div class="hidden md:flex items-center gap-3">
-          <a id="nav-login-btn" href="/login" class="btn btn-ghost py-1.5 px-4 text-sm">Login</a>
-          <div id="nav-user-wrap" class="hidden items-center gap-2">
-            <div id="nav-avatar-wrap" onclick="window.location.href='/profile'" class="cursor-pointer">
-              <div id="nav-avatar-img" class="w-8 h-8 rounded-full overflow-hidden hidden"><img id="nav-avatar-photo"
-                  src="" alt="Profile" class="w-full h-full object-cover" /></div>
-              <div id="nav-avatar-txt" class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
-                style="background:var(--ink);color:#fff">U</div>
-            </div>
-            <span class="text-sm font-medium cursor-pointer" id="nav-uname" style="color:var(--ink)">User</span>
-            <button onclick="logoutUser()"
-              style="color:var(--ink3);background:none;border:none;cursor:pointer;font-size:.8rem;"><i
-                class="fas fa-sign-out-alt"></i></button>
           </div>
         </div>
-        <div class="md:hidden flex items-center gap-2">
-          <button data-theme-toggle
-            style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i
-              class="fas fa-moon"></i></button>
-          <button id="nav-hamburger" aria-label="Open menu"
-            style="color:var(--ink2);background:none;border:none;cursor:pointer;padding:.4rem;"><i
-              class="fas fa-bars text-lg"></i></button>
+
+        <!-- Portals dropdown -->
+        <div class="relative" id="nav-portal-wrap">
+          <button class="nav-link flex items-center gap-1"
+                  onclick="toggleNavDropdown('portal-dropdown')"
+                  style="background:none;border:none;cursor:pointer;font-family:inherit"
+                  aria-haspopup="true" aria-expanded="false">
+            Portals <i class="fas fa-chevron-down" style="font-size:.6rem;opacity:.6"></i>
+          </button>
+          <div id="portal-dropdown"
+               class="nav-dropdown hidden absolute top-full right-0 mt-2 w-52 p-1.5 z-50"
+               role="menu">
+            <a href="https://vit-student.vercel.app/" target="_blank" rel="noopener"
+               class="nav-drop-item">
+              <span>🎓</span>
+              <div>
+                <div style="font-size:.83rem;font-weight:600;color:var(--ink)">Student Portal</div>
+                <div style="font-size:.72rem;color:var(--ink3)">Login &amp; manage</div>
+              </div>
+            </a>
+            <a href="https://vit-teacher.vercel.app/" target="_blank" rel="noopener"
+               class="nav-drop-item">
+              <span>👨‍🏫</span>
+              <div>
+                <div style="font-size:.83rem;font-weight:600;color:var(--ink)">Staff Portal</div>
+                <div style="font-size:.72rem;color:var(--ink3)">Teacher dashboard</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="/admission" class="nav-link" data-nav="admission"
+           style="color:var(--sky);font-weight:600">Admission</a>
+      </div>
+
+      <!-- Desktop right: login/user -->
+      <div class="hidden md:flex items-center gap-3">
+        <!-- Theme toggle -->
+        <button data-theme-toggle aria-label="Toggle dark mode"
+                style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;transition:color .2s;"
+                class="hover:text-sky-500 mr-1">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button id="nav-login-btn" onclick="openModal('auth-modal')"
+                class="btn btn-sky py-1.5 px-4 text-sm">Get Started</button>
+        <div id="nav-user-wrap" class="hidden items-center gap-2">
+          <div id="nav-avatar-wrap" onclick="openModal('profile-modal')"
+               class="cursor-pointer relative" title="View Profile">
+            <div id="nav-avatar-img" class="w-8 h-8 rounded-full overflow-hidden hidden">
+              <img id="nav-avatar-photo" src="" alt="Profile" class="w-full h-full object-cover"/>
+            </div>
+            <div id="nav-avatar-txt"
+                 class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"
+                 style="background:var(--ink);color:#fff">U</div>
+          </div>
+          <span class="text-sm font-medium cursor-pointer" id="nav-uname"
+                style="color:var(--ink)" onclick="openModal('profile-modal')">User</span>
+          <button onclick="logoutUser()"
+                  style="color:var(--ink3);background:none;border:none;cursor:pointer;font-size:.8rem;"
+                  title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
         </div>
       </div>
+
+      <!-- Mobile hamburger -->
+      <div class="md:hidden flex items-center gap-2">
+        <button data-theme-toggle aria-label="Toggle dark mode"
+                style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button id="nav-hamburger" aria-label="Open menu"
+                style="color:var(--ink2);background:none;border:none;cursor:pointer;padding:.4rem;">
+          <i class="fas fa-bars text-lg"></i>
+        </button>
+      </div>
+
     </div>
-    <div id="mob-menu">
-      <div class="px-4 py-4 space-y-0.5">
-        <a href="/" class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">🏠 Home</a>
-        <a href="/about" class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">ℹ️ About</a>
-        <a href="/contact" class="nav-link active block px-3 py-2.5 rounded-lg" style="background:var(--bg2)">📬
-          Contact</a>
-        <a href="/admission" class="nav-link block px-3 py-2.5 rounded-lg font-semibold" style="color:var(--sky)">📝
-          Admission Apply</a>
-        <div style="height:1px;background:var(--border);margin:.75rem 0"></div>
-        <a id="mob-login-btn" href="/login" class="btn btn-sky w-full py-2.5 text-sm justify-center">Login /
-          Register</a>
-        <div id="mob-user-row" class="hidden items-center gap-3 px-3 py-2">
-          <div id="mob-avatar-txt" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm"
-            style="background:var(--ink);color:#fff">U</div>
-          <div class="flex-1">
-            <div id="mob-uname" class="th font-semibold text-sm">User</div>
-          </div>
-          <button onclick="logoutUser()" class="btn btn-ghost text-xs px-3 py-1.5">Logout</button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mob-menu" role="dialog" aria-label="Navigation menu">
+    <div class="px-4 py-4 space-y-0.5">
+      <a href="/"            data-nav="home" class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer">🏠 Home</a>
+      <a href="/about"       data-nav="about" class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer">ℹ️ About</a>
+      <a href="/contact"     data-nav="contact" class="nav-link active block px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer">📬 Contact</a>
+      <a href="/gallery"     data-nav="gallery" class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer">🖼️ Gallery</a>
+      <a href="/results"     data-nav="results" class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer">📊 Results</a>
+      <a href="/certificate" data-nav="certificate" class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer">🎓 Certificate</a>
+      <a href="/admission"   data-nav="admission" class="nav-link block px-3 py-2.5 rounded-lg cursor-pointer font-semibold"
+         style="color:var(--sky)">📝 Admission Apply</a>
+
+      <div style="height:1px;background:var(--border);margin:.75rem 0"></div>
+
+      <p style="font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);font-weight:600;padding:.5rem .75rem .25rem">
+        Quick Access
+      </p>
+
+      <button onclick="openModal('tracker-modal');closeMob()"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer w-full text-left"
+              style="background:none;border:none;font-family:inherit">
+        <span>🔍</span>
+        <div>
+          <div style="font-size:.875rem;font-weight:500;color:var(--ink)">Track Inquiry</div>
+          <div style="font-size:.75rem;color:var(--ink3)">Application status</div>
         </div>
+      </button>
+
+      <a href="https://vit-student.vercel.app/" target="_blank"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 no-underline">
+        <span>🎓</span>
+        <div>
+          <div style="font-size:.875rem;font-weight:500;color:var(--ink)">Student Portal</div>
+          <div style="font-size:.75rem;color:var(--ink3)">Login &amp; results</div>
+        </div>
+        <i class="fas fa-external-link-alt text-xs ml-auto" style="color:var(--ink3)"></i>
+      </a>
+
+      <a href="https://vit-teacher.vercel.app/" target="_blank"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 no-underline">
+        <span>👨‍🏫</span>
+        <div>
+          <div style="font-size:.875rem;font-weight:500;color:var(--ink)">Staff Portal</div>
+          <div style="font-size:.75rem;color:var(--ink3)">Teacher dashboard</div>
+        </div>
+        <i class="fas fa-external-link-alt text-xs ml-auto" style="color:var(--ink3)"></i>
+      </a>
+
+      <div style="height:1px;background:var(--border);margin:.75rem 0"></div>
+
+      <a id="mob-login-btn" href="/login" class="btn btn-sky w-full py-2.5 text-sm justify-center">Get Started</a>
+
+      <div id="mob-user-row" class="hidden items-center gap-3 px-3 py-2">
+        <div id="mob-avatar-txt"
+             class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm"
+             style="background:var(--ink);color:#fff">U</div>
+        <div class="flex-1">
+          <div id="mob-uname" class="th font-semibold text-sm">User</div>
+          <div id="mob-email" class="th3 text-xs">email</div>
+        </div>
+        <button onclick="logoutUser()"
+                class="btn btn-ghost text-xs px-3 py-1.5">Logout</button>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 </header>
 <div id="toast"></div>
 <div id="mob-overlay"></div>
