@@ -506,21 +506,8 @@
       <!-- Badges -->
       <div id="curr-badges" class="flex flex-wrap gap-2 mb-5"></div>
       
-      <!-- Tabs -->
-      <div class="border-b mb-4" style="border-color: rgba(255,255,255,.1);">
-        <nav class="-mb-px flex gap-4" aria-label="Tabs">
-          <button class="curr-tab-btn active" onclick="switchCurrTab(this, 'curriculum')">
-            <i class="fas fa-list-check mr-2"></i> Curriculum
-          </button>
-          <button class="curr-tab-btn" onclick="switchCurrTab(this, 'features')">
-            <i class="fas fa-star mr-2"></i> Course Includes
-          </button>
-        </nav>
-      </div>
-
-      <!-- Tab Panes -->
-      <div id="tab-curriculum" class="curr-tab-pane space-y-2"></div>
-      <div id="tab-features" class="curr-tab-pane hidden space-y-3"></div>
+      <!-- Curriculum List -->
+      <div id="tab-curriculum" class="space-y-2 mt-2"></div>
 
       <!-- Actions -->
       <div class="flex gap-3 mt-6 pt-5" style="border-top: 1px solid rgba(255,255,255,.1);">
@@ -838,17 +825,7 @@ window.resetFilters = () => {
   window.renderCourses();
 };
 
-// ── New Curriculum Modal Tabs ──
-window.switchCurrTab = (btn, tabName) => {
-  // Hide all panes
-  document.querySelectorAll('.curr-tab-pane').forEach(p => p.classList.add('hidden'));
-  // Deactivate all buttons
-  document.querySelectorAll('.curr-tab-btn').forEach(b => b.classList.remove('active'));
-  
-  // Show selected pane and activate button
-  document.getElementById(`tab-${tabName}`)?.classList.remove('hidden');
-  btn.classList.add('active');
-};
+
 
 // ── New Curriculum modal ──
 window.viewCurriculum = id => {
@@ -896,26 +873,7 @@ window.viewCurriculum = id => {
     setHtml('#tab-curriculum', '<p class="text-slate-400 text-sm text-center py-4">Curriculum details jald hi aa rahe hain.</p>');
   }
 
-  // 4. Populate Features Tab
-  const featItems = (c.features||'').split('\n').filter(x=>x.trim());
-  if (featItems.length > 0) {
-    const featuresHtml = featItems.map(f =>
-      `<div class="flex items-start gap-3 text-sm" style="color:rgba(255,255,255,.8)">
-        <i class="fas fa-check-circle text-xs flex-shrink-0 mt-1.5" style="color:#34d399"></i>
-        <span>${sanitizeForHtml(f.trim())}</span>
-      </div>`
-    ).join('');
-    setHtml('#tab-features', featuresHtml);
-    document.querySelector('.curr-tab-btn[onclick*="features"]').style.display = 'block';
-  } else {
-    setHtml('#tab-features', '<p class="text-slate-400 text-sm text-center py-4">Course features jald hi update honge.</p>');
-    document.querySelector('.curr-tab-btn[onclick*="features"]').style.display = 'none';
-  }
-
-  // 5. Reset to first tab
-  switchCurrTab(document.querySelector('.curr-tab-btn'), 'curriculum');
-
-  // 6. Update Apply Button
+  // 4. Update Apply Button
   const applyBtn = document.getElementById('curr-apply-btn');
   if (applyBtn) {
     applyBtn.onclick = (e) => {

@@ -76,27 +76,45 @@ export function initDropdowns() {
 // ── Global Modal Helpers (centralized) ──
 export function openModal(id) {
   const el = document.getElementById(id);
-  if (el) { el.classList.add('open'); }
+  if (el) { 
+    el.classList.add('open'); 
+    document.body.style.overflow = 'hidden'; // Lock background scroll
+  }
 }
 window.openModal = openModal;
 
 export function closeModal(id) {
   const el = document.getElementById(id);
-  if (el) { el.classList.remove('open'); }
+  if (el) { 
+    el.classList.remove('open'); 
+    // Only restore overflow if no other modals are open
+    if (!document.querySelector('.modal-wrap.open')) {
+      document.body.style.overflow = ''; 
+    }
+  }
 }
 window.closeModal = closeModal;
 
 // Close modals on Escape key
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-wrap.open').forEach(m => m.classList.remove('open'));
+    document.querySelectorAll('.modal-wrap.open').forEach(m => {
+      m.classList.remove('open');
+      document.body.style.overflow = '';
+    });
   }
 });
 
-// Close modals on backdrop click
+// Close modals on backdrop click and fix stacking contexts
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.modal-wrap').forEach(m => {
-    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+    // Fix parent transform/overflow issues by moving to body
+    if (m.parentNode !== document.body) {
+      document.body.appendChild(m);
+    }
+    m.addEventListener('click', e => { 
+      if (e.target === m) closeModal(m.id); 
+    });
   });
 });
 
@@ -137,14 +155,17 @@ export function initScrollBehavior() {
     if (!ticking) {
       requestAnimationFrame(() => {
         const y = window.scrollY;
+        const topBanner = document.getElementById('top-banner');
 
         // Hide/show navbar and adjust filter bar if it exists
         if (y > lastY && y > 80) {
           navbar?.classList.add('hidden-nav');
+          topBanner?.classList.add('hidden-nav');
           // On courses page, move filter bar to top
-          if (filterBar) filterBar.style.top = `var(--banner-height, 0px)`;
+          if (filterBar) filterBar.style.top = `0px`;
         } else {
           navbar?.classList.remove('hidden-nav');
+          topBanner?.classList.remove('hidden-nav');
           // On courses page, move filter bar below navbar
           if (filterBar) filterBar.style.top = `var(--nav-top, 56px)`;
         }
