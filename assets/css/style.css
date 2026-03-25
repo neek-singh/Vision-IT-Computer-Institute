@@ -75,8 +75,12 @@
   --shadow-hover: 0 4px 16px rgba(0,0,0,.35);
 }
 
-/* ════ Reset ════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ════ Reset & Safety ════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; }
+.desc, .th2, .comment, p, span, div {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
 html { scroll-behavior: smooth; }
 body {
   font-family: 'DM Sans', system-ui, sans-serif;
@@ -90,6 +94,12 @@ body {
 }
 a { text-decoration: none; }
 img { max-width: 100%; display: block; }
+
+/* UX Stability Auth Loading */
+body.auth-loading #nav-avatar-wrap,
+body.auth-loading #mob-avatar-txt { display: none !important; }
+body.auth-loading #nav-login-btn,
+body.auth-loading #mob-login-btn { visibility: hidden !important; }
 
 /* ════ NAVBAR ════ */
 #navbar {

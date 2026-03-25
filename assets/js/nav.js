@@ -126,6 +126,13 @@ export function initScrollBehavior() {
   let lastY     = 0;
   let ticking   = false;
 
+  let cachedHeight = document.documentElement.scrollHeight;
+  let cachedWinHeight = window.innerHeight;
+  window.addEventListener('resize', () => {
+    cachedHeight = document.documentElement.scrollHeight;
+    cachedWinHeight = window.innerHeight;
+  });
+
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
@@ -146,7 +153,7 @@ export function initScrollBehavior() {
 
         // Scroll progress bar
         if (progBar) {
-          const total  = document.documentElement.scrollHeight - window.innerHeight;
+          const total  = cachedHeight - cachedWinHeight;
           const pct    = total > 0 ? (y / total) * 100 : 0;
           progBar.style.width = pct + '%';
         }
@@ -161,6 +168,7 @@ export function initScrollBehavior() {
 // ── Auth state → update nav UI ──
 export function initAuthNav() {
   onAuthStateChanged(auth, user => {
+    document.body.classList.remove('auth-loading');
     const loginBtn    = document.getElementById('nav-login-btn');
     const userWrap    = document.getElementById('nav-user-wrap');
     const mobLoginBtn = document.getElementById('mob-login-btn');

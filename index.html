@@ -1257,6 +1257,13 @@ document.getElementById('hero-slider').addEventListener('touchend',   e => {
 (function initThreeHero() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas || !window.THREE) return;
+
+  canvas.addEventListener('webglcontextlost', (e) => {
+    e.preventDefault();
+    document.querySelector('#hero-wrap')?.classList.add('fallback-bg');
+    canvas.closest('section')?.classList.add('fallback-bg');
+  });
+
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(canvas.offsetWidth || window.innerWidth, canvas.offsetHeight || window.innerHeight);

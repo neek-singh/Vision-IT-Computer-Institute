@@ -9,7 +9,7 @@ import { db, storage } from './firebase-config.js';
 import {
   collection, doc, getDocs, getDoc, addDoc, updateDoc,
   deleteDoc, setDoc, query, orderBy, where, limit,
-  serverTimestamp, increment, onSnapshot
+  serverTimestamp, increment, onSnapshot, runTransaction
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 import {
   ref, uploadBytesResumable, getDownloadURL
@@ -19,9 +19,22 @@ import {
 export {
   collection, doc, getDocs, getDoc, addDoc, updateDoc,
   deleteDoc, setDoc, query, orderBy, where, limit,
-  serverTimestamp, increment, onSnapshot,
+  serverTimestamp, increment, onSnapshot, runTransaction,
   ref, uploadBytesResumable, getDownloadURL
 };
+
+// ════════════════════════════════════════════
+// SECURE API WRAPPERS (For App Check & Cloud Functions)
+// ════════════════════════════════════════════
+
+/** Secure wrapper for document creation */
+export async function apiCreate(collName, data) {
+  // In the future, this can be replaced by a fetch() call to a Cloud Function
+  return await addDoc(collection(db, collName), {
+    ...data,
+    _clientTimestamp: Date.now()
+  });
+}
 
 // ════════════════════════════════════════════
 // COURSES
@@ -114,20 +127,27 @@ export async function deleteComment(blogId, cmtId) {
   try { await updateDoc(doc(db, 'blogs', blogId), { comments: increment(-1) }); } catch {}
 }
 
-/** Toggle like on a blog post */
+/** Toggle like on a blog post using Atomic Transations */
 export async function toggleLike(blogId, userId) {
   const likeRef = doc(db, `blogs/${blogId}/likes`, userId);
   const blogRef = doc(db, 'blogs', blogId);
-  const ls = await getDoc(likeRef);
-  if (ls.exists()) {
-    await deleteDoc(likeRef);
-    try { await updateDoc(blogRef, { likes: increment(-1) }); } catch {}
-    return false; // unliked
-  } else {
-    await setDoc(likeRef, { userId, timestamp: serverTimestamp() });
-    try { await updateDoc(blogRef, { likes: increment(1) }); } catch {}
-    return true; // liked
-  }
+
+  return await runTransaction(db, async (transaction) => {
+    const ls = await transaction.get(likeRef);
+    const bs = await transaction.get(blogRef);
+    const data = bs.data() || {};
+    const currentLikes = data.likes || 0;
+
+    if (ls.exists()) {
+      transaction.delete(likeRef);
+      transaction.update(blogRef, { likes: Math.max(0, currentLikes - 1) });
+      return false; // unliked
+    } else {
+      transaction.set(likeRef, { userId, timestamp: serverTimestamp() });
+      transaction.update(blogRef, { likes: currentLikes + 1 });
+      return true; // liked
+    }
+  });
 }
 
 // ════════════════════════════════════════════
