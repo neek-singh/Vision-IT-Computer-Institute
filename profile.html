@@ -96,6 +96,7 @@
         <input type="file" id="photo-input" accept="image/*" class="hidden" onchange="handlePhotoChange(this)"/>
         <h1 class="th font-black text-xl" id="p-name">—</h1>
         <p class="th2 text-sm" id="p-email">—</p>
+        <p class="th3 text-[10px] uppercase tracking-tighter mt-1">Tap photo to change</p>
       </div>
 
       <!-- Info -->
@@ -119,8 +120,11 @@
 
       <!-- Actions -->
       <div class="space-y-2">
+        <button onclick="document.getElementById('photo-input').click()" class="btn btn-sky w-full py-2.5 text-sm justify-center mb-2" style="width:100%">
+          <i class="fas fa-camera mr-2"></i>Upload New Photo
+        </button>
         <button onclick="document.getElementById('edit-form').style.display='block';document.getElementById('edit-name').focus()" class="btn btn-ghost w-full py-2.5 text-sm justify-center" style="width:100%">
-          <i class="fas fa-pen mr-2"></i>Edit Profile
+          <i class="fas fa-pen mr-2"></i>Edit Name
         </button>
         <a href="/results" class="btn btn-ghost w-full py-2.5 text-sm justify-center" style="width:100%;display:flex">
           <i class="fas fa-chart-bar mr-2"></i>My Results
