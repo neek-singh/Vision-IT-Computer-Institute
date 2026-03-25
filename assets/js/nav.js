@@ -12,6 +12,8 @@ import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/f
 // ── Current page detection (from filename) ──
 function getCurrentPage() {
   const path = window.location.pathname;
+  if (path === '/' || path.endsWith('/index.html')) return 'home';
+  if (path.includes('admin'))      return 'admin'; // Admin has priority
   if (path.includes('courses'))    return 'courses';
   if (path.includes('admission'))  return 'admission';
   if (path.includes('contact'))    return 'contact';
@@ -22,17 +24,19 @@ function getCurrentPage() {
   if (path.includes('certificate'))return 'certificate';
   if (path.includes('privacy'))    return 'privacy';
   if (path.includes('terms'))      return 'terms';
-  if (path.includes('admin'))      return 'admin';
   return 'home';
 }
 
 // ── Set active nav link ──
-export function setActiveNav(page) {
-  document.querySelectorAll('.nav-link, .mob-nav-link').forEach(el => {
+export function setActiveNav(pageName) {
+  // Remove active from all nav links
+  document.querySelectorAll('[data-nav]').forEach(el => {
     el.classList.remove('active');
   });
-  const active = document.getElementById(`nav-${page}`);
-  if (active) active.classList.add('active');
+  // Add active to the correct links (desktop, mobile, dropdowns)
+  document.querySelectorAll(`[data-nav="${pageName}"]`).forEach(el => {
+    el.classList.add('active');
+  });
 }
 
 // ── Mobile menu ──
