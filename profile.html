@@ -39,6 +39,13 @@
         <a href="/" class="nav-link">Home</a>
         <a href="/results" class="nav-link">Results</a>
         <a href="/certificate" class="nav-link">Certificate</a>
+        <div id="nav-user-wrap" class="hidden items-center gap-3 pl-4 border-l border-[var(--border)]">
+          <div class="th3 text-xs font-semibold text-right hidden lg:block"><div id="nav-uname" class="th truncate max-w-[100px]">Profile</div><div class="opacity-60">Student</div></div>
+          <a href="/profile" class="w-9 h-9 rounded-full bg-[var(--sky)] flex items-center justify-center text-white font-bold overflow-hidden border-2 border-white/10 no-underline">
+            <span id="nav-avatar-txt">U</span>
+            <img id="nav-avatar-photo" src="" class="w-full h-full object-cover hidden" onload="this.classList.remove('hidden'); document.getElementById('nav-avatar-txt').classList.add('hidden')"/>
+          </a>
+        </div>
         <button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:1rem;"><i class="fas fa-moon"></i></button>
       </div>
       <div class="md:hidden flex items-center gap-2">
@@ -207,6 +214,8 @@ function fillProfile(user, dbData = null) {
   const email2El = document.getElementById('p-email2');
   const uidEl = document.getElementById('p-uid');
   const avatarTxt = document.getElementById('avatar-txt');
+  const avatarImg = document.getElementById('avatar-img');
+  const avatarWrap = document.getElementById('avatar-img-wrap');
   const editNameInp = document.getElementById('edit-name');
 
   if (nameEl) nameEl.textContent = name;
@@ -217,15 +226,24 @@ function fillProfile(user, dbData = null) {
   if (avatarTxt) avatarTxt.textContent = name[0].toUpperCase();
   if (editNameInp) editNameInp.value = name;
 
-  if (photo) {
-    const wrap = document.getElementById('avatar-img-wrap');
-    const img  = document.getElementById('avatar-img');
-    const txt  = document.getElementById('avatar-txt');
-    if (img && wrap && txt) {
-        img.src = photo;
-        wrap.classList.remove('hidden');
-        txt.style.display = 'none';
+  if (photo && avatarImg && avatarWrap && avatarTxt) {
+    avatarImg.src = photo;
+    avatarImg.onload = () => {
+      avatarWrap.classList.remove('hidden');
+      avatarTxt.style.display = 'none';
+    };
+    avatarImg.onerror = () => {
+      avatarWrap.classList.add('hidden');
+      avatarTxt.style.display = 'flex';
+    };
+    // Fallback if cached or fast-loading
+    if (avatarImg.complete) {
+        avatarWrap.classList.remove('hidden');
+        avatarTxt.style.display = 'none';
     }
+  } else if (avatarTxt && avatarWrap) {
+    avatarWrap.classList.add('hidden');
+    avatarTxt.style.display = 'flex';
   }
 }
 
