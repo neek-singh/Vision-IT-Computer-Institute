@@ -119,6 +119,20 @@
 #curr-modal .th2 { color: rgba(255,255,255,.65); }
 #curr-modal .th3 { color: rgba(255,255,255,.4); }
 
+.curr-tab-btn {
+  background: none; border: none; cursor: pointer;
+  color: rgba(255,255,255,.5);
+  padding: .5rem .2rem;
+  font-size: .875rem; font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+}
+.curr-tab-btn:hover { color: rgba(255,255,255,.8); }
+.curr-tab-btn.active {
+  color: var(--sky);
+  border-bottom-color: var(--sky);
+}
+
 /* Compare bar */
 #compare-bar {
   position: fixed; bottom: 0; left: 0; right: 0;
@@ -471,42 +485,52 @@
      CURRICULUM MODAL
 ══════════════════════════════════════════════ -->
 <div class="modal-wrap" id="curr-modal" role="dialog" aria-modal="true" aria-labelledby="curr-name">
-  <div class="modal-box max-w-lg" style="background:#12131a;border-color:rgba(255,255,255,.1)">
-    <button onclick="closeModal('curr-modal')" class="absolute top-4 right-4 text-xl" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5)"><i class="fas fa-times"></i></button>
+  <div class="modal-box max-w-2xl p-0" style="background:#12131a;border-color:rgba(255,255,255,.1)">
+    <button onclick="closeModal('curr-modal')" class="absolute top-4 right-4 text-xl z-10" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5)"><i class="fas fa-times"></i></button>
 
-    <!-- Header -->
-    <div class="flex items-center gap-4 mb-6">
-      <div id="curr-icon" class="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0" style="background:rgba(var(--sky-rgb),.2)">💻</div>
-      <div class="flex-1 min-w-0">
-        <h3 id="curr-name" class="text-white font-black text-xl leading-tight mb-2">Course Name</h3>
-        <div id="curr-badges" class="flex flex-wrap gap-2"></div>
+    <!-- Header with BG image -->
+    <div class="relative p-6 text-white" style="min-height: 160px; display: flex; flex-direction: column; justify-content: flex-end;">
+      <div class="absolute inset-0 bg-cover bg-center" id="curr-bg-img-container" style="background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&q=80');">
+        <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(18,19,26,1) 0%, rgba(18,19,26,0.5) 70%, rgba(18,19,26,0) 100%);"></div>
+      </div>
+      <div class="relative z-0 flex items-end gap-4">
+        <div id="curr-icon" class="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl flex-shrink-0" style="background:rgba(var(--sky-rgb),.2); border: 2px solid rgba(var(--sky-rgb),.4);">💻</div>
+        <div class="flex-1 min-w-0">
+          <h3 id="curr-name" class="font-black text-2xl leading-tight mb-1.5" style="text-shadow: 1px 1px 3px rgba(0,0,0,.6);">Course Name</h3>
+          <div id="curr-short-desc" class="text-sm text-slate-300" style="font-weight: 300;">Short description of the course.</div>
+        </div>
       </div>
     </div>
+    
+    <div class="p-6">
+      <!-- Badges -->
+      <div id="curr-badges" class="flex flex-wrap gap-2 mb-5"></div>
+      
+      <!-- Tabs -->
+      <div class="border-b mb-4" style="border-color: rgba(255,255,255,.1);">
+        <nav class="-mb-px flex gap-4" aria-label="Tabs">
+          <button class="curr-tab-btn active" onclick="switchCurrTab(this, 'curriculum')">
+            <i class="fas fa-list-check mr-2"></i> Curriculum
+          </button>
+          <button class="curr-tab-btn" onclick="switchCurrTab(this, 'features')">
+            <i class="fas fa-star mr-2"></i> Course Includes
+          </button>
+        </nav>
+      </div>
 
-    <!-- Curriculum list -->
-    <div class="mb-6">
-      <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
-        <i class="fas fa-list-check" style="color:var(--sky)"></i> Curriculum
-      </h4>
-      <div id="curr-items" class="space-y-2"></div>
-    </div>
+      <!-- Tab Panes -->
+      <div id="tab-curriculum" class="curr-tab-pane space-y-2"></div>
+      <div id="tab-features" class="curr-tab-pane hidden space-y-3"></div>
 
-    <!-- Features -->
-    <div id="curr-feats-wrap" class="mb-6">
-      <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
-        <i class="fas fa-star" style="color:#f59e0b"></i> Course Includes
-      </h4>
-      <div id="curr-feats" class="space-y-2"></div>
-    </div>
-
-    <!-- Actions -->
-    <div class="flex gap-3">
-      <a href="/admission" id="curr-apply-btn" class="btn btn-sky flex-1 py-3 text-sm justify-center">
-        <i class="fas fa-pen-to-square mr-1"></i> Apply Now
-      </a>
-      <a href="https://wa.me/918103170595" target="_blank" rel="noopener" class="btn py-3 px-4 text-sm justify-center" style="background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.3);color:#25d366">
-        <i class="fab fa-whatsapp text-base"></i>
-      </a>
+      <!-- Actions -->
+      <div class="flex gap-3 mt-6 pt-5" style="border-top: 1px solid rgba(255,255,255,.1);">
+        <a href="/admission" id="curr-apply-btn" class="btn btn-sky flex-1 py-3 text-sm justify-center">
+          <i class="fas fa-pen-to-square mr-1"></i> Apply Now
+        </a>
+        <a href="https://wa.me/918103170595" target="_blank" rel="noopener" class="btn py-3 px-4 text-sm justify-center" style="background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.3);color:#25d366">
+          <i class="fab fa-whatsapp text-base"></i>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -842,7 +866,8 @@ window.viewCurriculum = id => {
   };
 
   // 1. Populate Header
-  set('#curr-bg-img', c.image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&q=80', 'src');
+  const bgContainer = document.querySelector('#curr-bg-img-container');
+  if (bgContainer) bgContainer.style.backgroundImage = `url('${c.image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&q=80'}')`;
   set('#curr-icon', c.icon || '💻');
   set('#curr-name', c.name || 'Course Details');
   set('#curr-short-desc', c.description ? c.description.split('.')[0] + '.' : '');
