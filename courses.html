@@ -741,7 +741,16 @@ function getCourseCard(c) {
         </button>
         <button onclick="applyAdmission('${safeName}')"
           class="flex-1 py-2.5 text-xs font-black rounded-xl text-white flex items-center justify-center gap-1.5 transition-all"
-          style="background:linear-gradient(135dees() {
+          style="background:linear-gradient(135deg, var(--sky), var(--sky2))">
+          <i class="fas fa-check mr-1"></i> Apply
+        </button>
+      </div>
+    </div>
+  </article>`;
+}
+
+// ── Fetch courses from Firestore ──
+async function loadCourses() {
   try {
     const snap = await getDocs(query(collection(db,'courses'), orderBy('createdAt','asc')));
     let cs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
