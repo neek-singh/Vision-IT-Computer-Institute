@@ -814,50 +814,93 @@ window.resetFilters = () => {
   window.renderCourses();
 };
 
-// ── Curriculum modal ──
+// ── New Curriculum Modal Tabs ──
+window.switchCurrTab = (btn, tabName) => {
+  // Hide all panes
+  document.querySelectorAll('.curr-tab-pane').forEach(p => p.classList.add('hidden'));
+  // Deactivate all buttons
+  document.querySelectorAll('.curr-tab-btn').forEach(b => b.classList.remove('active'));
+  
+  // Show selected pane and activate button
+  document.getElementById(`tab-${tabName}`)?.classList.remove('hidden');
+  btn.classList.add('active');
+};
+
+// ── New Curriculum modal ──
 window.viewCurriculum = id => {
   const c = allCourses.find(x => x.id === id);
   if (!c) return;
 
-  const set = (elId, val) => { const el=document.getElementById(elId); if(el) el.textContent=val; };
-  set('curr-icon', c.icon || '💻');
-  set('curr-name', c.name || '');
+  // Helper to set element content/attributes
+  const set = (selector, content, attr = 'textContent') => {
+    const el = document.querySelector(selector);
+    if (el) el[attr] = content;
+  };
+  const setHtml = (selector, html) => {
+    const el = document.querySelector(selector);
+    if (el) el.innerHTML = html;
+  };
 
+  // 1. Populate Header
+  set('#curr-bg-img', c.image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&q=80', 'src');
+  set('#curr-icon', c.icon || '💻');
+  set('#curr-name', c.name || 'Course Details');
+  set('#curr-short-desc', c.description ? c.description.split('.')[0] + '.' : '');
+
+  // 2. Populate Badges
   const pct = discountPct(c.feeOrig, c.fee, c.discPct);
-  const badges = document.getElementById('curr-badges');
-  if (badges) {
-    badges.innerHTML = [
-      c.duration ? `<span class="feat-pill">${sanitizeForHtml(c.duration)}</span>` : '',
-      c.level    ? `<span class="feat-pill" style="background:rgba(245,158,11,.15);color:var(--gold);border-color:rgba(245,158,11,.25)">${sanitizeForHtml(c.level)}</span>` : '',
-      c.fee      ? `<span class="feat-pill" style="background:rgba(16,185,129,.15);color:#34d399;border-color:rgba(16,185,129,.25)">${sanitizeForHtml(c.fee)}</span>` : '',
-      pct > 0    ? `<span class="feat-pill" style="background:rgba(239,68,68,.15);color:#f87171;border-color:rgba(239,68,68,.25)">${pct}% OFF</span>` : '',
-    ].join('');
+  const badgesHtml = [
+    c.duration ? `<span class="feat-pill"><i class="far fa-clock mr-1.5"></i>${sanitizeForHtml(c.duration)}</span>` : '',
+    c.level    ? `<span class="feat-pill" style="background:rgba(245,158,11,.15);color:var(--gold);border-color:rgba(245,158,11,.25)"><i class="fas fa-layer-group mr-1.5"></i>${sanitizeForHtml(c.level)}</span>` : '',
+    c.fee      ? `<span class="feat-pill" style="background:rgba(16,185,129,.15);color:#34d399;border-color:rgba(16,185,129,.25)"><i class="fas fa-rupee-sign mr-1.5"></i>${sanitizeForHtml(c.fee)}</span>` : '',
+    pct > 0    ? `<span class="feat-pill" style="background:rgba(239,68,68,.15);color:#f87171;border-color:rgba(239,68,68,.25)">${pct}% OFF</span>` : '',
+  ].filter(Boolean).join('');
+  setHtml('#curr-badges', badgesHtml);
+
+  // 3. Populate Curriculum Tab
+  const currItems = (c.curriculum||'').split('\n').filter(x=>x.trim());
+  if (currItems.length > 0) {
+    const curriculumHtml = currItems.map((item, i) =>
+      `<div class="curr-item">
+        <div class="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center text-xs font-black" style="background:rgba(var(--sky-rgb),.2);color:#60a5d4">${String(i + 1).padStart(2, '0')}</div>
+        <span style="color:#f0ede8;font-size:.875rem">${sanitizeForHtml(item.trim())}</span>
+      </div>`
+    ).join('');
+    setHtml('#tab-curriculum', curriculumHtml);
+  } else {
+    setHtml('#tab-curriculum', '<p class="text-slate-400 text-sm text-center py-4">Curriculum details jald hi aa rahe hain.</p>');
   }
 
-  const currItems = (c.curriculum||'').split('\n').filter(x=>x.trim());
-  const ci = document.getElementById('curr-items');
-  if (ci) ci.innerHTML = currItems.map((item,i) =>
-    `<div class="curr-item">
-      <div class="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center text-xs font-black" style="background:rgba(var(--sky-rgb),.2);color:#60a5d4">${i+1}</div>
-      <span style="color:#f0ede8;font-size:.875rem">${sanitizeForHtml(item.trim())}</span>
-    </div>`
-  ).join('');
-
+  // 4. Populate Features Tab
   const featItems = (c.features||'').split('\n').filter(x=>x.trim());
-  const cf = document.getElementById('curr-feats');
-  if (cf) cf.innerHTML = featItems.map(f =>
-    `<div class="flex items-center gap-3 text-sm" style="color:rgba(255,255,255,.75)">
-      <i class="fas fa-check-circle text-xs flex-shrink-0" style="color:#34d399"></i>
-      ${sanitizeForHtml(f.trim())}
-    </div>`
-  ).join('');
+  if (featItems.length > 0) {
+    const featuresHtml = featItems.map(f =>
+      `<div class="flex items-start gap-3 text-sm" style="color:rgba(255,255,255,.8)">
+        <i class="fas fa-check-circle text-xs flex-shrink-0 mt-1.5" style="color:#34d399"></i>
+        <span>${sanitizeForHtml(f.trim())}</span>
+      </div>`
+    ).join('');
+    setHtml('#tab-features', featuresHtml);
+    document.querySelector('.curr-tab-btn[onclick*="features"]').style.display = 'block';
+  } else {
+    setHtml('#tab-features', '<p class="text-slate-400 text-sm text-center py-4">Course features jald hi update honge.</p>');
+    document.querySelector('.curr-tab-btn[onclick*="features"]').style.display = 'none';
+  }
 
-  // Update apply button
+  // 5. Reset to first tab
+  switchCurrTab(document.querySelector('.curr-tab-btn'), 'curriculum');
+
+  // 6. Update Apply Button
   const applyBtn = document.getElementById('curr-apply-btn');
   if (applyBtn) {
-    applyBtn.onclick = () => { closeModal('curr-modal'); applyAdmission(c.name); };
+    applyBtn.onclick = (e) => {
+      e.preventDefault();
+      closeModal('curr-modal');
+      applyAdmission(c.name);
+    };
   }
 
+  // 7. Open Modal
   openModal('curr-modal');
 };
 
