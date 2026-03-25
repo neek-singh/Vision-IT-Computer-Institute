@@ -157,16 +157,15 @@ export function initScrollBehavior() {
         const y = window.scrollY;
         const topBanner = document.getElementById('top-banner');
 
-        // Hide/show navbar and adjust filter bar if it exists
+        // Hide/show entire header and adjust filter bar if it exists
+        const header = document.getElementById('main-header');
         if (y > lastY && y > 80) {
-          navbar?.classList.add('hidden-nav');
-          topBanner?.classList.add('hidden-nav');
+          header?.classList.add('hidden-nav');
           // On courses page, move filter bar to top
           if (filterBar) filterBar.style.top = `0px`;
         } else {
-          navbar?.classList.remove('hidden-nav');
-          topBanner?.classList.remove('hidden-nav');
-          // On courses page, move filter bar below navbar
+          header?.classList.remove('hidden-nav');
+          // On courses page, move filter bar below header
           if (filterBar) filterBar.style.top = `var(--nav-top, 56px)`;
         }
         navbar?.classList.toggle('scrolled', y > 10);
@@ -273,13 +272,12 @@ export async function initTopBanner(loadBannerSettings) {
   const bannerCd  = document.getElementById('top-banner-cd');
   if (!banner) return;
 
-  // Helper: update navbar top + CSS variable for sticky elements
+  // Helper: update header height CSS variables for scroll-padding and sticky offsets
   function updateNavTop() {
-    const bh = (banner.style.display !== 'none') ? (banner.offsetHeight || 0) : 0;
-    const navbar = document.getElementById('navbar');
-    if (navbar) navbar.style.top = bh + 'px';
-    document.documentElement.style.setProperty('--banner-height', bh + 'px');
-    document.documentElement.style.setProperty('--nav-top', (56 + bh) + 'px');
+    const header = document.getElementById('main-header');
+    const hh = header?.offsetHeight || 0;
+    document.documentElement.style.setProperty('--banner-height', hh + 'px');
+    document.documentElement.style.setProperty('--nav-top', (hh) + 'px');
   }
 
   if (sessionStorage.getItem('top-banner-dismissed') === '1') {

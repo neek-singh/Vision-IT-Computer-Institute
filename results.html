@@ -1,207 +1,269 @@
 <!DOCTYPE html>
 <html lang="hi-IN" data-theme="light">
-<head>
-<meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="icon" type="image/png" href="/bg-Logo.png"/>
-<link rel="shortcut icon" href="/bg-Logo.png"/>
-<link rel="manifest" href="/manifest.json"/>
-<title>My Results | Vision IT Computer Institute Surajpur CG</title>
-<meta name="description" content="Vision IT Computer Institute ke students apne exam results, marks aur grades yahan dekh sakte hain. Login karein aur apni performance check karein."/>
-<meta name="robots" content="index, follow"/>
-<link rel="canonical" href="https://visionitinstitute.vercel.app/results"/>
-<meta property="og:type" content="website"/>
-<meta property="og:title" content="My Results | Vision IT Computer Institute"/>
-<meta property="og:url" content="https://visionitinstitute.vercel.app/results"/>
-<meta property="og:image" content="https://visionitinstitute.vercel.app/bg-Logo.png"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://visionitinstitute.vercel.app/"},{"@type":"ListItem","position":2,"name":"My Results","item":"https://visionitinstitute.vercel.app/results"}]}</script>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="/assets/css/style.css"/>
-<script>(function(){var t=localStorage.getItem('vit-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
-<style>.result-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1rem;}</style>
-</head>
-<body class="pgIn">
-<div id="top-banner" style="display:none;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;padding:.5rem 1rem;background:var(--sky);position:fixed;top:0;left:0;right:0;z-index:1001;"><span id="top-banner-text">🎉 Vision IT mein Admission Open hai!</span><button id="top-banner-cta">Apply Now</button><button id="top-banner-close">×</button></div>
-<div id="toast"></div><div id="mob-overlay"></div>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/bg-Logo.png" />
+  <link rel="shortcut icon" href="/bg-Logo.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Results - Vision IT Computer Institute</title>
+  <meta name="description"
+    content="Vision IT Computer Institute ke students apne exam results, marks aur grades yahan dekh sakte hain. Login karein aur apni performance check karein." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://visionitinstitute.vercel.app/results" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="My Results | Vision IT Computer Institute" />
+  <meta property="og:url" content="https://visionitinstitute.vercel.app/results" />
+  <meta property="og:image" content="https://visionitinstitute.vercel.app/bg-Logo.png" />
+  <script
+    type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://visionitinstitute.vercel.app/"},{"@type":"ListItem","position":2,"name":"My Results","item":"https://visionitinstitute.vercel.app/results"}]}</script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <script>(function () { var t = localStorage.getItem('vit-theme') || 'light'; document.documentElement.setAttribute('data-theme', t); })();</script>
+  <style>
+    .result-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body class="pgIn">
+<header id="main-header">
+  <div id="top-banner"
+    style="display:none;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;padding:.5rem 1rem;background:var(--sky);position:relative;z-index:1001;">
+    <span id="top-banner-text">🎉 Vision IT mein Admission Open hai!</span><button id="top-banner-cta">Apply
+      Now</button><button id="top-banner-close">×</button></div>
+
+  <nav id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-14">
+        <a href="/" class="flex items-center gap-2.5 no-underline" id="logo-btn"><img src="/bg-Logo.png" alt="Vision IT"
+            class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32" loading="eager" />
+          <div>
+            <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1">Vision IT
+            </div>
+            <div
+              style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:600">
+              Computer Institute</div>
+          </div>
+        </a>
+        <div class="hidden md:flex items-center gap-5">
+          <a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/contact"
+            class="nav-link">Contact</a>
+          <button data-theme-toggle
+            style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i
+              class="fas fa-moon"></i></button>
+          <a href="/admission" class="nav-link" style="color:var(--sky);font-weight:600">Admission</a>
+        </div>
+        <div class="md:hidden flex items-center gap-2"><button data-theme-toggle
+            style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i
+              class="fas fa-moon"></i></button><button id="nav-hamburger"
+            style="color:var(--ink2);background:none;border:none;cursor:pointer;padding:.4rem;"><i
+              class="fas fa-bars text-lg"></i></button></div>
+      </div>
+    </div>
+    <div id="mob-menu">
+      <div class="px-4 py-4 space-y-0.5">
+        <a href="/" class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">🏠 Home</a>
+        <a href="/admission" class="nav-link block px-3 py-2.5 rounded-lg font-semibold" style="color:var(--sky)">📝
+          Admission</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div id="toast"></div>
+<div id="mob-overlay"></div>
 <div class="modal-wrap" id="auth-modal" role="dialog" aria-modal="true">
   <div class="modal-box max-w-md">
-    <button onclick="document.getElementById('auth-modal').classList.remove('open')" class="absolute top-4 right-4 th3 text-xl" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>
-    <div class="text-center mb-6"><img src="/bg-Logo.png" alt="Vision IT" class="w-12 h-12 mx-auto mb-3 rounded-xl object-contain bg-white" width="48" height="48"/><h3 class="th font-black text-xl">Login</h3></div>
+    <button onclick="document.getElementById('auth-modal').classList.remove('open')"
+      class="absolute top-4 right-4 th3 text-xl" style="background:none;border:none;cursor:pointer;"><i
+        class="fas fa-times"></i></button>
+    <div class="text-center mb-6"><img src="/bg-Logo.png" alt="Vision IT"
+        class="w-12 h-12 mx-auto mb-3 rounded-xl object-contain bg-white" width="48" height="48" />
+      <h3 class="th font-black text-xl">Login</h3>
+    </div>
     <form id="login-form" class="space-y-4">
-      <div><label class="lbl">Email *</label><input type="email" id="l-email" class="inp" placeholder="your@email.com" required autocomplete="email"/></div>
-      <div><label class="lbl">Password *</label><input type="password" id="l-pass" class="inp" placeholder="Password" required autocomplete="current-password"/></div>
+      <div><label class="lbl">Email *</label><input type="email" id="l-email" class="inp" placeholder="your@email.com"
+          required autocomplete="email" /></div>
+      <div><label class="lbl">Password *</label><input type="password" id="l-pass" class="inp" placeholder="Password"
+          required autocomplete="current-password" /></div>
       <button type="submit" class="btn btn-sky w-full py-3 text-sm justify-center">Login</button>
     </form>
   </div>
 </div>
 
-<nav id="navbar">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6"><div class="flex items-center justify-between h-14">
-    <a href="/" class="flex items-center gap-2.5 no-underline" id="logo-btn"><img src="/bg-Logo.png" alt="Vision IT" class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32" loading="eager"/><div><div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--ink);line-height:1">Vision IT</div><div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:600">Computer Institute</div></div></a>
-    <div class="hidden md:flex items-center gap-5">
-      <a href="/" class="nav-link">Home</a><a href="/about" class="nav-link">About</a><a href="/contact" class="nav-link">Contact</a>
-      <button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i class="fas fa-moon"></i></button>
-      <a href="/admission" class="nav-link" style="color:var(--sky);font-weight:600">Admission</a>
+  <section class="pt-24 pb-10" style="background:var(--bg2)">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <nav aria-label="Breadcrumb" class="flex items-center justify-center gap-2 mb-5 text-sm th3"><a href="/"
+          class="hover:text-sky-400 no-underline th3">Home</a><i class="fas fa-chevron-right text-[10px]"></i><span
+          style="color:var(--sky)">My Results</span></nav>
+      <div class="slabel mb-3">Academic Records</div>
+      <h1
+        style="font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,4vw,2.8rem);font-weight:400;color:var(--ink);margin-bottom:.75rem">
+        Student <span style="color:var(--sky);font-style:italic">Results</span></h1>
+      <p class="th2 max-w-xl mx-auto" style="font-weight:300">Apne marks, grades aur performance dekhen — login karein
+      </p>
     </div>
-    <div class="md:hidden flex items-center gap-2"><button data-theme-toggle style="background:none;border:none;cursor:pointer;color:var(--ink2);font-size:1rem;"><i class="fas fa-moon"></i></button><button id="nav-hamburger" style="color:var(--ink2);background:none;border:none;cursor:pointer;padding:.4rem;"><i class="fas fa-bars text-lg"></i></button></div>
-  </div></div>
-  <div id="mob-menu"><div class="px-4 py-4 space-y-0.5">
-    <a href="/" class="nav-link block px-3 py-2.5 rounded-lg hover:bg-gray-50">🏠 Home</a>
-    <a href="/admission" class="nav-link block px-3 py-2.5 rounded-lg font-semibold" style="color:var(--sky)">📝 Admission</a>
-  </div></div>
-</nav>
+  </section>
 
-<section class="pt-24 pb-10" style="background:var(--bg2)">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-    <nav aria-label="Breadcrumb" class="flex items-center justify-center gap-2 mb-5 text-sm th3"><a href="/" class="hover:text-sky-400 no-underline th3">Home</a><i class="fas fa-chevron-right text-[10px]"></i><span style="color:var(--sky)">My Results</span></nav>
-    <div class="slabel mb-3">Academic Records</div>
-    <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,4vw,2.8rem);font-weight:400;color:var(--ink);margin-bottom:.75rem">Student <span style="color:var(--sky);font-style:italic">Results</span></h1>
-    <p class="th2 max-w-xl mx-auto" style="font-weight:300">Apne marks, grades aur performance dekhen — login karein</p>
-  </div>
-</section>
-
-<main class="py-12" style="background:var(--bg)">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6">
-    <div id="results-login-prompt" class="hidden text-center py-16">
-      <div style="font-size:5rem;margin-bottom:1rem">🔒</div>
-      <h2 class="th font-black text-2xl mb-3">Login Required</h2>
-      <p class="th2 mb-6" style="font-weight:300">Result dekhne ke liye apne Vision IT account mein login karein</p>
-      <button onclick="document.getElementById('auth-modal').classList.add('open')" class="btn btn-sky px-8 py-3.5 text-base"><i class="fas fa-sign-in-alt mr-2"></i>Login to View Results</button>
+  <main class="py-12" style="background:var(--bg)">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div id="results-login-prompt" class="hidden text-center py-16">
+        <div style="font-size:5rem;margin-bottom:1rem">🔒</div>
+        <h2 class="th font-black text-2xl mb-3">Login Required</h2>
+        <p class="th2 mb-6" style="font-weight:300">Result dekhne ke liye apne Vision IT account mein login karein</p>
+        <button onclick="document.getElementById('auth-modal').classList.add('open')"
+          class="btn btn-sky px-8 py-3.5 text-base"><i class="fas fa-sign-in-alt mr-2"></i>Login to View
+          Results</button>
+      </div>
+      <div id="results-loading" class="hidden text-center py-16">
+        <div class="spin-el mx-auto mb-4"></div>
+        <p class="th2 text-sm">Results load ho rahe hain...</p>
+      </div>
+      <div id="results-empty" class="hidden text-center py-16">
+        <div style="font-size:5rem;margin-bottom:1rem">📋</div>
+        <h2 class="th font-bold text-xl mb-2">Abhi Koi Result Nahi</h2>
+        <p class="th2 text-sm mb-5" style="font-weight:300">Aapke results jab available honge, yahan show honge</p>
+      </div>
+      <div id="results-content" class="hidden">
+        <div id="results-summary" class="result-card mb-5"></div>
+        <div id="results-list"></div>
+      </div>
     </div>
-    <div id="results-loading" class="hidden text-center py-16">
-      <div class="spin-el mx-auto mb-4"></div>
-      <p class="th2 text-sm">Results load ho rahe hain...</p>
+  </main>
+
+  <footer class="py-10" style="background:var(--bg2);border-top:1px solid var(--border)">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-2 no-underline"><img src="/bg-Logo.png" alt="Vision IT"
+          class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32" loading="lazy" />
+        <div class="th font-black text-sm">Vision IT Computer Institute</div>
+      </a>
+      <div class="flex gap-4 text-sm"><a href="/certificate"
+          class="th2 hover:text-sky-400 no-underline">Certificate</a><a href="/contact"
+          class="th2 hover:text-sky-400 no-underline">Contact</a></div>
+      <div class="th3 text-sm">© 2026 Vision IT Computer Institute</div>
     </div>
-    <div id="results-empty" class="hidden text-center py-16">
-      <div style="font-size:5rem;margin-bottom:1rem">📋</div>
-      <h2 class="th font-bold text-xl mb-2">Abhi Koi Result Nahi</h2>
-      <p class="th2 text-sm mb-5" style="font-weight:300">Aapke results jab available honge, yahan show honge</p>
-    </div>
-    <div id="results-content" class="hidden">
-      <div id="results-summary" class="result-card mb-5"></div>
-      <div id="results-list"></div>
-    </div>
-  </div>
-</main>
+  </footer>
 
-<footer class="py-10" style="background:var(--bg2);border-top:1px solid var(--border)">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-    <a href="/" class="flex items-center gap-2 no-underline"><img src="/bg-Logo.png" alt="Vision IT" class="w-8 h-8 rounded-lg object-contain bg-white" width="32" height="32" loading="lazy"/><div class="th font-black text-sm">Vision IT Computer Institute</div></a>
-    <div class="flex gap-4 text-sm"><a href="/certificate" class="th2 hover:text-sky-400 no-underline">Certificate</a><a href="/contact" class="th2 hover:text-sky-400 no-underline">Contact</a></div>
-    <div class="th3 text-sm">© 2026 Vision IT Computer Institute</div>
-  </div>
-</footer>
+  <script type="module">
+    import { initTheme } from '/assets/js/theme.js';
+    import { initNav, initTopBanner } from '/assets/js/nav.js';
+    import { loadBannerSettings } from '/assets/js/db-helpers.js';
+    import { auth, db } from '/assets/js/firebase-config.js';
+    import { loginUser } from '/assets/js/auth.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    import { collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    initTheme(); initNav(); initTopBanner(loadBannerSettings);
 
-<script type="module">
-import { initTheme } from '/assets/js/theme.js';
-import { initNav, initTopBanner } from '/assets/js/nav.js';
-import { loadBannerSettings } from '/assets/js/db-helpers.js';
-import { auth, db } from '/assets/js/firebase-config.js';
-import { loginUser } from '/assets/js/auth.js';
-import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-initTheme(); initNav(); initTopBanner(loadBannerSettings);
+    function show(id) { document.getElementById(id)?.classList.remove('hidden'); }
+    function hide(...ids) { ids.forEach(id => document.getElementById(id)?.classList.add('hidden')); }
+    function gradeColor(g) { if (g === 'A+' || g === 'A') return '#34d399'; if (g === 'B+' || g === 'B') return '#38bdf8'; if (g === 'C') return '#fbbf24'; return '#f87171'; }
+    function calcGrade(p) { if (p >= 90) return 'A+'; if (p >= 80) return 'A'; if (p >= 70) return 'B+'; if (p >= 60) return 'B'; if (p >= 50) return 'C'; if (p >= 40) return 'D'; return 'F'; }
 
-function show(id){document.getElementById(id)?.classList.remove('hidden');}
-function hide(...ids){ids.forEach(id=>document.getElementById(id)?.classList.add('hidden'));}
-function gradeColor(g){if(g==='A+'||g==='A')return'#34d399';if(g==='B+'||g==='B')return'#38bdf8';if(g==='C')return'#fbbf24';return'#f87171';}
-function calcGrade(p){if(p>=90)return'A+';if(p>=80)return'A';if(p>=70)return'B+';if(p>=60)return'B';if(p>=50)return'C';if(p>=40)return'D';return'F';}
-
-onAuthStateChanged(auth, async user => {
-  hide('results-login-prompt','results-loading','results-empty','results-content');
-  if (!user) { show('results-login-prompt'); return; }
-  show('results-loading');
-  try {
-    const snap = await getDocs(query(collection(db,'student_results'), orderBy('createdAt','desc')));
-    let results = [];
-    snap.forEach(d => { const data=d.data(); if(data.userId===user.uid||data.email===user.email) results.push({id:d.id,...data}); });
-    hide('results-loading');
-    if (!results.length) { show('results-empty'); return; }
-    show('results-content');
-    const latest = results[0];
-    const pct = latest.totalPercentage||latest.percentage||'—';
-    const grade = latest.grade||calcGrade(parseFloat(pct)||0);
-    document.getElementById('results-summary').innerHTML = `
+    onAuthStateChanged(auth, async user => {
+      hide('results-login-prompt', 'results-loading', 'results-empty', 'results-content');
+      if (!user) { show('results-login-prompt'); return; }
+      show('results-loading');
+      try {
+        const snap = await getDocs(query(collection(db, 'student_results'), orderBy('createdAt', 'desc')));
+        let results = [];
+        snap.forEach(d => { const data = d.data(); if (data.userId === user.uid || data.email === user.email) results.push({ id: d.id, ...data }); });
+        hide('results-loading');
+        if (!results.length) { show('results-empty'); return; }
+        show('results-content');
+        const latest = results[0];
+        const pct = latest.totalPercentage || latest.percentage || '—';
+        const grade = latest.grade || calcGrade(parseFloat(pct) || 0);
+        document.getElementById('results-summary').innerHTML = `
       <div style="display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem">
         <div style="width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0;background:linear-gradient(135deg,var(--sky),#0284c7)">🎓</div>
-        <div style="flex:1"><h2 class="th font-black text-xl">${latest.studentName||user.displayName||'Student'}</h2><div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.25rem"><span class="badge">${latest.course||'Course'}</span>${latest.batch?`<span class="badge">${latest.batch}</span>`:''}</div></div>
+        <div style="flex:1"><h2 class="th font-black text-xl">${latest.studentName || user.displayName || 'Student'}</h2><div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.25rem"><span class="badge">${latest.course || 'Course'}</span>${latest.batch ? `<span class="badge">${latest.batch}</span>` : ''}</div></div>
         <div style="text-align:center;flex-shrink:0"><div style="font-size:3rem;font-weight:900;color:${gradeColor(grade)};line-height:1">${grade}</div><div class="th2 text-sm font-bold">${pct}%</div><div class="th3 text-xs">Overall Grade</div></div>
       </div>`;
-    document.getElementById('results-list').innerHTML = results.map(r => {
-      const g = r.grade||calcGrade(parseFloat(r.totalPercentage||r.percentage)||0);
-      const subjects = r.subjects||[];
-      return `<div class="result-card">
+        document.getElementById('results-list').innerHTML = results.map(r => {
+          const g = r.grade || calcGrade(parseFloat(r.totalPercentage || r.percentage) || 0);
+          const subjects = r.subjects || [];
+          return `<div class="result-card">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1rem">
-          <div><h3 class="th font-black text-lg">${r.course||'Course'}</h3>${r.batch?`<span class="badge">${r.batch}</span>`:''}</div>
-          <div style="text-align:right"><div style="font-size:1.75rem;font-weight:900;color:${gradeColor(g)}">${g}</div><div class="th2 text-sm font-bold">${r.totalPercentage||r.percentage||'—'}%</div></div>
+          <div><h3 class="th font-black text-lg">${r.course || 'Course'}</h3>${r.batch ? `<span class="badge">${r.batch}</span>` : ''}</div>
+          <div style="text-align:right"><div style="font-size:1.75rem;font-weight:900;color:${gradeColor(g)}">${g}</div><div class="th2 text-sm font-bold">${r.totalPercentage || r.percentage || '—'}%</div></div>
         </div>
-        ${subjects.length?`<div style="margin-top:.75rem">${subjects.map(s=>{const sp=Math.round((s.obtained/s.total)*100)||0;return`<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.4rem"><span class="th2 text-sm" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.subject}</span><span class="th2 text-xs whitespace-nowrap">${s.obtained}/${s.total}</span><div style="width:80px;height:6px;border-radius:3px;background:var(--border);flex-shrink:0"><div style="height:100%;border-radius:3px;background:${gradeColor(calcGrade(sp))};width:${sp}%"></div></div></div>`;}).join('')}</div>`:''}
-        ${r.remarks?`<div class="glass rounded-xl px-3 py-2 mt-3 text-sm th2"><i class="fas fa-comment-dots mr-2" style="color:var(--sky)"></i>${r.remarks}</div>`:''}
+        ${subjects.length ? `<div style="margin-top:.75rem">${subjects.map(s => { const sp = Math.round((s.obtained / s.total) * 100) || 0; return `<div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.4rem"><span class="th2 text-sm" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.subject}</span><span class="th2 text-xs whitespace-nowrap">${s.obtained}/${s.total}</span><div style="width:80px;height:6px;border-radius:3px;background:var(--border);flex-shrink:0"><div style="height:100%;border-radius:3px;background:${gradeColor(calcGrade(sp))};width:${sp}%"></div></div></div>`; }).join('')}</div>` : ''}
+        ${r.remarks ? `<div class="glass rounded-xl px-3 py-2 mt-3 text-sm th2"><i class="fas fa-comment-dots mr-2" style="color:var(--sky)"></i>${r.remarks}</div>` : ''}
       </div>`;
-    }).join('');
-  } catch (e) { hide('results-loading'); show('results-empty'); console.error(e); }
-});
-</script>
-<script>
+        }).join('');
+      } catch (e) { hide('results-loading'); show('results-empty'); console.error(e); }
+    });
+  </script>
+  <script>
 
 
-document.querySelectorAll('.modal-wrap').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
-</script>
-<script>
-/* ── Global modal helpers — always available ── */
-window.openModal = function(id) {
-  var el = document.getElementById(id);
-  if (el) { el.classList.add('open'); }
-};
-window.closeModal = function(id) {
-  var el = document.getElementById(id);
-  if (el) { el.classList.remove('open'); }
-};
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.modal-wrap').forEach(function(m) {
-    m.addEventListener('click', function(e) {
-      if (e.target === m) m.classList.remove('open');
+    document.querySelectorAll('.modal-wrap').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }));
+  </script>
+  <script>
+    /* ── Global modal helpers — always available ── */
+    window.openModal = function (id) {
+      var el = document.getElementById(id);
+      if (el) { el.classList.add('open'); }
+    };
+    window.closeModal = function (id) {
+      var el = document.getElementById(id);
+      if (el) { el.classList.remove('open'); }
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.modal-wrap').forEach(function (m) {
+        m.addEventListener('click', function (e) {
+          if (e.target === m) m.classList.remove('open');
+        });
+      });
     });
-  });
-});
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-wrap.open').forEach(function(m) {
-      m.classList.remove('open');
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-wrap.open').forEach(function (m) {
+          m.classList.remove('open');
+        });
+      }
     });
-  }
-});
-</script>
-<script>
-(function() {
-  function initMobNav() {
-    var hb = document.getElementById('nav-hamburger');
-    var mm = document.getElementById('mob-menu');
-    var ov = document.getElementById('mob-overlay');
-    if (!hb || !mm || !ov) return;
-    // Remove old listeners by cloning
-    var newHb = hb.cloneNode(true);
-    hb.parentNode.replaceChild(newHb, hb);
-    var newOv = ov.cloneNode(true);
-    ov.parentNode.replaceChild(newOv, ov);
-    // Add fresh listeners
-    document.getElementById('nav-hamburger').addEventListener('click', function() {
-      document.getElementById('mob-menu').classList.toggle('open');
-      document.getElementById('mob-overlay').classList.toggle('open');
-    });
-    document.getElementById('mob-overlay').addEventListener('click', function() {
-      document.getElementById('mob-menu').classList.remove('open');
-      document.getElementById('mob-overlay').classList.remove('open');
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMobNav);
-  } else {
-    initMobNav();
-  }
-})();
-</script>
-</body></html>
+  </script>
+  <script>
+    (function () {
+      function initMobNav() {
+        var hb = document.getElementById('nav-hamburger');
+        var mm = document.getElementById('mob-menu');
+        var ov = document.getElementById('mob-overlay');
+        if (!hb || !mm || !ov) return;
+        // Remove old listeners by cloning
+        var newHb = hb.cloneNode(true);
+        hb.parentNode.replaceChild(newHb, hb);
+        var newOv = ov.cloneNode(true);
+        ov.parentNode.replaceChild(newOv, ov);
+        // Add fresh listeners
+        document.getElementById('nav-hamburger').addEventListener('click', function () {
+          document.getElementById('mob-menu').classList.toggle('open');
+          document.getElementById('mob-overlay').classList.toggle('open');
+        });
+        document.getElementById('mob-overlay').addEventListener('click', function () {
+          document.getElementById('mob-menu').classList.remove('open');
+          document.getElementById('mob-overlay').classList.remove('open');
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMobNav);
+      } else {
+        initMobNav();
+      }
+    })();
+  </script>
+</body>
+
+</html>
