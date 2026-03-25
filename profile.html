@@ -153,9 +153,10 @@
 <script type="module">
 import { initTheme } from '/assets/js/theme.js';
 import { initNav }   from '/assets/js/nav.js';
-import { auth }      from '/assets/js/firebase-config.js';
+import { auth, db }  from '/assets/js/firebase-config.js';
 import { logoutUser, updateDisplayName, uploadProfilePhoto } from '/assets/js/auth.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 initTheme(); 
 initNav();
@@ -170,7 +171,7 @@ window.toast = (msg, type='inf') => {
   t._tid = setTimeout(() => t.classList.remove('show'), 3500);
 };
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async user => {
   const loading = document.getElementById('loading-state');
   const notLoggedIn = document.getElementById('not-logged-in');
   const profileMain = document.getElementById('profile-main');
@@ -182,14 +183,24 @@ onAuthStateChanged(auth, user => {
     if (profileMain) profileMain.style.display = 'none';
     return;
   }
-  
+
+  // Fetch from Firestore for full database synchronization
+  let dbData = null;
+  try {
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    if (snap.exists()) dbData = snap.data();
+  } catch(e) { console.error('Firestore err:', e); }
+
   if (profileMain) profileMain.style.display = 'block';
   if (notLoggedIn) notLoggedIn.style.display = 'none';
-  fillProfile(user);
+  fillProfile(user, dbData);
 });
 
-function fillProfile(user) {
-  const name = user.displayName || user.email?.split('@')[0] || 'User';
+function fillProfile(user, dbData = null) {
+  const data = dbData || {};
+  const name = data.displayName || user.displayName || user.email?.split('@')[0] || 'User';
+  const photo = data.photoURL || user.photoURL;
+  
   const nameEl = document.getElementById('p-name');
   const emailEl = document.getElementById('p-email');
   const dNameEl = document.getElementById('p-displayname');
@@ -206,12 +217,12 @@ function fillProfile(user) {
   if (avatarTxt) avatarTxt.textContent = name[0].toUpperCase();
   if (editNameInp) editNameInp.value = name;
 
-  if (user.photoURL) {
+  if (photo) {
     const wrap = document.getElementById('avatar-img-wrap');
     const img  = document.getElementById('avatar-img');
     const txt  = document.getElementById('avatar-txt');
     if (img && wrap && txt) {
-        img.src = user.photoURL;
+        img.src = photo;
         wrap.classList.remove('hidden');
         txt.style.display = 'none';
     }
