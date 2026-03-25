@@ -152,109 +152,136 @@ import { initNav }   from '/assets/js/nav.js';
 import { auth }      from '/assets/js/firebase-config.js';
 import { logoutUser, updateDisplayName, uploadProfilePhoto } from '/assets/js/auth.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-initTheme(); initNav();
+
+initTheme(); 
+initNav();
 
 window.toast = (msg, type='inf') => {
-  const icons={ok:'✅',err:'❌',inf:'ℹ️'};
-  const t=document.getElementById('toast');
-  t.innerHTML=`<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
-  t.classList.add('show'); clearTimeout(t._tid);
-  t._tid=setTimeout(()=>t.classList.remove('show'),3500);
+  const icons = { ok:'✅', err:'❌', inf:'ℹ️' };
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.innerHTML = `<div class="toast-inner toast-${type}">${icons[type]||'ℹ️'} ${msg}</div>`;
+  t.classList.add('show'); 
+  clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove('show'), 3500);
 };
 
 onAuthStateChanged(auth, user => {
-  document.getElementById('loading-state').style.display = 'none';
+  const loading = document.getElementById('loading-state');
+  const notLoggedIn = document.getElementById('not-logged-in');
+  const profileMain = document.getElementById('profile-main');
+  
+  if (loading) loading.style.display = 'none';
+  
   if (!user) {
-    document.getElementById('not-logged-in').style.display = 'block';
+    if (notLoggedIn) notLoggedIn.style.display = 'block';
+    if (profileMain) profileMain.style.display = 'none';
     return;
   }
-  document.getElementById('profile-main').style.display = 'block';
+  
+  if (profileMain) profileMain.style.display = 'block';
+  if (notLoggedIn) notLoggedIn.style.display = 'none';
   fillProfile(user);
 });
 
 function fillProfile(user) {
   const name = user.displayName || user.email?.split('@')[0] || 'User';
-  document.getElementById('p-name').textContent = name;
-  document.getElementById('p-email').textContent = user.email || '—';
-  document.getElementById('p-displayname').textContent = name;
-  document.getElementById('p-email2').textContent = user.email || '—';
-  document.getElementById('p-uid').textContent = user.uid;
-  document.getElementById('avatar-txt').textContent = name[0].toUpperCase();
-  document.getElementById('edit-name').value = name;
+  const nameEl = document.getElementById('p-name');
+  const emailEl = document.getElementById('p-email');
+  const dNameEl = document.getElementById('p-displayname');
+  const email2El = document.getElementById('p-email2');
+  const uidEl = document.getElementById('p-uid');
+  const avatarTxt = document.getElementById('avatar-txt');
+  const editNameInp = document.getElementById('edit-name');
+
+  if (nameEl) nameEl.textContent = name;
+  if (emailEl) emailEl.textContent = user.email || '—';
+  if (dNameEl) dNameEl.textContent = name;
+  if (email2El) email2El.textContent = user.email || '—';
+  if (uidEl) uidEl.textContent = user.uid;
+  if (avatarTxt) avatarTxt.textContent = name[0].toUpperCase();
+  if (editNameInp) editNameInp.value = name;
 
   if (user.photoURL) {
     const wrap = document.getElementById('avatar-img-wrap');
     const img  = document.getElementById('avatar-img');
     const txt  = document.getElementById('avatar-txt');
-    img.src = user.photoURL;
-    wrap.classList.remove('hidden');
-    txt.style.display = 'none';
+    if (img && wrap && txt) {
+        img.src = user.photoURL;
+        wrap.classList.remove('hidden');
+        txt.style.display = 'none';
+    }
   }
 }
 
+window.saveProfile = async () => {
+  const name = document.getElementById('edit-name').value.trim();
+  if (!name) { toast('Naam khali nahi ho sakta','err'); return; }
+  
+  toast('Processing...', 'inf');
   try {
     await updateDisplayName(name);
-    document.getElementById('p-name').textContent = name;
-    document.getElementById('p-displayname').textContent = name;
-    document.getElementById('avatar-txt').textContent = name[0].toUpperCase();
-    document.getElementById('edit-form').style.display = 'none';
-    toast('Profile update ho gaya ✅','ok');
-  } catch(err) { toast('Error: '+err.message,'err'); }
+    const nameEl = document.getElementById('p-name');
+    const dNameEl = document.getElementById('p-displayname');
+    const avatarTxt = document.getElementById('avatar-txt');
+    const editForm = document.getElementById('edit-form');
+    
+    if (nameEl) nameEl.textContent = name;
+    if (dNameEl) dNameEl.textContent = name;
+    if (avatarTxt) avatarTxt.textContent = name[0].toUpperCase();
+    if (editForm) editForm.style.display = 'none';
+    
+    toast('Profile update ho gaya ✅', 'ok');
+  } catch(err) { 
+    toast('Error: ' + err.message, 'err'); 
+  }
 };
 
-  if (file.size > 2*1024*1024) { toast('Photo 2MB se bada nahi hona chahiye','err'); return; }
-  toast('Photo upload ho rahi hai...','inf');
+window.handlePhotoChange = async (input) => {
+  const file = input.files[0];
+  if (!file) return;
+  
+  if (file.size > 2*1024*1024) { 
+    toast('Photo 2MB se bada nahi hona chahiye', 'err'); 
+    return; 
+  }
+  
+  toast('Photo upload ho rahi hai...', 'inf');
   try {
     const url = await uploadProfilePhoto(file);
     const wrap = document.getElementById('avatar-img-wrap');
     const img  = document.getElementById('avatar-img');
     const txt  = document.getElementById('avatar-txt');
-    img.src = url;
-    wrap.classList.remove('hidden');
-    txt.style.display = 'none';
-    toast('Photo update ho gayi ✅','ok');
-  } catch(err) { toast('Upload failed: '+err.message,'err'); }
+    
+    if (img && wrap && txt) {
+        img.src = url;
+        wrap.classList.remove('hidden');
+        txt.style.display = 'none';
+    }
+    toast('Photo update ho gayi ✅', 'ok');
+  } catch(err) { 
+    toast('Upload failed: ' + err.message, 'err'); 
+  }
 };
 
-</script>
-<script>
-window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};
-window.closeModal=function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');};
-document.addEventListener('DOMContentLoaded',function(){
-  var hb=document.getElementById('nav-hamburger'),mm=document.getElementById('mob-menu'),ov=document.getElementById('mob-overlay');
-  if(hb&&mm&&ov){hb.addEventListener('click',function(){mm.classList.toggle('open');ov.classList.toggle('open');});ov.addEventListener('click',function(){mm.classList.remove('open');ov.classList.remove('open');});}
-});
-</script>
-<script>
-(function(){
-  function initMobNav(){
-    var hb=document.getElementById('nav-hamburger');
-    var mm=document.getElementById('mob-menu');
-    var ov=document.getElementById('mob-overlay');
-    if(!hb||!mm||!ov) return;
-    var h2=hb.cloneNode(true); hb.parentNode.replaceChild(h2,hb);
-    var o2=ov.cloneNode(true); ov.parentNode.replaceChild(o2,ov);
-    document.getElementById('nav-hamburger').addEventListener('click',function(){
-      document.getElementById('mob-menu').classList.toggle('open');
-      document.getElementById('mob-overlay').classList.toggle('open');
-    });
-    document.getElementById('mob-overlay').addEventListener('click',function(){
-      document.getElementById('mob-menu').classList.remove('open');
-      document.getElementById('mob-overlay').classList.remove('open');
-    });
-  }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initMobNav);}
-  else{initMobNav();}
-})();
-</script>
-<script>
-window.openModal=function(id){var el=document.getElementById(id);if(el)el.classList.add('open');};
-window.closeModal=function(id){var el=document.getElementById(id);if(el)el.classList.remove('open');};
-window.togglePwd=function(a,b){var i=document.getElementById(a),e=document.getElementById(b);if(!i)return;i.type=i.type==='password'?'text':'password';if(e)e.className=i.type==='password'?'fas fa-eye text-sm':'fas fa-eye-slash text-sm';};
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.modal-wrap').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-wrap.open').forEach(function(m){m.classList.remove('open');});});
-});
+window.doLogout = async () => {
+    try {
+        await logoutUser();
+        window.location.href = '/login';
+    } catch(err) {
+        toast('Logout failed: ' + err.message, 'err');
+    }
+};
+
+window.openModal = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('open');
+};
+
+window.closeModal = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('open');
+};
 </script>
 </body>
 </html>
